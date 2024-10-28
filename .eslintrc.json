@@ -1,0 +1,9 @@
+{
+    "extends": "standard",
+    "rules": {
+      "no-unused-vars": "off",
+      "space-before-function-paren": ["error", "never"],
+      "eol-last": ["error", "never"],
+      "indent": ["error", 4]
+    }
+}  

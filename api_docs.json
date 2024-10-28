@@ -1,0 +1,72 @@
+{
+  "definitions": {},
+  "info": {
+    "title": "soccer-master-backend",
+    "version": "1.0.0",
+    "license": {
+      "name": "ISC"
+    },
+    "description": "Specification JSONs: [v2](/api-spec/v2), [v3](/api-spec/v3)."
+  },
+  "paths": {
+    "/api/tournament-date/create": {
+      "post": {
+        "summary": "/api/tournament-date/create",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": ""
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2024-10-25T00:00:00.000Z"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/tournament-date/create</pre>\n</body>\n</html>\n"
+            }
+          }
+        },
+        "tags": [],
+        "produces": [
+          "text/html"
+        ]
+      }
+    },
+    "/api/tournament-date/update": {
+      "patch": {
+        "summary": "/api/tournament-date/update",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    }
+  },
+  "swagger": "2.0",
+  "tags": [],
+  "schemes": [
+    "http"
+  ],
+  "host": "localhost:3001"
+}
