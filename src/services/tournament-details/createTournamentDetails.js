@@ -3,8 +3,8 @@ import errorCodes from '../../constants/errors/errorCodes.js'
 import tournamentDatailService from './common/tournamentDatailService.js'
 import { checkExistingTournament } from './checkExistingTournament.js'
 
-const { ERROR_WHILE_CREATING_TOURNAMENT_DATE } = errorCodes.tournamentErrors
-export const createTournamentDate = async(req, res) => {
+const { AN_ERROR_OCURRED_WHILE_CREATING_TOURNAMENT_DETAILS } = errorCodes.tournamentErrors
+const createTournamentDetails = async(req, res) => {
     try {
         const tournamentExistsError = await checkExistingTournament(req.body.date, req.body.name)
 
@@ -18,7 +18,9 @@ export const createTournamentDate = async(req, res) => {
     } catch (err) {
         console.log('ERROR EN CREATE')
         console.log(err)
-        const errors = [{ msg: ERROR_WHILE_CREATING_TOURNAMENT_DATE }]
+        const errors = [{ msg: AN_ERROR_OCURRED_WHILE_CREATING_TOURNAMENT_DETAILS }]
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors })
     }
 }
+
+export default createTournamentDetails

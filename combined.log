@@ -367,3 +367,192 @@
 {"level":"info","message":"Player synchronized"}
 {"level":"info","message":"Connected to database"}
 {"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"error","message":"Error when synchronizing Player: column \"tournamentDateId\" of relation \"TournamentDates\" already exists","name":"SequelizeDatabaseError","original":{"code":"42701","file":"tablecmds.c","length":150,"line":"6995","name":"error","routine":"check_for_column_name_collision","severity":"ERROR","sql":"ALTER TABLE \"public\".\"TournamentDates\" ADD COLUMN \"tournamentDateId\"   SERIAL ;"},"parameters":{},"parent":{"code":"42701","file":"tablecmds.c","length":150,"line":"6995","name":"error","routine":"check_for_column_name_collision","severity":"ERROR","sql":"ALTER TABLE \"public\".\"TournamentDates\" ADD COLUMN \"tournamentDateId\"   SERIAL ;"},"sql":"ALTER TABLE \"public\".\"TournamentDates\" ADD COLUMN \"tournamentDateId\"   SERIAL ;","stack":"Error\n    at Query.run (/home/federico/Escritorio/soccer-master-backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)\n    at /home/federico/Escritorio/soccer-master-backend/node_modules/sequelize/lib/sequelize.js:315:28\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async PostgresQueryInterface.addColumn (/home/federico/Escritorio/soccer-master-backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:184:12)\n    at async TournamentDate.sync (/home/federico/Escritorio/soccer-master-backend/node_modules/sequelize/lib/model.js:958:11)\n    at async Sequelize.sync (/home/federico/Escritorio/soccer-master-backend/node_modules/sequelize/lib/sequelize.js:377:9)\n    at async file:///home/federico/Escritorio/soccer-master-backend/src/models/playerModel.js:32:1"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"errors":[{"instance":null,"message":"relname must be unique","origin":"DB","path":"relname","type":"unique violation","validatorArgs":[],"validatorKey":"not_unique","validatorName":null,"value":"TournamentDetails_tournamentDetailsId_seq"},{"instance":null,"message":"relnamespace must be unique","origin":"DB","path":"relnamespace","type":"unique violation","validatorArgs":[],"validatorKey":"not_unique","validatorName":null,"value":"2200"}],"fields":{"relname":"TournamentDetails_tournamentDetailsId_seq","relnamespace":"2200"},"level":"error","message":"Error when synchronizing Player: Validation error","name":"SequelizeUniqueConstraintError","original":{"code":"23505","constraint":"pg_class_relname_nsp_index","detail":"Key (relname, relnamespace)=(TournamentDetails_tournamentDetailsId_seq, 2200) already exists.","file":"nbtinsert.c","length":284,"line":"663","name":"error","routine":"_bt_check_unique","schema":"pg_catalog","severity":"ERROR","sql":"CREATE TABLE IF NOT EXISTS \"TournamentDetails\" (\"tournamentDetailsId\"   SERIAL , \"date\" TIMESTAMP WITH TIME ZONE NOT NULL, \"name\" VARCHAR(255), \"createdAt\" TIMESTAMP WITH TIME ZONE NOT NULL, \"updatedAt\" TIMESTAMP WITH TIME ZONE NOT NULL, PRIMARY KEY (\"tournamentDetailsId\"));","table":"pg_class"},"parent":{"code":"23505","constraint":"pg_class_relname_nsp_index","detail":"Key (relname, relnamespace)=(TournamentDetails_tournamentDetailsId_seq, 2200) already exists.","file":"nbtinsert.c","length":284,"line":"663","name":"error","routine":"_bt_check_unique","schema":"pg_catalog","severity":"ERROR","sql":"CREATE TABLE IF NOT EXISTS \"TournamentDetails\" (\"tournamentDetailsId\"   SERIAL , \"date\" TIMESTAMP WITH TIME ZONE NOT NULL, \"name\" VARCHAR(255), \"createdAt\" TIMESTAMP WITH TIME ZONE NOT NULL, \"updatedAt\" TIMESTAMP WITH TIME ZONE NOT NULL, PRIMARY KEY (\"tournamentDetailsId\"));","table":"pg_class"},"sql":"CREATE TABLE IF NOT EXISTS \"TournamentDetails\" (\"tournamentDetailsId\"   SERIAL , \"date\" TIMESTAMP WITH TIME ZONE NOT NULL, \"name\" VARCHAR(255), \"createdAt\" TIMESTAMP WITH TIME ZONE NOT NULL, \"updatedAt\" TIMESTAMP WITH TIME ZONE NOT NULL, PRIMARY KEY (\"tournamentDetailsId\"));","stack":"Error\n    at Query.run (/home/federico/Escritorio/soccer-master-backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)\n    at /home/federico/Escritorio/soccer-master-backend/node_modules/sequelize/lib/sequelize.js:315:28\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async PostgresQueryInterface.createTable (/home/federico/Escritorio/soccer-master-backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:98:12)\n    at async TournamentDetails.sync (/home/federico/Escritorio/soccer-master-backend/node_modules/sequelize/lib/model.js:942:7)\n    at async Sequelize.sync (/home/federico/Escritorio/soccer-master-backend/node_modules/sequelize/lib/sequelize.js:377:9)\n    at async file:///home/federico/Escritorio/soccer-master-backend/src/models/playerModel.js:32:1"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamenteDate synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
+{"level":"info","message":"Player synchronized"}
+{"level":"info","message":"TournamentDetails synchronized"}
+{"level":"info","message":"Connected to database"}
+{"level":"info","message":"App listening on port 3001!"}
