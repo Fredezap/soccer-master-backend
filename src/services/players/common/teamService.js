@@ -4,7 +4,7 @@ const add = async({ name, teamId }, { transaction = null }) => {
     try {
         const newPlayer = await Player.create(
             { name, teamId },
-            { transaction } // Pasar la transacción aquí
+            { transaction }
         )
         return newPlayer
     } catch (error) {
@@ -17,7 +17,7 @@ const destroy = async({ playerId }, { transaction = null }) => {
     try {
         const result = await Player.destroy({
             where: { playerId },
-            transaction // Pasar la transacción aquí
+            transaction
         })
 
         if (result === 0) {

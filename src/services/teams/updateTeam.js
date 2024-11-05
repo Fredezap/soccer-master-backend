@@ -22,11 +22,11 @@ const updateTeam = async(req, res) => {
         const playersToAdd = newPlayers.filter(newPlayer => !newPlayer.playerId)
 
         const playerRemovalPromises = playersToRemove.length > 0
-            ? playersToRemove.map(player => playerService.deletePlayer({ playerId: player.playerId }, { transaction }))
+            ? playersToRemove.map(player => playerService.destroy({ playerId: player.playerId }, { transaction }))
             : []
 
         const playerAdditionPromises = playersToAdd.length > 0
-            ? playersToAdd.map(player => playerService.addPlayer({ name: player.name, teamId }, { transaction }))
+            ? playersToAdd.map(player => playerService.add({ name: player.name, teamId }, { transaction }))
             : []
 
         await Promise.all([
@@ -41,6 +41,7 @@ const updateTeam = async(req, res) => {
         await transaction.commit()
         return res.status(StatusCodes.OK).json({ success: true })
     } catch (error) {
+        console.error('ERROR: ', error)
         await transaction.rollback()
         const errors = [{ msg: ERROR_WHILE_UPDATING_TEAM }]
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ errors })

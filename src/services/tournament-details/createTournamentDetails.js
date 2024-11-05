@@ -4,7 +4,7 @@ import tournamentDatailService from './common/tournamentDatailService.js'
 import { checkExistingTournament } from './checkExistingTournament.js'
 
 const { ERROR_WHILE_CREATING_TOURNAMENT_DATE } = errorCodes.tournamentErrors
-export const createTournamentDate = async(req, res) => {
+export const createTournamentDetails = async(req, res) => {
     try {
         const tournamentExistsError = await checkExistingTournament(req.body.date, req.body.name)
 

@@ -2,7 +2,7 @@ import express from 'express'
 import runValidations from '../middlewares/common/validations/runValidations.js'
 import validateTournamentName from '../middlewares/tournament-details/validateTournamentName.js'
 import validateTournamentDate from '../middlewares/tournament-details/validateTournamentDate.js'
-import { createTournamentDate } from '../services/tournament-details/createTournamentDate.js'
+import { createTournamentDetails } from '../services/tournament-details/createTournamentDetails.js'
 import getTournamentDetails from '../services/tournament-details/getTournamentDetails.js'
 
 const tournamentDateRouter = express.Router()
@@ -14,7 +14,7 @@ const runTournamentStartingTimeRouter = runValidations([
 
 tournamentDateRouter.post('/create',
     runTournamentStartingTimeRouter,
-    createTournamentDate
+    createTournamentDetails
 )
 
 // todo: create update endpoint
