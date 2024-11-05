@@ -10,8 +10,6 @@ export const checkExistingTournament = async(date, name) => {
             return new Error(TOURNAMENT_DETAILS_ALREADY_EXIST)
         }
     } catch (error) {
-        console.log('ERROR')
-        console.error('Error in checkExistingTournament:', error)
         return new Error(AN_ERROR_OCURRED_GETTING_TOURNAMENT_DETAILS)
     }
 }
