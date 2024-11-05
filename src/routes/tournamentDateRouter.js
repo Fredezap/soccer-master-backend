@@ -12,26 +12,16 @@ const runTournamentStartingTimeRouter = runValidations([
     validateTournamentDate
 ])
 
-const print = (req, res, next) => {
-    console.log('en print')
-    console.log(req.body)
-    next()
-}
-
 tournamentDateRouter.post('/create',
-    print,
     runTournamentStartingTimeRouter,
     createTournamentDate
 )
 
-tournamentDateRouter.patch('/update',
-    print
-    // runTournamentStartingTimeRouter
-    // updateTournamentStartingTime
-)
+// todo: create update endpoint
+// tournamentDateRouter.patch('/update'
+// )
 
 tournamentDateRouter.post('/get-details',
-    print,
     getTournamentDetails
 )
 

@@ -1,9 +1,11 @@
+// models/Player.js
 import { sequelize } from '../database/connection.js'
 import { DataTypes } from 'sequelize'
 import logger from '../utils/logger.js'
 import { playerConstants } from '../constants/player/playerConstants.js'
+import { Team } from './teamModel.js'
 
-const { MIN_NAME_LENGTH, MIN_SURNAME_LENGTH, MAX_NAME_LENGTH, MAX_SURNAME_LENGTH } = playerConstants
+const { MIN_NAME_LENGTH, MAX_NAME_LENGTH } = playerConstants
 
 export const Player = sequelize.define('Player', {
     playerId: {
@@ -19,14 +21,15 @@ export const Player = sequelize.define('Player', {
             len: [MIN_NAME_LENGTH, MAX_NAME_LENGTH]
         }
     },
-    surname: {
-        type: DataTypes.STRING,
+    teamId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-            len: [MIN_SURNAME_LENGTH, MAX_SURNAME_LENGTH]
-        }
+        references: {
+            model: Team,
+            key: 'teamId'
+        },
+        onDelete: 'CASCADE'
     }
-    // todo: agreagr team y ver que mas
 })
 
 await sequelize.sync({ alter: true })

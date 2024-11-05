@@ -9,9 +9,53 @@
     "description": "Specification JSONs: [v2](/api-spec/v2), [v3](/api-spec/v3)."
   },
   "paths": {
-    "/api/tournament-date/create": {
+    "/api/admin/tournament-details/create": {
       "post": {
-        "summary": "/api/tournament-date/create",
+        "summary": "/api/admin/tournament-details/create",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/tournament-details/update": {
+      "patch": {
+        "summary": "/api/admin/tournament-details/update",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/tournament-details/get-details": {
+      "post": {
+        "summary": "/api/admin/tournament-details/get-details",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/teams/create": {
+      "post": {
+        "summary": "/api/admin/teams/create",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/teams/update": {
+      "patch": {
+        "summary": "/api/admin/teams/update",
         "consumes": [
           "application/json"
         ],
@@ -25,12 +69,22 @@
               "properties": {
                 "name": {
                   "type": "string",
-                  "example": ""
+                  "example": "Una Cosa"
                 },
-                "date": {
+                "players": {
+                  "type": "array",
+                  "items": {},
+                  "example": [
+                    null
+                  ]
+                },
+                "adminCredentials": {
                   "type": "string",
-                  "format": "date-time",
-                  "example": "2024-10-25T00:00:00.000Z"
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6InNvY2Nlci1tYXN0ZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.nfSEeK9Cdl8V6YVm49a7ant6WoXzizZK51YB6NykMSc"
+                },
+                "teamId": {
+                  "type": "string",
+                  "example": ""
                 }
               }
             }
@@ -41,7 +95,7 @@
             "description": "Not Found",
             "schema": {
               "type": "string",
-              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/tournament-date/create</pre>\n</body>\n</html>\n"
+              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot PATCH /api/admin/teams/update</pre>\n</body>\n</html>\n"
             }
           }
         },
@@ -51,9 +105,20 @@
         ]
       }
     },
-    "/api/tournament-date/update": {
-      "patch": {
-        "summary": "/api/tournament-date/update",
+    "/api/admin/teams/get-all": {
+      "post": {
+        "summary": "/api/admin/teams/get-all",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/get-info": {
+      "post": {
+        "summary": "/api/admin/get-info",
         "consumes": [
           "application/json"
         ],

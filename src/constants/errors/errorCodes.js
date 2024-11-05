@@ -10,12 +10,27 @@ const tournamentErrors = {
     TOURNAMENT_DETAILS_ALREADY_EXIST: 'tournament details already exist, if you want you can update them'
 }
 
+const teamErrors = {
+    ERROR_WHILE_CREATING_TEAM: 'error while creating team',
+    INVALID_TEAM_NAME: 'invalid team name',
+    TEAM_NAME_TOO_LONG: 'team name too long',
+    TEAM_NAME_TOO_SHORT: 'team name too short',
+    INVALID_PLAYERS_LIST: 'invalid player list',
+    TEAM_ALREADY_EXISTS: 'Team already exist',
+    ERROR_WHILE_GETTING_TEAMS: 'error while getting teams',
+    TEAM_NOT_FOUNDED: 'team not funded',
+    ERROR_WHILE_UPDATING_TEAM: 'error while updating team',
+    INVALID_TEAM_ID: 'invalid team id',
+    ERROR_WHILE_DELETING_TEAM: 'error while deleting team'
+}
+
 const admin = {
     INVALID_CREDENTIALS: 'invalid credentials'
 }
 
 const errorCodes = {
     tournamentErrors,
+    teamErrors,
     admin
 }
 
