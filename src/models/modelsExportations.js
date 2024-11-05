@@ -1,7 +1,7 @@
 import { Player } from './playerModel.js'
-import { TournamentDate } from './tournamentDateModel.js'
+import { TournamentDetails } from './tournamentDetailsModel.js'
 
 export const modelsExportations = {
     Player,
-    TournamentDate
+    TournamentDetails
 }
