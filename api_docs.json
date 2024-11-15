@@ -20,17 +20,6 @@
         "tags": []
       }
     },
-    "/api/admin/tournament-details/update": {
-      "patch": {
-        "summary": "/api/admin/tournament-details/update",
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {},
-        "tags": []
-      }
-    },
     "/api/admin/tournament-details/get-details": {
       "post": {
         "summary": "/api/admin/tournament-details/get-details",
@@ -59,50 +48,20 @@
         "consumes": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "Una Cosa"
-                },
-                "players": {
-                  "type": "array",
-                  "items": {},
-                  "example": [
-                    null
-                  ]
-                },
-                "adminCredentials": {
-                  "type": "string",
-                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6InNvY2Nlci1tYXN0ZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.nfSEeK9Cdl8V6YVm49a7ant6WoXzizZK51YB6NykMSc"
-                },
-                "teamId": {
-                  "type": "string",
-                  "example": ""
-                }
-              }
-            }
-          }
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/teams/delete": {
+      "post": {
+        "summary": "/api/admin/teams/delete",
+        "consumes": [
+          "application/json"
         ],
-        "responses": {
-          "404": {
-            "description": "Not Found",
-            "schema": {
-              "type": "string",
-              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot PATCH /api/admin/teams/update</pre>\n</body>\n</html>\n"
-            }
-          }
-        },
-        "tags": [],
-        "produces": [
-          "text/html"
-        ]
+        "parameters": [],
+        "responses": {},
+        "tags": []
       }
     },
     "/api/admin/teams/get-all": {
@@ -116,9 +75,131 @@
         "tags": []
       }
     },
-    "/api/admin/get-info": {
+    "/api/admin/fixture/stages/create": {
       "post": {
-        "summary": "/api/admin/get-info",
+        "summary": "/api/admin/fixture/stages/create",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/stages/delete": {
+      "post": {
+        "summary": "/api/admin/fixture/stages/delete",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/stages/get-all": {
+      "post": {
+        "summary": "/api/admin/fixture/stages/get-all",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/groups/create": {
+      "post": {
+        "summary": "/api/admin/fixture/groups/create",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/groups/update": {
+      "patch": {
+        "summary": "/api/admin/fixture/groups/update",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/groups/update-group-name": {
+      "patch": {
+        "summary": "/api/admin/fixture/groups/update-group-name",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/groups/delete": {
+      "post": {
+        "summary": "/api/admin/fixture/groups/delete",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/groups/delete-team-group": {
+      "post": {
+        "summary": "/api/admin/fixture/groups/delete-team-group",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teamId": {
+                  "type": "number",
+                  "example": 5
+                },
+                "groupId": {
+                  "type": "number",
+                  "example": 8
+                },
+                "adminCredentials": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6InNvY2Nlci1tYXN0ZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.nfSEeK9Cdl8V6YVm49a7ant6WoXzizZK51YB6NykMSc"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "type": "string",
+              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/fixture/groups/delete-team-group</pre>\n</body>\n</html>\n"
+            }
+          }
+        },
+        "tags": [],
+        "produces": [
+          "text/html"
+        ]
+      }
+    },
+    "/api/admin/fixture/groups/get-all": {
+      "post": {
+        "summary": "/api/admin/fixture/groups/get-all",
         "consumes": [
           "application/json"
         ],

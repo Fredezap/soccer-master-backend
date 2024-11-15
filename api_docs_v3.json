@@ -16,13 +16,6 @@
         "tags": []
       }
     },
-    "/api/admin/tournament-details/update": {
-      "patch": {
-        "summary": "/api/admin/tournament-details/update",
-        "responses": {},
-        "tags": []
-      }
-    },
     "/api/admin/tournament-details/get-details": {
       "post": {
         "summary": "/api/admin/tournament-details/get-details",
@@ -40,30 +33,93 @@
     "/api/admin/teams/update": {
       "patch": {
         "summary": "/api/admin/teams/update",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/teams/delete": {
+      "post": {
+        "summary": "/api/admin/teams/delete",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/teams/get-all": {
+      "post": {
+        "summary": "/api/admin/teams/get-all",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/stages/create": {
+      "post": {
+        "summary": "/api/admin/fixture/stages/create",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/stages/delete": {
+      "post": {
+        "summary": "/api/admin/fixture/stages/delete",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/stages/get-all": {
+      "post": {
+        "summary": "/api/admin/fixture/stages/get-all",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/groups/create": {
+      "post": {
+        "summary": "/api/admin/fixture/groups/create",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/groups/update": {
+      "patch": {
+        "summary": "/api/admin/fixture/groups/update",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/groups/update-group-name": {
+      "patch": {
+        "summary": "/api/admin/fixture/groups/update-group-name",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/groups/delete": {
+      "post": {
+        "summary": "/api/admin/fixture/groups/delete",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/groups/delete-team-group": {
+      "post": {
+        "summary": "/api/admin/fixture/groups/delete-team-group",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "Una Cosa"
+                  "teamId": {
+                    "type": "number",
+                    "example": 5
                   },
-                  "players": {
-                    "type": "array",
-                    "items": {},
-                    "example": [
-                      null
-                    ]
+                  "groupId": {
+                    "type": "number",
+                    "example": 8
                   },
                   "adminCredentials": {
                     "type": "string",
                     "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6InNvY2Nlci1tYXN0ZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.nfSEeK9Cdl8V6YVm49a7ant6WoXzizZK51YB6NykMSc"
-                  },
-                  "teamId": {
-                    "type": "string",
-                    "example": ""
                   }
                 }
               }
@@ -78,7 +134,7 @@
               "text/html": {
                 "schema": {
                   "type": "string",
-                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot PATCH /api/admin/teams/update</pre>\n</body>\n</html>\n"
+                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/fixture/groups/delete-team-group</pre>\n</body>\n</html>\n"
                 }
               }
             }
@@ -87,16 +143,9 @@
         "tags": []
       }
     },
-    "/api/admin/teams/get-all": {
+    "/api/admin/fixture/groups/get-all": {
       "post": {
-        "summary": "/api/admin/teams/get-all",
-        "responses": {},
-        "tags": []
-      }
-    },
-    "/api/admin/get-info": {
-      "post": {
-        "summary": "/api/admin/get-info",
+        "summary": "/api/admin/fixture/groups/get-all",
         "responses": {},
         "tags": []
       }
