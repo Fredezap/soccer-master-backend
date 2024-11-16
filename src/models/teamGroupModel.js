@@ -1,24 +1,16 @@
+// models/TeamStage.js
 import { sequelize } from '../database/connection.js'
 import { DataTypes } from 'sequelize'
 import logger from '../utils/logger.js'
-import { playerConstants } from '../constants/player/playerConstants.js'
 import { Team } from './teamModel.js'
+import { Group } from './groupModel.js'
 
-const { MIN_NAME_LENGTH, MAX_NAME_LENGTH } = playerConstants
-
-export const Player = sequelize.define('Player', {
-    playerId: {
+export const TeamGroup = sequelize.define('TeamGroup', {
+    teamGroupId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false
-    },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            len: [MIN_NAME_LENGTH, MAX_NAME_LENGTH]
-        }
     },
     teamId: {
         type: DataTypes.INTEGER,
@@ -26,6 +18,14 @@ export const Player = sequelize.define('Player', {
         references: {
             model: Team,
             key: 'teamId'
+        }
+    },
+    groupId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: Group,
+            key: 'groupId'
         },
         onDelete: 'CASCADE'
     }
@@ -33,8 +33,8 @@ export const Player = sequelize.define('Player', {
 
 await sequelize.sync()
     .then(() => {
-        logger.info('Player synchronized')
+        logger.info('TeamGroup synchronized')
     })
     .catch(err => {
-        logger.error('Error when synchronizing Player:', err)
+        logger.error('Error when synchronizing TeamGroup:', err)
     })
