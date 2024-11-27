@@ -41,7 +41,6 @@ const updateTeam = async(req, res) => {
         await transaction.commit()
         return res.status(StatusCodes.OK).json({ success: true })
     } catch (error) {
-        console.error('ERROR: ', error)
         await transaction.rollback()
         const errors = [{ msg: ERROR_WHILE_UPDATING_TEAM }]
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ errors })

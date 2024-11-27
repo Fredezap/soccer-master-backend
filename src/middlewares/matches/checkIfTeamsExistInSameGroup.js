@@ -7,7 +7,6 @@ const checkIfTeamsExistInSameGroup = async(req, res, next) => {
     try {
         const { localTeamId, visitorTeamId, groupId } = req.body
         const result = await groupService.checkIfTeamsExistInSameGroup(localTeamId, visitorTeamId, groupId)
-        console.log('primer result', result)
         if (!result.success) {
             const errors = [{ msg: ERROR_WHILE_VERIFYING_TEAMS }]
             return res.status(StatusCodes.NOT_FOUND).json({ errors })

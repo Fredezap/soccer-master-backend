@@ -6,6 +6,7 @@ import { Team } from '../../../../models/teamModel.js'
 const create = async(data) => {
     const { name, type, order } = data
 
+    // eslint-disable-next-line no-useless-catch
     try {
         const response = await Stage.create(
             {
@@ -17,7 +18,6 @@ const create = async(data) => {
 
         return response
     } catch (error) {
-        console.error('Error creating stage:', error)
         throw error
     }
 }

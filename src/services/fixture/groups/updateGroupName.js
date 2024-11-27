@@ -10,7 +10,6 @@ const updateGroupName = async(req, res) => {
         await groupService.updateGroupName(groupId, name)
         return res.status(StatusCodes.OK).json({ success: true })
     } catch (error) {
-        console.error('ERROR: ', error)
         const errors = [{ msg: ERROR_WHILE_UPDATING_GROUP_NAME }]
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ errors })
     }

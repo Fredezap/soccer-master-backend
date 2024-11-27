@@ -10,7 +10,6 @@ const deleteGroup = async(req, res) => {
         await groupService.deleteGroup(groupId)
         return res.status(StatusCodes.OK).json({ success: true })
     } catch (error) {
-        console.error('ERROR: ', error)
         const errors = [{ msg: ERROR_WHILE_DELETING_GROUP }]
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ errors })
     }

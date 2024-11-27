@@ -4,12 +4,12 @@ import { Team } from '../../../../models/teamModel.js'
 import { TeamGroup } from '../../../../models/teamGroupModel.js'
 import { Stage } from '../../../../models/stageModel.js'
 import errorCodes from '../../../../constants/errors/errorCodes.js'
-import { Match } from '../../../../models/matchModel.js'
 const { NO_MATCHING_TEAM_AND_GROUP_FOUND } = errorCodes.groupErrors
 
 const create = async(data) => {
     const { name, stageId } = data
 
+    // eslint-disable-next-line no-useless-catch
     try {
         const response = await Group.create(
             {
@@ -20,12 +20,12 @@ const create = async(data) => {
 
         return response
     } catch (error) {
-        console.error('Error creating group:', error)
         throw error
     }
 }
 
 const getAllGroupsWithTeams = async() => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const groups = await Group.findAll({
             include: [
@@ -40,7 +40,6 @@ const getAllGroupsWithTeams = async() => {
             ]
         })
 
-        // Agrupar los grupos por stageId, incluyendo el nombre de la stage
         const groupedByStageId = groups.reduce((acc, group) => {
             const { stageId, name } = group.Stage // Obtiene el stageId y el nombre de la stage
             if (!acc[stageId]) {
@@ -50,10 +49,8 @@ const getAllGroupsWithTeams = async() => {
             return acc
         }, {})
 
-        console.log(groupedByStageId)
         return groupedByStageId
     } catch (error) {
-        console.error('Error al obtener los grupos con equipos:', error)
         throw error
     }
 }
@@ -67,28 +64,28 @@ async function getOneById(groupId) {
 }
 
 async function updateGroupName(groupId, name) {
+    // eslint-disable-next-line no-useless-catch
     try {
         await Group.update(
             { name },
             { where: { groupId } }
         )
-        console.log('Group name updated successfully')
     } catch (error) {
-        console.error('Error updating group name:', error)
         throw error
     }
 }
 
 async function updateTeamsGroup(group, selectedTeamIds) {
+    // eslint-disable-next-line no-useless-catch
     try {
         await group.addTeams(selectedTeamIds)
     } catch (error) {
-        console.error('Error updating teams in group:', error)
         throw error
     }
 }
 
 async function deleteTeamGroupRecord(groupId, teamId) {
+    // eslint-disable-next-line no-useless-catch
     try {
         const result = await TeamGroup.destroy({
             where: {
@@ -96,30 +93,28 @@ async function deleteTeamGroupRecord(groupId, teamId) {
                 teamId
             }
         })
-        console.log('result: ', result)
+
         if (result === 0) {
             return { success: false, error: NO_MATCHING_TEAM_AND_GROUP_FOUND }
         } else {
             return { success: true, result }
         }
     } catch (error) {
-        console.error('Error deleting record from TeamGroup:', error)
         throw error
     }
 }
 
 async function deleteGroup(groupId) {
+    // eslint-disable-next-line no-useless-catch
     try {
         await Group.destroy({ where: { groupId } })
     } catch (error) {
-        console.error('Error deleting group:', error)
         throw error
     }
 }
 
 async function getAvailableTeams(stageId) {
     try {
-        // Obtener los IDs de los equipos ya asignados a grupos en la stage especificada
         const allocatedTeamIds = await TeamGroup.findAll({
             attributes: ['teamId'],
             include: [
@@ -132,9 +127,6 @@ async function getAvailableTeams(stageId) {
             raw: true
         }).then(records => records.map(record => record.teamId))
 
-        console.log('ALLOCATED TEAMS: ', allocatedTeamIds)
-
-        // Obtener equipos que no están en los grupos asignados de la stage especificada
         const availableTeams = await Team.findAll({
             where: {
                 teamId: { [Op.notIn]: allocatedTeamIds }
@@ -143,7 +135,6 @@ async function getAvailableTeams(stageId) {
 
         return availableTeams
     } catch (error) {
-        console.error('Error fetching available teams:', error)
         return []
     }
 }
@@ -168,7 +159,6 @@ const checkIfTeamsExistInSameGroup = async(localTeamId, visitorTeamId, groupId) 
             return { success: false }
         }
     } catch (error) {
-        console.error('Error verificando equipos en el grupo:', error)
         return { success: false }
     }
 }

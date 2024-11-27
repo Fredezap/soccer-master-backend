@@ -8,7 +8,6 @@ const createGroup = async(req, res) => {
         await groupService.create(req.body)
         return res.status(StatusCodes.CREATED).json()
     } catch (err) {
-        console.log('ERROR AL CREAR GROUP', err)
         const errors = [{ msg: ERROR_WHILE_CREATING_GROUP }]
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors })
     }

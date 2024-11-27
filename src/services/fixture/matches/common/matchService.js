@@ -40,12 +40,12 @@ const checkIfMatchExists = async(stageId, localTeamId, visitorTeamId, date, time
             return { success: false }
         }
     } catch (error) {
-        console.error('Error verificando existencia de partido:', error)
         return { success: false }
     }
 }
 
 const getAllMatchesByDate = async() => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const matches = await Match.findAll({
             include: [
@@ -77,10 +77,8 @@ const getAllMatchesByDate = async() => {
             return acc
         }, {})
 
-        console.log('groupedByDate', groupedByDate)
         return groupedByDate
     } catch (error) {
-        console.error('Error al obtener los partidos por fecha:', error)
         throw error
     }
 }

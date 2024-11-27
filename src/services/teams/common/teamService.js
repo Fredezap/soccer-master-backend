@@ -4,6 +4,7 @@ import { Player } from '../../../models/playerModel.js'
 const create = async(data) => {
     const { name, players } = data
 
+    // eslint-disable-next-line no-useless-catch
     try {
         const response = await Team.create(
             {
@@ -17,7 +18,6 @@ const create = async(data) => {
 
         return response
     } catch (error) {
-        console.error('Error creating team and players:', error)
         throw error
     }
 }

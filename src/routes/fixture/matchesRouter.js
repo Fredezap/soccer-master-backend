@@ -31,14 +31,7 @@ const runValidateMatch = runValidations([
     validateMatchExist
 ])
 
-const print = (req, res, next) => {
-    console.log('en print')
-    console.log(req.body)
-    next()
-}
-
 matchesRouter.post('/create',
-    print,
     runValidateCreateData,
     checkIfTeamsExistInSameGroup,
     checkIfMatchAlreadyExist,
@@ -51,7 +44,6 @@ matchesRouter.post('/delete',
 )
 
 matchesRouter.post('/get-all',
-    print,
     getAllMatches
 )
 

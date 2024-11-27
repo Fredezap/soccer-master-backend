@@ -51,51 +51,36 @@ const runValidateIfGroupExist = runValidations([
     checkIfGroupExist
 ])
 
-const print = (req, res, next) => {
-    console.log('en prin group router')
-    console.log(req.body)
-    next()
-}
-
 groupsRouter.post('/create',
-    print,
     runValidateGroupValues,
     capitalizeGroupName,
     runValidateIfGroupAlreadyExist,
-    print,
     createGroup
 )
 
 groupsRouter.patch('/update',
-    print,
     runValidateGroupValuesUpdate,
     runValidateIfGroupExist,
     updateTeamsGroup
 )
 
 groupsRouter.patch('/update-group-name',
-    print,
     runValidateGroupValuesUpdateName,
     capitalizeGroupName,
-    print,
     updateGroupName
 )
 
 groupsRouter.post('/delete',
-    print,
     runValidateGroupIdDelete,
     deleteGroup
 )
 
 groupsRouter.post('/delete-team-group',
-    print,
     runValidateTeamAndGroupIds,
-    print,
     deleteTeamGroupRecord
 )
 
 groupsRouter.post('/get-all',
-    print,
     getAllGroups
 )
 

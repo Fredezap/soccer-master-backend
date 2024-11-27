@@ -1,6 +1,7 @@
 import { Player } from '../../../models/playerModel.js'
 
 const add = async({ name, teamId }, { transaction = null }) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const newPlayer = await Player.create(
             { name, teamId },
@@ -8,12 +9,12 @@ const add = async({ name, teamId }, { transaction = null }) => {
         )
         return newPlayer
     } catch (error) {
-        console.error('Error adding new player:', error)
         throw error
     }
 }
 
 const destroy = async({ playerId }, { transaction = null }) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const result = await Player.destroy({
             where: { playerId },
@@ -26,7 +27,6 @@ const destroy = async({ playerId }, { transaction = null }) => {
 
         return result
     } catch (error) {
-        console.error(`Error deleting player with ID ${playerId}:`, error)
         throw error
     }
 }

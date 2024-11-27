@@ -3,7 +3,7 @@ import app from './server.js'
 import logger from './utils/logger.js'
 import { connectToDatabase } from './database/connection.js'
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 4102;
 
 (async() => {
     await connectToDatabase()

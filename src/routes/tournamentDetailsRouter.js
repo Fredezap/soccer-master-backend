@@ -20,12 +20,6 @@ const runUpdateValidations = runValidations([
     validateTournamentId
 ])
 
-// const print = (req, res, next) => {
-//     console.log('en print')
-//     console.log(req.body)
-//     next()
-// }
-
 tournamentDetailsRouter.post('/create',
     runCreateValidations,
     createTournamentDetails

@@ -8,7 +8,6 @@ const createStage = async(req, res) => {
         await stageService.create(req.body)
         return res.status(StatusCodes.CREATED).json()
     } catch (err) {
-        console.log('ERROR AL CREAR STAGE', err)
         const errors = [{ msg: ERROR_WHILE_CREATING_STAGE }]
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors })
     }

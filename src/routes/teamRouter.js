@@ -26,12 +26,6 @@ const runValidateTeamExist = runValidations([
     validateTeamExist
 ])
 
-const print = (req, res, next) => {
-    console.log('en print de team router')
-    console.log(req.body)
-    next()
-}
-
 teamRouter.post('/create',
     runValidateTeamValues,
     capitalizeTeamName,
@@ -54,7 +48,6 @@ teamRouter.post('/delete',
 )
 
 teamRouter.post('/get-all',
-    // print,
     getAllTeams
 )
 

@@ -2,7 +2,7 @@ node_modules
 dist
 dist-ssr
 *.local
-.env
-.env.prod
+.env.development
+.env.production
 combined.log
 error.log

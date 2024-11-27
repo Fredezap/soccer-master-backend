@@ -7,7 +7,6 @@ const checkIfMatchAlreadyExist = async(req, res, next) => {
     try {
         const { stageId, localTeamId, visitorTeamId, date, time } = req.body
         const result = await matchService.checkIfMatchExists(stageId, localTeamId, visitorTeamId, date, time)
-        console.log('result de check if exist el match', result)
         if (result.success) {
             const errors = [{ msg: THIS_MATCH_ALREADY_EXIST }]
             return res.status(StatusCodes.BAD_REQUEST).json({ errors })

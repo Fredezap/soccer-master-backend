@@ -33,12 +33,6 @@ const runValidateStageExistbyId = runValidations([
     checkIfStageExistById
 ])
 
-const print = (req, res, next) => {
-    console.log('en print')
-    console.log(req.body)
-    next()
-}
-
 stagesRouter.post('/create',
     runValidateStageValues,
     capitalizeStageName,
@@ -47,7 +41,6 @@ stagesRouter.post('/create',
 )
 
 stagesRouter.post('/delete',
-    print,
     runValidateStageId,
     runValidateStageExistbyId,
     deleteStage

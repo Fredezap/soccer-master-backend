@@ -6,7 +6,6 @@ const getAllGroups = async(req, res) => {
     const { ERROR_WHILE_GETTING_GROUPS } = errorCodes.groupErrors
     try {
         const dbGroups = await groupService.getAllGroupsWithTeams()
-        console.log(dbGroups)
         return res.status(StatusCodes.OK).json({ dbGroups })
     } catch (err) {
         const errors = [{ msg: ERROR_WHILE_GETTING_GROUPS }]

@@ -1,6 +1,5 @@
 import { check } from 'express-validator'
 import errorCodes from '../../constants/errors/errorCodes.js'
-const { ADMIN_CREDENTIALS } = process.env
 const { INVALID_CREDENTIALS } = errorCodes.admin
 
 const adminCredentials = check('adminCredentials')
@@ -8,7 +7,7 @@ const adminCredentials = check('adminCredentials')
         if (value === undefined) {
             throw new Error(INVALID_CREDENTIALS)
         }
-        if (value === ADMIN_CREDENTIALS) {
+        if (value === process.env.ADMIN_CREDENTIALS) {
             return true
         }
         throw new Error(INVALID_CREDENTIALS)

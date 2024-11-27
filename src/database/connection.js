@@ -1,5 +1,10 @@
 import logger from '../utils/logger.js'
 import { Sequelize } from 'sequelize'
+import dotenv from 'dotenv'
+
+dotenv.config({
+    path: `.env.${process.env.NODE_ENV || 'development'}`
+})
 
 const { PG_AUTH_USER, PG_HOST, PG_DATABASE, PG_PASSWORD, PG_PORT, PG_DIALECT } = process.env
 
