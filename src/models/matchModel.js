@@ -59,6 +59,10 @@ export const Match = sequelize.define('Match', {
         type: DataTypes.DATE,
         allowNull: false
     },
+    time: {
+        type: DataTypes.TIME,
+        allowNull: false
+    },
     location: {
         type: DataTypes.STRING,
         allowNull: false

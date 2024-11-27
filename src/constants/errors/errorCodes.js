@@ -51,7 +51,19 @@ const groupErrors = {
     ERROR_WHILE_UPDATING_TEAM: 'error while updating team',
     ERROR_WHILE_DELETING_GROUP: 'error while deleting group',
     ERROR_WHILE_UPDATING_GROUP_NAME: 'error while updating group name',
-    NO_MATCHING_TEAM_AND_GROUP_FOUND: 'No matching team and group found'
+    NO_MATCHING_TEAM_AND_GROUP_FOUND: 'No matching team and group found',
+    ERROR_WHILE_VERIFYING_TEAMS: 'error while verifying teams'
+}
+
+const matchErrors = {
+    ERROR_WHILE_CREATING_MATCH: 'error while creating match',
+    THIS_MATCH_ALREADY_EXIST: 'this match already exist',
+    ERROR_WHILE_CHECKING_MATCH_DATA: 'error while checking match data',
+    INVALID_DATE: 'invalid date',
+    INVALID_TIME: 'invalid time',
+    INVALID_MATCH_ID: 'invalid match id',
+    SELECTED_MATCH_DOES_NOT_EXIST: 'selected match does not exist',
+    ERROR_WHILE_DELETING_MATCH: 'error while deleting match'
 }
 
 const admin = {
@@ -63,6 +75,7 @@ const errorCodes = {
     teamErrors,
     stageErrors,
     groupErrors,
+    matchErrors,
     admin
 }
 

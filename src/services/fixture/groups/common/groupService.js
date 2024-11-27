@@ -4,6 +4,7 @@ import { Team } from '../../../../models/teamModel.js'
 import { TeamGroup } from '../../../../models/teamGroupModel.js'
 import { Stage } from '../../../../models/stageModel.js'
 import errorCodes from '../../../../constants/errors/errorCodes.js'
+import { Match } from '../../../../models/matchModel.js'
 const { NO_MATCHING_TEAM_AND_GROUP_FOUND } = errorCodes.groupErrors
 
 const create = async(data) => {
@@ -34,7 +35,7 @@ const getAllGroupsWithTeams = async() => {
                 },
                 {
                     model: Stage,
-                    attributes: ['stageId', 'name'] // Selecciona el id y el nombre de la stage
+                    attributes: ['stageId', 'name']
                 }
             ]
         })
@@ -147,6 +148,31 @@ async function getAvailableTeams(stageId) {
     }
 }
 
+const checkIfTeamsExistInSameGroup = async(localTeamId, visitorTeamId, groupId) => {
+    try {
+        const teamIds = [localTeamId, visitorTeamId]
+
+        const matchingTeams = await TeamGroup.findAll({
+            where: {
+                teamId: teamIds,
+                groupId
+            }
+        })
+
+        const foundTeamIds = matchingTeams.map(record => record.teamId)
+        const allTeamsExist = teamIds.every(id => foundTeamIds.includes(id))
+
+        if (allTeamsExist) {
+            return { success: true }
+        } else {
+            return { success: false }
+        }
+    } catch (error) {
+        console.error('Error verificando equipos en el grupo:', error)
+        return { success: false }
+    }
+}
+
 const groupService = {
     create,
     getAllGroupsWithTeams,
@@ -156,7 +182,8 @@ const groupService = {
     getAvailableTeams,
     deleteGroup,
     updateGroupName,
-    deleteTeamGroupRecord
+    deleteTeamGroupRecord,
+    checkIfTeamsExistInSameGroup
 }
 
 export default groupService

@@ -103,17 +103,35 @@
     "/api/admin/fixture/groups/delete-team-group": {
       "post": {
         "summary": "/api/admin/fixture/groups/delete-team-group",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/groups/get-all": {
+      "post": {
+        "summary": "/api/admin/fixture/groups/get-all",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/matches/create": {
+      "post": {
+        "summary": "/api/admin/fixture/matches/create",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "teamId": {
+                  "groupId": {
+                    "type": "number",
+                    "example": 8
+                  },
+                  "team1Id": {
                     "type": "number",
                     "example": 5
                   },
-                  "groupId": {
+                  "team2Id": {
                     "type": "number",
                     "example": 8
                   },
@@ -134,7 +152,7 @@
               "text/html": {
                 "schema": {
                   "type": "string",
-                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/fixture/groups/delete-team-group</pre>\n</body>\n</html>\n"
+                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/fixture/matches/create</pre>\n</body>\n</html>\n"
                 }
               }
             }
@@ -143,9 +161,10 @@
         "tags": []
       }
     },
-    "/api/admin/fixture/groups/get-all": {
+    "/api/admin/fixture/matches/delete": {},
+    "/api/admin/fixture/matches/get-all": {
       "post": {
-        "summary": "/api/admin/fixture/groups/get-all",
+        "summary": "/api/admin/fixture/matches/get-all",
         "responses": {},
         "tags": []
       }
