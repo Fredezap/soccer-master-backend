@@ -1,4 +1,7 @@
+import { Group } from '../../../../models/groupModel.js'
+import { Match } from '../../../../models/matchModel.js'
 import { Stage } from '../../../../models/stageModel.js'
+import { Team } from '../../../../models/teamModel.js'
 
 const create = async(data) => {
     const { name, type, order } = data
@@ -32,7 +35,36 @@ const getOneByOrder = async(order) => {
 }
 
 const getAll = async() => {
-    return await Stage.findAll()
+    const stages = await Stage.findAll({
+        include: {
+            model: Match,
+            include: [
+                {
+                    model: Team,
+                    as: 'LocalTeam',
+                    include: [
+                        {
+                            model: Group,
+                            through: { attributes: [] } // Excluye los datos de TeamGroup
+                        }
+                    ]
+                },
+                {
+                    model: Team,
+                    as: 'VisitorTeam',
+                    include: [
+                        {
+                            model: Group,
+                            through: { attributes: [] } // Excluye los datos de TeamGroup
+                        }
+                    ]
+                }
+            ]
+        },
+        order: [[{ model: Match }, 'date', 'ASC']]
+    })
+
+    return stages
 }
 
 const update = async({ stageId, name }, { transaction = null }) => {

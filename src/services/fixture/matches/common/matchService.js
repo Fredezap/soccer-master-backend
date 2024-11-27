@@ -6,6 +6,45 @@ import { Match } from '../../../../models/matchModel.js'
 // todo: Crear el router para matches, ver si va por ahi
 // todo: Ver en el front si realmente recibiendo esto va bien.
 // todo: ANTES QUE NADA. QUE CONSULTA DATOS NECESITABA EN LAS BRACKETS PARA QUE FUNCIONEN? TENIA DATOS DE PRUEBA.
+
+const create = async(values) => {
+    const { stageId, localTeamId, visitorTeamId, date, time, location } = values
+
+    const newMatch = await Match.create({
+        stageId,
+        localTeamId,
+        visitorTeamId,
+        date,
+        time,
+        location
+    })
+
+    return newMatch
+}
+
+const checkIfMatchExists = async(stageId, localTeamId, visitorTeamId, date, time) => {
+    try {
+        const match = await Match.findOne({
+            where: {
+                stageId,
+                localTeamId,
+                visitorTeamId,
+                date,
+                time
+            }
+        })
+
+        if (match) {
+            return { success: true }
+        } else {
+            return { success: false }
+        }
+    } catch (error) {
+        console.error('Error verificando existencia de partido:', error)
+        return { success: false }
+    }
+}
+
 const getAllMatchesByDate = async() => {
     try {
         const matches = await Match.findAll({
@@ -38,7 +77,7 @@ const getAllMatchesByDate = async() => {
             return acc
         }, {})
 
-        console.log(groupedByDate)
+        console.log('groupedByDate', groupedByDate)
         return groupedByDate
     } catch (error) {
         console.error('Error al obtener los partidos por fecha:', error)
@@ -46,8 +85,33 @@ const getAllMatchesByDate = async() => {
     }
 }
 
+const getOneById = async(id) => {
+    return Match.findByPk(id)
+}
+
+const destroy = async({ matchId }) => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+        const result = await Match.destroy({
+            where: { matchId }
+        })
+
+        if (result === 0) {
+            throw new Error(`Match with ID ${matchId} not found`)
+        }
+
+        return result
+    } catch (error) {
+        throw error
+    }
+}
+
 const matchService = {
-    getAllMatchesByDate
+    create,
+    getAllMatchesByDate,
+    checkIfMatchExists,
+    getOneById,
+    destroy
 }
 
 export default matchService

@@ -158,6 +158,28 @@
         "consumes": [
           "application/json"
         ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/groups/get-all": {
+      "post": {
+        "summary": "/api/admin/fixture/groups/get-all",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/matches/create": {
+      "post": {
+        "summary": "/api/admin/fixture/matches/create",
+        "consumes": [
+          "application/json"
+        ],
         "parameters": [
           {
             "in": "body",
@@ -166,11 +188,15 @@
             "schema": {
               "type": "object",
               "properties": {
-                "teamId": {
+                "groupId": {
+                  "type": "number",
+                  "example": 8
+                },
+                "team1Id": {
                   "type": "number",
                   "example": 5
                 },
-                "groupId": {
+                "team2Id": {
                   "type": "number",
                   "example": 8
                 },
@@ -187,7 +213,7 @@
             "description": "Not Found",
             "schema": {
               "type": "string",
-              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/fixture/groups/delete-team-group</pre>\n</body>\n</html>\n"
+              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/fixture/matches/create</pre>\n</body>\n</html>\n"
             }
           }
         },
@@ -197,9 +223,10 @@
         ]
       }
     },
-    "/api/admin/fixture/groups/get-all": {
+    "/api/admin/fixture/matches/delete": {},
+    "/api/admin/fixture/matches/get-all": {
       "post": {
-        "summary": "/api/admin/fixture/groups/get-all",
+        "summary": "/api/admin/fixture/matches/get-all",
         "consumes": [
           "application/json"
         ],

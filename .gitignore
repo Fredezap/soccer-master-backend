@@ -3,5 +3,6 @@ dist
 dist-ssr
 *.local
 .env
+.env.prod
 combined.log
 error.log

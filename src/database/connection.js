@@ -7,6 +7,7 @@ export const sequelize = new Sequelize(PG_DATABASE, PG_AUTH_USER, PG_PASSWORD, {
     host: PG_HOST,
     port: PG_PORT,
     dialect: PG_DIALECT,
+    timezone: '+01:00',
     logging: false
     // logging: console.log,
 })

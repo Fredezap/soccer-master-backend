@@ -40,7 +40,7 @@ const runValidateGroupIdDelete = runValidations([
 
 const runValidateTeamAndGroupIds = runValidations([
     validateGroupId,
-    validateTeamId
+    validateTeamId('teamId')
 ])
 
 const runValidateIfGroupAlreadyExist = runValidations([
