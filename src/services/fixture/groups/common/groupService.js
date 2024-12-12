@@ -4,6 +4,7 @@ import { Team } from '../../../../models/teamModel.js'
 import { TeamGroup } from '../../../../models/teamGroupModel.js'
 import { Stage } from '../../../../models/stageModel.js'
 import errorCodes from '../../../../constants/errors/errorCodes.js'
+import { Match } from '../../../../models/matchModel.js'
 const { NO_MATCHING_TEAM_AND_GROUP_FOUND } = errorCodes.groupErrors
 
 const create = async(data) => {
@@ -41,7 +42,7 @@ const getAllGroupsWithTeams = async() => {
         })
 
         const groupedByStageId = groups.reduce((acc, group) => {
-            const { stageId, name } = group.Stage // Obtiene el stageId y el nombre de la stage
+            const { stageId, name } = group.Stage
             if (!acc[stageId]) {
                 acc[stageId] = { name, groups: [] }
             }

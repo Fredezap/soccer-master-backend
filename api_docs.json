@@ -108,6 +108,17 @@
         "tags": []
       }
     },
+    "/api/admin/fixture/stages/get-all-knockout-stages": {
+      "post": {
+        "summary": "/api/admin/fixture/stages/get-all-knockout-stages",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
     "/api/admin/fixture/groups/create": {
       "post": {
         "summary": "/api/admin/fixture/groups/create",
@@ -163,9 +174,9 @@
         "tags": []
       }
     },
-    "/api/admin/fixture/groups/get-all": {
+    "/api/admin/fixture/groups/get-all-groups": {
       "post": {
-        "summary": "/api/admin/fixture/groups/get-all",
+        "summary": "/api/admin/fixture/groups/get-all-groups",
         "consumes": [
           "application/json"
         ],
@@ -174,9 +185,42 @@
         "tags": []
       }
     },
-    "/api/admin/fixture/matches/create": {
+    "/api/admin/fixture/matches/create-group-match": {
       "post": {
-        "summary": "/api/admin/fixture/matches/create",
+        "summary": "/api/admin/fixture/matches/create-group-match",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/matches/create-knockout-match-known-teams": {
+      "post": {
+        "summary": "/api/admin/fixture/matches/create-knockout-match-known-teams",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/matches/create-knockout-match-unknown-teams": {
+      "post": {
+        "summary": "/api/admin/fixture/matches/create-knockout-match-unknown-teams",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/matches/edit": {
+      "post": {
+        "summary": "/api/admin/fixture/matches/edit",
         "consumes": [
           "application/json"
         ],
@@ -188,21 +232,29 @@
             "schema": {
               "type": "object",
               "properties": {
-                "groupId": {
+                "matchId": {
                   "type": "number",
-                  "example": 8
+                  "example": 58
                 },
-                "team1Id": {
+                "localTeamId": {
                   "type": "number",
-                  "example": 5
+                  "example": 1
                 },
-                "team2Id": {
+                "visitorTeamId": {
                   "type": "number",
-                  "example": 8
+                  "example": 3
                 },
-                "adminCredentials": {
+                "token": {
                   "type": "string",
-                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6InNvY2Nlci1tYXN0ZXIiLCJpYXQiOjE1MTYyMzkwMjJ9.nfSEeK9Cdl8V6YVm49a7ant6WoXzizZK51YB6NykMSc"
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzZEBhc2QuY29tIiwiaWF0IjoxNzMzNTMwNzQxLCJleHAiOjE3MzYxNTg3NDF9.Pch_6pJsUoMm1l2-TTigRK1vJizoEB_455wUq-F9LOs"
+                },
+                "role": {
+                  "type": "string",
+                  "example": "user"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "asd@asd.com"
                 }
               }
             }
@@ -213,7 +265,7 @@
             "description": "Not Found",
             "schema": {
               "type": "string",
-              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/fixture/matches/create</pre>\n</body>\n</html>\n"
+              "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/fixture/matches/edit</pre>\n</body>\n</html>\n"
             }
           }
         },
@@ -223,10 +275,53 @@
         ]
       }
     },
-    "/api/admin/fixture/matches/delete": {},
+    "/api/admin/fixture/matches/delete": {
+      "post": {
+        "summary": "/api/admin/fixture/matches/delete",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
     "/api/admin/fixture/matches/get-all": {
       "post": {
         "summary": "/api/admin/fixture/matches/get-all",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/validate-access": {
+      "post": {
+        "summary": "/api/admin/validate-access",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "/api/auth/login",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "summary": "/api/auth/register",
         "consumes": [
           "application/json"
         ],

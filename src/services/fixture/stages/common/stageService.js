@@ -55,7 +55,7 @@ const getAll = async() => {
                     include: [
                         {
                             model: Group,
-                            through: { attributes: [] } // Excluye los datos de TeamGroup
+                            through: { attributes: [] }
                         }
                     ]
                 }
@@ -63,7 +63,7 @@ const getAll = async() => {
         },
         order: [[{ model: Match }, 'date', 'ASC']]
     })
-
+    console.log('STAGES: ', stages)
     return stages
 }
 
@@ -94,13 +94,64 @@ const destroy = async({ stageId }) => {
     }
 }
 
+const getKnockoutStagesWithTeams = async() => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+        // Filtra las etapas de tipo 'knockout' directamente
+        const stages = await Stage.findAll({
+            where: { type: 'knockout' },
+            include: [
+                {
+                    model: Match,
+                    include: [
+                        {
+                            model: Team,
+                            as: 'LocalTeam'
+                        },
+                        {
+                            model: Team,
+                            as: 'VisitorTeam'
+                        }
+                    ]
+                }
+            ]
+        })
+        // Organizar los datos por cada etapa
+        const groupedByStageId = stages.reduce((acc, stage) => {
+            const { stageId, name, order, type } = stage
+            if (!acc[stageId]) {
+                acc[stageId] = { stageId, name, order, type, Matches: [] }
+            }
+
+            // Aquí se agregan los partidos de la fase knockout
+            stage.Matches.forEach(match => {
+                acc[stageId].Matches.push({
+                    matchId: match.matchId,
+                    localTeam: match.LocalTeam,
+                    visitorTeam: match.VisitorTeam,
+                    date: match.date,
+                    time: match.time,
+                    location: match.location
+                })
+            })
+
+            return acc
+        }, {})
+
+        return groupedByStageId
+    } catch (error) {
+        throw error
+    }
+}
+
 const stageService = {
     create,
     getOneByName,
     getOneByOrder,
     getAll,
     getOneById,
-    destroy
+    destroy,
+    getKnockoutStagesWithTeams
 }
 
 export default stageService

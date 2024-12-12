@@ -1,7 +1,7 @@
 import { TournamentDetails } from '../../../models/tournamentDetailsModel.js'
 
 const create = async(data) => {
-    const response = await TournamentDate.create(data)
+    const response = await TournamentDetails.create(data)
     return response
 }
 

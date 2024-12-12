@@ -1,12 +1,28 @@
-// models/associations.js
 import { Team } from './teamModel.js'
 import { Player } from './playerModel.js'
 import { Stage } from './stageModel.js'
 import { Group } from './groupModel.js'
 import { Match } from './matchModel.js'
 import { TeamGroup } from './teamGroupModel.js'
+import { TournamentDetails } from './tournamentDetailsModel.js'
 
 export const modelsAssociations = () => {
+    // Relación entre TournamentDetails y Team
+    TournamentDetails.hasMany(Team, { foreignKey: 'tournamentId', onDelete: 'CASCADE' })
+    Team.belongsTo(TournamentDetails, { foreignKey: 'tournamentId' })
+
+    // Relación entre TournamentDetails y Stage
+    TournamentDetails.hasMany(Stage, { foreignKey: 'tournamentId', onDelete: 'CASCADE' })
+    Stage.belongsTo(TournamentDetails, { foreignKey: 'tournamentId' })
+
+    // Relación entre TournamentDetails y Match
+    TournamentDetails.hasMany(Match, { foreignKey: 'tournamentId', onDelete: 'CASCADE' })
+    Match.belongsTo(TournamentDetails, { foreignKey: 'tournamentId' })
+
+    // Relación entre TournamentDetails y Group
+    TournamentDetails.hasMany(Group, { foreignKey: 'tournamentId', onDelete: 'CASCADE' })
+    Group.belongsTo(TournamentDetails, { foreignKey: 'tournamentId' })
+
     // Relación entre Team y Player
     Team.hasMany(Player, { foreignKey: 'teamId', onDelete: 'CASCADE' })
     Player.belongsTo(Team, { foreignKey: 'teamId' })
@@ -14,14 +30,6 @@ export const modelsAssociations = () => {
     // Relación entre Stage y Group
     Stage.hasMany(Group, { foreignKey: 'stageId', onDelete: 'CASCADE' })
     Group.belongsTo(Stage, { foreignKey: 'stageId' })
-
-    // // Relación entre Group y Team
-    // Group.belongsToMany(Team, { through: 'GroupTeams', foreignKey: 'groupId', otherKey: 'teamId', onDelete: 'CASCADE' })
-    // Team.belongsToMany(Group, { through: 'GroupTeams', foreignKey: 'teamId', otherKey: 'groupId', onDelete: 'CASCADE' })
-
-    // // Relación entre Stage y Team (vía TeamStage)
-    // Stage.belongsToMany(Team, { through: TeamStage, foreignKey: 'stageId', otherKey: 'teamId', onDelete: 'CASCADE' })
-    // Team.belongsToMany(Stage, { through: TeamStage, foreignKey: 'teamId', otherKey: 'stageId', onDelete: 'CASCADE' })
 
     // Relación entre Match y Team (local y visitante)
     Team.hasMany(Match, { as: 'LocalMatches', foreignKey: 'localTeamId', onDelete: 'CASCADE' })

@@ -20,7 +20,7 @@ export const TournamentDetails = sequelize.define('TournamentDetails', {
 })
 
 // Sincronizar el modelo con la base de datos
-await sequelize.sync({ alter: true })
+await sequelize.sync()
     .then(() => {
         logger.info('TournamentDetails synchronized')
     })
