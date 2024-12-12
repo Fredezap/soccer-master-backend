@@ -17,10 +17,6 @@ tournamentDateRouter.post('/create',
     createTournamentDetails
 )
 
-// todo: create update endpoint
-// tournamentDateRouter.patch('/update'
-// )
-
 tournamentDateRouter.post('/get-details',
     getTournamentDetails
 )

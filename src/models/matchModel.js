@@ -1,4 +1,3 @@
-// models/Match.js
 import { sequelize } from '../database/connection.js'
 import { DataTypes } from 'sequelize'
 import logger from '../utils/logger.js'
@@ -37,12 +36,12 @@ export const Match = sequelize.define('Match', {
             key: 'teamId'
         }
     },
-    localPlaceholder: {
+    localTeamPlaceholder: {
         type: DataTypes.STRING,
         allowNull: true,
         comment: 'Description for local team (for example, 1º Group A)'
     },
-    visitorPlaceholder: {
+    visitorTeamPlaceholder: {
         type: DataTypes.STRING,
         allowNull: true,
         comment: 'Description for visitor team (for example, 4º Group B)'

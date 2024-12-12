@@ -1,23 +1,28 @@
 import express from 'express'
 import runValidations from '../middlewares/common/validations/runValidations.js'
-import adminCredentials from '../middlewares/admin/adminCredentials.js'
+import checkAdminCredentials from '../middlewares/user/validations/checkAdminCredentials.js'
 import tournamentDateRouter from './tournamentDateRouter.js'
 import teamRouter from './teamRouter.js'
 import fixtureRouter from './fixture/fixtureRouter.js'
+import validateToken from '../middlewares/user/validations/validateToken.js'
+import validateRole from '../middlewares/user/validations/validateRole.js'
+import verifyUserToken from '../middlewares/user/validations/verifyUserToken.js'
+import { checkTokenAndRoleDb } from '../middlewares/user/validations/checkTokenAndRoleDb.js'
 
 const adminRouter = express.Router()
 
-const runCheckAdminCredentials = runValidations([
-    adminCredentials
+const runValidateAdminValues = runValidations([
+    validateToken,
+    validateRole
 ])
 
-adminRouter.use(runCheckAdminCredentials)
+adminRouter.use(runValidateAdminValues, verifyUserToken, checkTokenAndRoleDb)
 adminRouter.use('/tournament-details', tournamentDateRouter)
 adminRouter.use('/teams', teamRouter)
 adminRouter.use('/fixture', fixtureRouter)
 
-// todo: necesito este endpoint?
-// adminRouter.post('/get-info',
-// )
+adminRouter.post('/validate-access', (req, res) => {
+    res.status(200).json({})
+})
 
 export default adminRouter

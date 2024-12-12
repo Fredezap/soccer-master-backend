@@ -11,6 +11,7 @@ import checkIfStageOrderAlreadyExist from '../../middlewares/stages/checkIfStage
 import validateStageId from '../../middlewares/stages/validateStageId.js'
 import checkIfStageExistById from '../../middlewares/stages/checkIfStageExistById.js'
 import deleteStage from '../../services/fixture/stages/deleteStage.js'
+import getAllKnockoutStagesWithTeams from '../../services/fixture/stages/getAllKnockoutStagesWithTeams.js'
 
 const stagesRouter = express.Router()
 
@@ -48,6 +49,10 @@ stagesRouter.post('/delete',
 
 stagesRouter.post('/get-all',
     getAllStages
+)
+
+stagesRouter.post('/get-all-knockout-stages',
+    getAllKnockoutStagesWithTeams
 )
 
 export default stagesRouter

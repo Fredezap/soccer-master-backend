@@ -3,7 +3,6 @@ import runValidations from '../../middlewares/common/validations/runValidations.
 import getAllMatches from '../../services/fixture/matches/getAllMatches.js'
 import validateTeamId from '../../middlewares/teams/validateTeamId.js'
 import validateGroupId from '../../middlewares/groups/validateGroupId.js'
-import checkIfMatchAlreadyExist from '../../middlewares/matches/checkIfMatchAlreadyExist.js'
 import createMatch from '../../services/fixture/matches/createMatch.js'
 import checkIfTeamsExistInSameGroup from '../../middlewares/matches/checkIfTeamsExistInSameGroup.js'
 import validateStageId from '../../middlewares/stages/validateStageId.js'
@@ -13,10 +12,17 @@ import checkTime from '../../middlewares/matches/checkTime.js'
 import validateMatchId from '../../middlewares/matches/validateMatchId.js'
 import validateMatchExist from '../../middlewares/matches/validateMatchExist.js'
 import deleteMatch from '../../services/fixture/matches/deleteMatch.js'
+import validateTeamPlaceholder from '../../middlewares/teams/validateTeamPlaceholder.js'
+import checkIfMatchAlreadyExistKnownTeams from '../../middlewares/matches/checkIfMatchAlreadyExistKnownTeams.js'
+import checkIfMatchAlreadyExistUnknownTeams from '../../middlewares/matches/checkIfMatchAlreadyExistUnknownTeams.js'
+import checkLocation from '../../middlewares/matches/checkLocation.js'
+import editMatch from '../../services/fixture/matches/editMatch.js'
+import validateTeamScore from '../../middlewares/matches/validateTeamScore.js'
+import validateTeamIdDoNotExist from '../../middlewares/teams/validateTeamIdDoNotExist.js'
 
 const matchesRouter = express.Router()
 
-const runValidateCreateData = runValidations([
+const runValidateCreateGroupMatchData = runValidations([
     validateTeamId('localTeamId'),
     validateTeamId('visitorTeamId'),
     validateGroupId,
@@ -26,16 +32,94 @@ const runValidateCreateData = runValidations([
     checkTime
 ])
 
+const p = (req, res, next) => {
+    console.log(req.body)
+    req.body.localTeamId = 22
+    next()
+}
+
+const runValidateKnockoutMatchKnownTeams = runValidations([
+    validateTeamId('localTeamId'),
+    validateTeamId('visitorTeamId'),
+    validateStageId,
+    checkIfStageExistById,
+    checkDate,
+    checkTime,
+    checkLocation
+])
+
+const runValidateKnockoutMatchKnownTeamsEdit = runValidations([
+    validateTeamId('localTeamId'),
+    validateTeamId('visitorTeamId'),
+    validateTeamScore('localTeamScore'),
+    validateTeamScore('visitorTeamScore'),
+    validateStageId,
+    checkIfStageExistById,
+    validateMatchId,
+    validateMatchExist,
+    checkDate,
+    checkTime,
+    checkLocation
+])
+
+const runValidateKnockoutMatchUnknownTeamsEdit = runValidations([
+    validateTeamIdDoNotExist('localTeamId'),
+    validateTeamIdDoNotExist('visitorTeamId'),
+    validateTeamScore('localTeamScore'),
+    validateTeamScore('visitorTeamScore'),
+    validateStageId,
+    checkIfStageExistById,
+    validateMatchId,
+    validateMatchExist,
+    checkDate,
+    checkTime,
+    checkLocation
+])
+
+const runValidateKnockoutMatchUnknownTeams = runValidations([
+    validateTeamPlaceholder('localTeamPlaceholder'),
+    validateTeamPlaceholder('visitorTeamPlaceholder'),
+    validateStageId,
+    checkIfStageExistById,
+    checkDate,
+    checkTime,
+    checkLocation
+])
+
 const runValidateMatch = runValidations([
     validateMatchId,
     validateMatchExist
 ])
 
-matchesRouter.post('/create',
-    runValidateCreateData,
+matchesRouter.post('/create-group-match',
+    runValidateCreateGroupMatchData,
     checkIfTeamsExistInSameGroup,
-    checkIfMatchAlreadyExist,
+    runValidateKnockoutMatchKnownTeams,
     createMatch
+)
+
+matchesRouter.post('/create-knockout-match-known-teams',
+    runValidateKnockoutMatchKnownTeams,
+    checkIfMatchAlreadyExistKnownTeams,
+    createMatch
+)
+
+matchesRouter.post('/create-knockout-match-unknown-teams',
+    runValidateKnockoutMatchUnknownTeams,
+    checkIfMatchAlreadyExistUnknownTeams,
+    createMatch
+)
+
+matchesRouter.post('/edit-known-teams',
+    runValidateKnockoutMatchKnownTeamsEdit,
+    checkIfMatchAlreadyExistKnownTeams,
+    editMatch
+)
+
+matchesRouter.post('/edit-unknown-teams',
+    runValidateKnockoutMatchUnknownTeamsEdit,
+    checkIfMatchAlreadyExistKnownTeams,
+    editMatch
 )
 
 matchesRouter.post('/delete',

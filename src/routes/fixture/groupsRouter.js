@@ -80,7 +80,7 @@ groupsRouter.post('/delete-team-group',
     deleteTeamGroupRecord
 )
 
-groupsRouter.post('/get-all',
+groupsRouter.post('/get-all-groups',
     getAllGroups
 )
 

@@ -23,7 +23,10 @@ const teamErrors = {
     TEAM_NOT_FOUNDED: 'team not funded',
     ERROR_WHILE_UPDATING_TEAM: 'error while updating team',
     INVALID_TEAM_ID: 'invalid team id',
-    ERROR_WHILE_DELETING_TEAM: 'error while deleting team'
+    INVALID_TEAM_PLACEHOLDER: 'invalid team placeholder',
+    ERROR_WHILE_DELETING_TEAM: 'error while deleting team',
+    INVALID_TEAM_SCORE: 'invalid team score',
+    TEAM_ID_NOT_ALLOWED: 'team id not allowed'
 }
 
 const stageErrors = {
@@ -63,11 +66,27 @@ const matchErrors = {
     INVALID_TIME: 'invalid time',
     INVALID_MATCH_ID: 'invalid match id',
     SELECTED_MATCH_DOES_NOT_EXIST: 'selected match does not exist',
-    ERROR_WHILE_DELETING_MATCH: 'error while deleting match'
+    ERROR_WHILE_DELETING_MATCH: 'error while deleting match',
+    INVALID_LOCATION: 'invalid location',
+    ERROR_WHILE_EDITING_MATCH: 'error while editing match'
 }
 
-const admin = {
-    INVALID_CREDENTIALS: 'invalid credentials'
+const OAuthErrors = {
+    SERVER_ERROR_GENERATING_TOKEN: 'server error generating token',
+    INVALID_CREDENTIALS: 'invalid credentials. Please login...',
+    TOKEN_HAS_EXPIRED: 'token has expired',
+    UNKNOWN_ERROR_WHILE_VERIFYING_TOKEN: 'unknown error while verifying token',
+    SERVER_ERROR_PROCCESING_PASSWORD: 'server error processing password',
+    SERVER_ERROR_CHECKING_CREDENTIALS: 'server error checking credentials',
+    ADMIN_USER_NOT_FOUND: 'admin user not found',
+    USER_REGISTRATION_NOT_ALLOWED: 'user registration not allowed',
+    EMAIL_NOT_VALID: 'email not valid',
+    ERROR_WHILE_CREATING_USER: 'error while creating user',
+    PASSWORD_NOT_VALID: 'password not valid',
+    PASSWORD_INVALID_LENGTH: 'password invalid length',
+    USER_ROLE_IS_NOT_DEFINED: 'user role is not defined. Please login...',
+    CONFIRM_PASSWORD_IS_REQUIRED: 'Confirm password is required',
+    PASSWORD_AND_CONFIRM_PASSWORD_DO_NOT_MATCH: 'Password and Confirm Password do not match'
 }
 
 const errorCodes = {
@@ -76,7 +95,7 @@ const errorCodes = {
     stageErrors,
     groupErrors,
     matchErrors,
-    admin
+    OAuthErrors
 }
 
 export default errorCodes

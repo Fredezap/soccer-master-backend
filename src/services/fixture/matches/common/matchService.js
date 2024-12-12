@@ -1,34 +1,68 @@
+/* eslint-disable no-useless-catch */
 import { Team } from '../../../../models/teamModel.js'
 import { Stage } from '../../../../models/stageModel.js'
 import { Match } from '../../../../models/matchModel.js'
 
-// todo: Ver si esto me sirve, que me devuelve
-// todo: Crear el router para matches, ver si va por ahi
-// todo: Ver en el front si realmente recibiendo esto va bien.
-// todo: ANTES QUE NADA. QUE CONSULTA DATOS NECESITABA EN LAS BRACKETS PARA QUE FUNCIONEN? TENIA DATOS DE PRUEBA.
-
 const create = async(values) => {
-    const { stageId, localTeamId, visitorTeamId, date, time, location } = values
-
-    const newMatch = await Match.create({
+    const {
         stageId,
         localTeamId,
         visitorTeamId,
+        localTeamPlaceholder,
+        visitorTeamPlaceholder,
         date,
         time,
         location
-    })
+    } = values
+
+    console.log('values', values)
+
+    const newMatchData = {
+        stageId,
+        date,
+        time,
+        location,
+        ...(localTeamId && { localTeamId }),
+        ...(visitorTeamId && { visitorTeamId }),
+        ...(localTeamPlaceholder && { localTeamPlaceholder }),
+        ...(visitorTeamPlaceholder && { visitorTeamPlaceholder })
+    }
+
+    const newMatch = await Match.create(newMatchData)
+    console.log('newMatch', newMatch)
 
     return newMatch
 }
 
-const checkIfMatchExists = async(stageId, localTeamId, visitorTeamId, date, time) => {
+const checkIfMatchExistsKnownTeams = async(stageId, localTeamId, visitorTeamId, date, time) => {
     try {
         const match = await Match.findOne({
             where: {
                 stageId,
                 localTeamId,
                 visitorTeamId,
+                date,
+                time
+            }
+        })
+
+        if (match) {
+            return { success: true, match }
+        } else {
+            return { success: false }
+        }
+    } catch (error) {
+        return { success: false }
+    }
+}
+
+const checkIfMatchExistsUnknownTeams = async(stageId, localTeamPlaceholder, visitorTeamPlaceholder, date, time) => {
+    try {
+        const match = await Match.findOne({
+            where: {
+                stageId,
+                localTeamPlaceholder,
+                visitorTeamPlaceholder,
                 date,
                 time
             }
@@ -104,12 +138,54 @@ const destroy = async({ matchId }) => {
     }
 }
 
+const edit = async({ values }) => {
+    const {
+        matchId,
+        stageId,
+        localTeamId,
+        visitorTeamId,
+        localTeamPlaceholder,
+        visitorTeamPlaceholder,
+        localTeamScore,
+        visitorTeamScore,
+        date,
+        time,
+        location
+    } = values
+
+    try {
+        await Match.update(
+            {
+                stageId,
+                localTeamId,
+                visitorTeamId,
+                localTeamPlaceholder,
+                visitorTeamPlaceholder,
+                localTeamScore,
+                visitorTeamScore,
+                date,
+                time,
+                location
+            },
+            {
+                where: { matchId }
+            }
+        )
+        console.log('Match updated successfully!')
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+}
+
 const matchService = {
     create,
     getAllMatchesByDate,
-    checkIfMatchExists,
+    checkIfMatchExistsKnownTeams,
+    checkIfMatchExistsUnknownTeams,
     getOneById,
-    destroy
+    destroy,
+    edit
 }
 
 export default matchService

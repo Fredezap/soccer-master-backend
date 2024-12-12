@@ -18,11 +18,13 @@
   "description": "",
   "dependencies": {
     "axios": "^1.7.5",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "express-oas-generator": "^1.0.46",
     "express-validator": "^7.0.1",
     "http-status-codes": "^2.3.0",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "pg": "^8.13.0",
     "sequelize": "^6.37.3",
