@@ -1,4 +1,3 @@
-// models/Group.js
 import { sequelize } from '../database/connection.js'
 import { DataTypes } from 'sequelize'
 import logger from '../utils/logger.js'

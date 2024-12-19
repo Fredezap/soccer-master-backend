@@ -6,9 +6,9 @@ const { TOURNAMENT_MIN_NAME_LENGTH, TOURNAMENT_MAX_NAME_LENGTH } = tournamentCon
 const { INVALID_TOURNAMENT_NAME, TOURNAMENT_NAME_TOO_LONG, TOURNAMENT_NAME_TOO_SHORT } = errorCodes.tournamentErrors
 
 const validateTournamentName = check('name', INVALID_TOURNAMENT_NAME)
-    .optional({ checkFalsy: true }) // Allow empty strings, falsy and undefined
+    .optional({ checkFalsy: true })
     .isString().withMessage(INVALID_TOURNAMENT_NAME)
-    .bail() // Stop validation if string is empty
+    .bail()
     .isLength({ min: TOURNAMENT_MIN_NAME_LENGTH }).withMessage(TOURNAMENT_NAME_TOO_SHORT)
     .isLength({ max: TOURNAMENT_MAX_NAME_LENGTH }).withMessage(TOURNAMENT_NAME_TOO_LONG)
 

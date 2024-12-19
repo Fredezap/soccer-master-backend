@@ -29,14 +29,9 @@ const runValidateCreateGroupMatchData = runValidations([
     validateStageId,
     checkIfStageExistById,
     checkDate,
-    checkTime
+    checkTime,
+    checkLocation
 ])
-
-const p = (req, res, next) => {
-    console.log(req.body)
-    req.body.localTeamId = 22
-    next()
-}
 
 const runValidateKnockoutMatchKnownTeams = runValidations([
     validateTeamId('localTeamId'),
@@ -94,7 +89,7 @@ const runValidateMatch = runValidations([
 matchesRouter.post('/create-group-match',
     runValidateCreateGroupMatchData,
     checkIfTeamsExistInSameGroup,
-    runValidateKnockoutMatchKnownTeams,
+    checkIfMatchAlreadyExistKnownTeams,
     createMatch
 )
 

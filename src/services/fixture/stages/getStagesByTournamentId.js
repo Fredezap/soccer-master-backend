@@ -2,11 +2,11 @@ import { StatusCodes } from 'http-status-codes'
 import errorCodes from '../../../constants/errors/errorCodes.js'
 import stageService from './common/stageService.js'
 
-const getAllStages = async(req, res) => {
+const getStagesByTournamentId = async(req, res) => {
     const { ERROR_WHILE_GETTING_STAGES } = errorCodes.stageErrors
-
     try {
-        const dbStages = await stageService.getAll()
+        const { tournamentId } = req.body.tournament
+        const dbStages = await stageService.getAllStagesByTournament({ tournamentId })
         return res.status(StatusCodes.OK).json({ dbStages })
     } catch (err) {
         const errors = [{ msg: ERROR_WHILE_GETTING_STAGES }]
@@ -14,4 +14,4 @@ const getAllStages = async(req, res) => {
     }
 }
 
-export default getAllStages
+export default getStagesByTournamentId

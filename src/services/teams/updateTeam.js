@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import { sequelize } from '../../database/connection.js' // Importa tu conexión de Sequelize
+import { sequelize } from '../../database/connection.js'
 import teamService from './common/teamService.js'
 import errorCodes from '../../constants/errors/errorCodes.js'
 import playerService from '../players/common/teamService.js'

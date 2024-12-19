@@ -1,16 +1,15 @@
+/* eslint-disable no-useless-catch */
 import { Op } from 'sequelize'
 import { Group } from '../../../../models/groupModel.js'
 import { Team } from '../../../../models/teamModel.js'
 import { TeamGroup } from '../../../../models/teamGroupModel.js'
 import { Stage } from '../../../../models/stageModel.js'
 import errorCodes from '../../../../constants/errors/errorCodes.js'
-import { Match } from '../../../../models/matchModel.js'
 const { NO_MATCHING_TEAM_AND_GROUP_FOUND } = errorCodes.groupErrors
 
 const create = async(data) => {
     const { name, stageId } = data
 
-    // eslint-disable-next-line no-useless-catch
     try {
         const response = await Group.create(
             {
@@ -26,7 +25,6 @@ const create = async(data) => {
 }
 
 const getAllGroupsWithTeams = async() => {
-    // eslint-disable-next-line no-useless-catch
     try {
         const groups = await Group.findAll({
             include: [
@@ -65,7 +63,6 @@ async function getOneById(groupId) {
 }
 
 async function updateGroupName(groupId, name) {
-    // eslint-disable-next-line no-useless-catch
     try {
         await Group.update(
             { name },
@@ -77,7 +74,6 @@ async function updateGroupName(groupId, name) {
 }
 
 async function updateTeamsGroup(group, selectedTeamIds) {
-    // eslint-disable-next-line no-useless-catch
     try {
         await group.addTeams(selectedTeamIds)
     } catch (error) {
@@ -86,7 +82,6 @@ async function updateTeamsGroup(group, selectedTeamIds) {
 }
 
 async function deleteTeamGroupRecord(groupId, teamId) {
-    // eslint-disable-next-line no-useless-catch
     try {
         const result = await TeamGroup.destroy({
             where: {
@@ -106,7 +101,6 @@ async function deleteTeamGroupRecord(groupId, teamId) {
 }
 
 async function deleteGroup(groupId) {
-    // eslint-disable-next-line no-useless-catch
     try {
         await Group.destroy({ where: { groupId } })
     } catch (error) {

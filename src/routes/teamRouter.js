@@ -10,12 +10,18 @@ import getAllTeams from '../services/teams/getAllTeams.js'
 import validateTeamExist from '../middlewares/teams/validateTeamExist.js'
 import updateTeam from '../services/teams/updateTeam.js'
 import deleteTeam from '../services/teams/deleteTeam.js'
+import validateTournamentExist from '../middlewares/tournament-details/validateTournamentExist.js'
+import getAllTeamsByTournamentId from '../services/teams/getAllTeamsByTournamentId.js'
 
 const teamRouter = express.Router()
 
 const runValidateTeamValues = runValidations([
     validateTeamName,
     validateTeamPlayers
+])
+
+const runValidateTournament = runValidations([
+    validateTournamentExist
 ])
 
 const runValidateTeamNotExist = runValidations([
@@ -28,6 +34,7 @@ const runValidateTeamExist = runValidations([
 
 teamRouter.post('/create',
     runValidateTeamValues,
+    runValidateTournament,
     capitalizeTeamName,
     capitalizePlayerName,
     runValidateTeamNotExist,
@@ -36,6 +43,7 @@ teamRouter.post('/create',
 
 teamRouter.patch('/update',
     runValidateTeamValues,
+    runValidateTournament,
     capitalizeTeamName,
     capitalizePlayerName,
     runValidateTeamExist,
@@ -49,6 +57,11 @@ teamRouter.post('/delete',
 
 teamRouter.post('/get-all',
     getAllTeams
+)
+
+teamRouter.post('/get-by-tournament',
+    runValidateTournament,
+    getAllTeamsByTournamentId
 )
 
 export default teamRouter

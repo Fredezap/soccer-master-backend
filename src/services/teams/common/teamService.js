@@ -1,15 +1,16 @@
+/* eslint-disable no-useless-catch */
 import { Team } from '../../../models/teamModel.js'
 import { Player } from '../../../models/playerModel.js'
 
 const create = async(data) => {
-    const { name, players } = data
+    const { name, players, tournamentId } = data
 
-    // eslint-disable-next-line no-useless-catch
     try {
         const response = await Team.create(
             {
                 name,
-                Players: players || []
+                Players: players || [],
+                tournamentId
             },
             {
                 include: [Player]
@@ -22,8 +23,8 @@ const create = async(data) => {
     }
 }
 
-const getOneByName = async(name) => {
-    const response = await Team.findOne({ where: { name } })
+const getOneByName = async(name, tournamentId) => {
+    const response = await Team.findOne({ where: { name, tournamentId } })
     return response
 }
 
@@ -33,6 +34,19 @@ const getOneById = async(id) => {
 
 const getAll = async() => {
     return await Team.findAll({
+        include: [
+            {
+                model: Player
+            }
+        ]
+    })
+}
+
+const getAllByTournamentId = async(tournamentId) => {
+    return await Team.findAll({
+        where: {
+            tournamentId
+        },
         include: [
             {
                 model: Player
@@ -52,7 +66,6 @@ const update = async({ teamId, name }, { transaction = null }) => {
 }
 
 const destroy = async({ teamId }) => {
-    // eslint-disable-next-line no-useless-catch
     try {
         const result = await Team.destroy({
             where: { teamId }
@@ -72,6 +85,7 @@ const teamService = {
     create,
     getOneByName,
     getAll,
+    getAllByTournamentId,
     getOneById,
     update,
     destroy

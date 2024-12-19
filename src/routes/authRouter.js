@@ -26,5 +26,5 @@ const registerValidations = runValidations([
 
 authRouter.post('/login', runLoginValidations, checkPassword, generateJWTToken)
 authRouter.post('/register', registerValidations, validateUsersIsEmpty, hashPassword, registerUser)
-// todo: seguir con los siguientes validadores del register
+
 export default authRouter

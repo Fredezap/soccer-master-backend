@@ -16,7 +16,7 @@ const validateTeamExist = check('teamId')
         if (!existingTeam) {
             throw new Error(TEAM_NOT_FOUNDED)
         }
-        req.body.team = existingTeam // Adjunta el equipo encontrado al request
+        req.body.team = existingTeam
     })
 
 export default validateTeamExist
