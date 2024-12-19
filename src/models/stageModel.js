@@ -2,6 +2,7 @@ import { sequelize } from '../database/connection.js'
 import { DataTypes } from 'sequelize'
 import logger from '../utils/logger.js'
 import StagesConstansts from '../constants/stages/stagesConstansts.js'
+import { Tournament } from './tournamentModel.js'
 
 export const Stage = sequelize.define('Stage', {
     stageId: {
@@ -21,6 +22,15 @@ export const Stage = sequelize.define('Stage', {
     order: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    tournamentId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Tournament,
+            key: 'tournamentId'
+        },
+        onDelete: 'CASCADE'
     }
 })
 

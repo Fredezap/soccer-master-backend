@@ -3,6 +3,7 @@ import { DataTypes } from 'sequelize'
 import logger from '../utils/logger.js'
 import { Team } from './teamModel.js'
 import { Stage } from './stageModel.js'
+import { Tournament } from './tournamentModel.js'
 
 export const Match = sequelize.define('Match', {
     matchId: {

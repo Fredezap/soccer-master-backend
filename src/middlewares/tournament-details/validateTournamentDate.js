@@ -7,11 +7,14 @@ const validateTournamentDate = check('date', TOURNAMENT_DATE_IS_MANDATORY)
     .exists()
     .isISO8601().withMessage(INVALID_TOURNAMENT_DATE)
     .toDate()
-    .custom(value => {
+    .custom((value, { req }) => {
         const today = new Date()
+
         if (value <= today) {
             throw new Error(TOURNAMENT_DATE_MUST_BE_FUTURE)
         }
+
+        req.body.date = new Date(value).toISOString()
         return true
     })
 

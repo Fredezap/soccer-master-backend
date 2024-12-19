@@ -9,7 +9,9 @@ const tournamentErrors = {
     AN_ERROR_OCURRED_WHILE_CREATING_TOURNAMENT_DETAILS: 'an error ocurred while creating tournament details',
     AN_ERROR_OCURRED_GETTING_TOURNAMENT_DETAILS: 'an error ocurred while getting tournament details',
     AN_ERROR_OCURRED_WHILE_UPDATING_TOURNAMENT_DETAILS: 'an error ocurred while updating tournament details',
-    TOURNAMENT_DETAILS_ALREADY_EXIST: 'tournament details already exist, if you want you can update them'
+    TOURNAMENT_DETAILS_ALREADY_EXIST: 'tournament details already exist, if you want you can update them',
+    AN_ERROR_OCURRED_WHILE_GETTING_TOURNAMENTS: 'an error ocurred while getting tournaments',
+    TOURNAMENT_NOT_FOUNDED: 'tournament not funded'
 }
 
 const teamErrors = {
@@ -54,11 +56,11 @@ const groupErrors = {
     ERROR_WHILE_UPDATING_TEAM: 'error while updating team',
     ERROR_WHILE_DELETING_GROUP: 'error while deleting group',
     ERROR_WHILE_UPDATING_GROUP_NAME: 'error while updating group name',
-    NO_MATCHING_TEAM_AND_GROUP_FOUND: 'No matching team and group found',
-    ERROR_WHILE_VERIFYING_TEAMS: 'error while verifying teams'
+    NO_MATCHING_TEAM_AND_GROUP_FOUND: 'No matching team and group found'
 }
 
 const matchErrors = {
+    ERROR_WHILE_VERIFYING_TEAMS: 'error while verifying teams',
     ERROR_WHILE_CREATING_MATCH: 'error while creating match',
     THIS_MATCH_ALREADY_EXIST: 'this match already exist',
     ERROR_WHILE_CHECKING_MATCH_DATA: 'error while checking match data',

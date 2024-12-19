@@ -12,6 +12,8 @@ import validateStageId from '../../middlewares/stages/validateStageId.js'
 import checkIfStageExistById from '../../middlewares/stages/checkIfStageExistById.js'
 import deleteStage from '../../services/fixture/stages/deleteStage.js'
 import getAllKnockoutStagesWithTeams from '../../services/fixture/stages/getAllKnockoutStagesWithTeams.js'
+import getStagesByTournamentId from '../../services/fixture/stages/getStagesByTournamentId.js'
+import validateTournamentExist from '../../middlewares/tournament-details/validateTournamentExist.js'
 
 const stagesRouter = express.Router()
 
@@ -19,6 +21,10 @@ const runValidateStageValues = runValidations([
     validateStageName,
     validateStageType,
     validateStageOrder
+])
+
+const runValidateTournament = runValidations([
+    validateTournamentExist
 ])
 
 const runValidateStageExist = runValidations([
@@ -36,6 +42,7 @@ const runValidateStageExistbyId = runValidations([
 
 stagesRouter.post('/create',
     runValidateStageValues,
+    runValidateTournament,
     capitalizeStageName,
     runValidateStageExist,
     createStage
@@ -49,6 +56,11 @@ stagesRouter.post('/delete',
 
 stagesRouter.post('/get-all',
     getAllStages
+)
+
+stagesRouter.post('/get-all-by-tournament',
+    runValidateTournament,
+    getStagesByTournamentId
 )
 
 stagesRouter.post('/get-all-knockout-stages',

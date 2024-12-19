@@ -1,7 +1,6 @@
 import express from 'express'
 import runValidations from '../middlewares/common/validations/runValidations.js'
-import checkAdminCredentials from '../middlewares/user/validations/checkAdminCredentials.js'
-import tournamentDateRouter from './tournamentDateRouter.js'
+import tournamentRouter from './tournamentRouter.js'
 import teamRouter from './teamRouter.js'
 import fixtureRouter from './fixture/fixtureRouter.js'
 import validateToken from '../middlewares/user/validations/validateToken.js'
@@ -17,7 +16,7 @@ const runValidateAdminValues = runValidations([
 ])
 
 adminRouter.use(runValidateAdminValues, verifyUserToken, checkTokenAndRoleDb)
-adminRouter.use('/tournament-details', tournamentDateRouter)
+adminRouter.use('/tournament-details', tournamentRouter)
 adminRouter.use('/teams', teamRouter)
 adminRouter.use('/fixture', fixtureRouter)
 

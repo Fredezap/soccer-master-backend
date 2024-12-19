@@ -2,8 +2,8 @@ import { sequelize } from '../database/connection.js'
 import { DataTypes } from 'sequelize'
 import logger from '../utils/logger.js'
 
-export const TournamentDetails = sequelize.define('TournamentDetails', {
-    tournamentDetailsId: {
+export const Tournament = sequelize.define('Tournament', {
+    tournamentId: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -19,11 +19,10 @@ export const TournamentDetails = sequelize.define('TournamentDetails', {
     }
 })
 
-// Sincronizar el modelo con la base de datos
 await sequelize.sync()
     .then(() => {
-        logger.info('TournamentDetails synchronized')
+        logger.info('Tournament synchronized')
     })
     .catch(err => {
-        logger.error('Error when synchronizing TournamentDetails:', err)
+        logger.error('Error when synchronizing Tournament:', err)
     })

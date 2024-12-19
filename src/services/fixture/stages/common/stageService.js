@@ -1,22 +1,21 @@
+/* eslint-disable no-useless-catch */
+import { where } from 'sequelize'
 import { Group } from '../../../../models/groupModel.js'
 import { Match } from '../../../../models/matchModel.js'
 import { Stage } from '../../../../models/stageModel.js'
 import { Team } from '../../../../models/teamModel.js'
+import { Tournament } from '../../../../models/tournamentModel.js'
 
 const create = async(data) => {
-    const { name, type, order } = data
+    const { name, type, order, tournamentId } = data
 
-    // eslint-disable-next-line no-useless-catch
     try {
-        const response = await Stage.create(
-            {
-                name,
-                type,
-                order
-            }
-        )
+        const [response, created] = await Stage.findOrCreate({
+            where: { name, tournamentId },
+            defaults: { type, order }
+        })
 
-        return response
+        return { response, created }
     } catch (error) {
         throw error
     }
@@ -45,7 +44,7 @@ const getAll = async() => {
                     include: [
                         {
                             model: Group,
-                            through: { attributes: [] } // Excluye los datos de TeamGroup
+                            through: { attributes: [] }
                         }
                     ]
                 },
@@ -61,24 +60,47 @@ const getAll = async() => {
                 }
             ]
         },
-        order: [[{ model: Match }, 'date', 'ASC']]
+        order: [['order', 'ASC']]
     })
-    console.log('STAGES: ', stages)
     return stages
 }
 
-const update = async({ stageId, name }, { transaction = null }) => {
-    return await Stage.update(
-        { name },
-        {
-            where: { stageId },
-            transaction
-        }
-    )
+const getAllStagesByTournament = async({ tournamentId }) => {
+    const stages = await Stage.findAll({
+        include: {
+            model: Match,
+            include: [
+                {
+                    model: Team,
+                    as: 'LocalTeam',
+                    include: [
+                        {
+                            model: Group,
+                            through: { attributes: [] }
+                        }
+                    ]
+                },
+                {
+                    model: Team,
+                    as: 'VisitorTeam',
+                    include: [
+                        {
+                            model: Group,
+                            through: { attributes: [] }
+                        }
+                    ]
+                }
+            ]
+        },
+        where: {
+            tournamentId
+        },
+        order: [['order', 'ASC']]
+    })
+    return stages
 }
 
 const destroy = async({ stageId }) => {
-    // eslint-disable-next-line no-useless-catch
     try {
         const result = await Stage.destroy({
             where: { stageId }
@@ -95,9 +117,7 @@ const destroy = async({ stageId }) => {
 }
 
 const getKnockoutStagesWithTeams = async() => {
-    // eslint-disable-next-line no-useless-catch
     try {
-        // Filtra las etapas de tipo 'knockout' directamente
         const stages = await Stage.findAll({
             where: { type: 'knockout' },
             include: [
@@ -116,14 +136,13 @@ const getKnockoutStagesWithTeams = async() => {
                 }
             ]
         })
-        // Organizar los datos por cada etapa
+
         const groupedByStageId = stages.reduce((acc, stage) => {
             const { stageId, name, order, type } = stage
             if (!acc[stageId]) {
                 acc[stageId] = { stageId, name, order, type, Matches: [] }
             }
 
-            // Aquí se agregan los partidos de la fase knockout
             stage.Matches.forEach(match => {
                 acc[stageId].Matches.push({
                     matchId: match.matchId,
@@ -149,6 +168,7 @@ const stageService = {
     getOneByName,
     getOneByOrder,
     getAll,
+    getAllStagesByTournament,
     getOneById,
     destroy,
     getKnockoutStagesWithTeams

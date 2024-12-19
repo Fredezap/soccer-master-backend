@@ -2,6 +2,7 @@ import { sequelize } from '../database/connection.js'
 import { DataTypes } from 'sequelize'
 import logger from '../utils/logger.js'
 import { teamsConstants } from '../constants/teams/teamsConstants.js'
+import { Tournament } from './tournamentModel.js'
 
 const { MIN_NAME_LENGTH, MAX_NAME_LENGTH } = teamsConstants
 
@@ -18,6 +19,15 @@ export const Team = sequelize.define('Team', {
         validate: {
             len: [MIN_NAME_LENGTH, MAX_NAME_LENGTH]
         }
+    },
+    tournamentId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Tournament,
+            key: 'tournamentId'
+        },
+        onDelete: 'CASCADE'
     }
 })
 

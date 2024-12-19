@@ -15,8 +15,6 @@ const create = async(values) => {
         location
     } = values
 
-    console.log('values', values)
-
     const newMatchData = {
         stageId,
         date,
@@ -29,8 +27,6 @@ const create = async(values) => {
     }
 
     const newMatch = await Match.create(newMatchData)
-    console.log('newMatch', newMatch)
-
     return newMatch
 }
 
@@ -79,7 +75,6 @@ const checkIfMatchExistsUnknownTeams = async(stageId, localTeamPlaceholder, visi
 }
 
 const getAllMatchesByDate = async() => {
-    // eslint-disable-next-line no-useless-catch
     try {
         const matches = await Match.findAll({
             include: [
@@ -122,7 +117,6 @@ const getOneById = async(id) => {
 }
 
 const destroy = async({ matchId }) => {
-    // eslint-disable-next-line no-useless-catch
     try {
         const result = await Match.destroy({
             where: { matchId }
@@ -171,9 +165,7 @@ const edit = async({ values }) => {
                 where: { matchId }
             }
         )
-        console.log('Match updated successfully!')
     } catch (error) {
-        console.error(error)
         throw error
     }
 }

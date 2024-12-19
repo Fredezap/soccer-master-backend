@@ -7,7 +7,7 @@ const { TEAM_NAME_TOO_LONG, TEAM_NAME_TOO_SHORT, INVALID_TEAM_NAME } = errorCode
 
 const validateTeamName = check('name', INVALID_TEAM_NAME)
     .isString().withMessage(INVALID_TEAM_NAME)
-    .bail() // Stop validation if string is empty
+    .bail()
     .isLength({ min: MIN_NAME_LENGTH }).withMessage(TEAM_NAME_TOO_SHORT)
     .isLength({ max: MAX_NAME_LENGTH }).withMessage(TEAM_NAME_TOO_LONG)
 
