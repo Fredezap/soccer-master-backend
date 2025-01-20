@@ -29,8 +29,10 @@ export const TeamGroup = sequelize.define('TeamGroup', {
         onDelete: 'CASCADE'
     }
 })
+TeamGroup.belongsTo(sequelize.models.Team, { foreignKey: 'teamId', onDelete: 'CASCADE' })
+TeamGroup.belongsTo(sequelize.models.Group, { foreignKey: 'groupId', onDelete: 'CASCADE' })
 
-await sequelize.sync()
+await sequelize.sync({ alter: true })
     .then(() => {
         logger.info('TeamGroup synchronized')
     })

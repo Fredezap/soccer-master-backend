@@ -14,6 +14,8 @@ import deleteGroup from '../../services/fixture/groups/deleteGroup.js'
 import updateGroupName from '../../services/fixture/groups/updateGroupName.js'
 import validateTeamId from '../../middlewares/teams/validateTeamId.js'
 import deleteTeamGroupRecord from '../../services/fixture/groups/deleteTeamGroupRecord.js'
+import validateTournamentExist from '../../middlewares/tournament-details/validateTournamentExist.js'
+import getAllGroupsByTournament from '../../services/fixture/groups/getAllGroupsByTournament.js'
 
 const groupsRouter = express.Router()
 
@@ -51,6 +53,10 @@ const runValidateIfGroupExist = runValidations([
     checkIfGroupExist
 ])
 
+const runValidateTournament = runValidations([
+    validateTournamentExist
+])
+
 groupsRouter.post('/create',
     runValidateGroupValues,
     capitalizeGroupName,
@@ -82,6 +88,11 @@ groupsRouter.post('/delete-team-group',
 
 groupsRouter.post('/get-all-groups',
     getAllGroups
+)
+
+groupsRouter.post('/get-all-groups-by-tournament',
+    runValidateTournament,
+    getAllGroupsByTournament
 )
 
 export default groupsRouter

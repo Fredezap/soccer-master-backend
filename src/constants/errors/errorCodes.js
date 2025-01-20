@@ -33,6 +33,7 @@ const teamErrors = {
 
 const stageErrors = {
     ERROR_WHILE_GETTING_STAGES: 'error while getting stages',
+    ERROR_WHILE_GETTING_KNOCKOUT_STAGES: 'error while getting knockout stages',
     STAGE_NAME_ALREADY_EXISTS: 'Stage name already exist',
     STAGE_ORDER_ALREADY_EXISTS: 'Stage order already exist',
     INVALID_STAGE_NAME: 'invalid stage name',
@@ -60,9 +61,11 @@ const groupErrors = {
 }
 
 const matchErrors = {
+    SELECTED_MATCH_NOT_FOUND: 'selected match not found',
     ERROR_WHILE_VERIFYING_TEAMS: 'error while verifying teams',
     ERROR_WHILE_CREATING_MATCH: 'error while creating match',
     THIS_MATCH_ALREADY_EXIST: 'this match already exist',
+    THIS_MATCH_DO_NOT_EXIST: 'this match do not exist',
     ERROR_WHILE_CHECKING_MATCH_DATA: 'error while checking match data',
     INVALID_DATE: 'invalid date',
     INVALID_TIME: 'invalid time',

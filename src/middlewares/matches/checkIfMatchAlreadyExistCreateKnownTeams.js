@@ -2,15 +2,12 @@ import { StatusCodes } from 'http-status-codes'
 import matchService from '../../services/fixture/matches/common/matchService.js'
 import errorCodes from '../../constants/errors/errorCodes.js'
 
-const checkIfMatchAlreadyExistKnownTeams = async(req, res, next) => {
+const checkIfMatchAlreadyExistCreateKnownTeams = async(req, res, next) => {
     const { THIS_MATCH_ALREADY_EXIST, ERROR_WHILE_CHECKING_MATCH_DATA } = errorCodes.matchErrors
     try {
-        const { stageId, localTeamId, visitorTeamId, date, time, matchId } = req.body
+        const { stageId, localTeamId, visitorTeamId, date, time } = req.body
         const result = await matchService.checkIfMatchExistsKnownTeams(stageId, localTeamId, visitorTeamId, date, time)
         if (result.success) {
-            if (matchId) {
-                if (matchId === result.match?.matchId) return next()
-            }
             const errors = [{ msg: THIS_MATCH_ALREADY_EXIST }]
             return res.status(StatusCodes.BAD_REQUEST).json({ errors })
         }
@@ -21,4 +18,4 @@ const checkIfMatchAlreadyExistKnownTeams = async(req, res, next) => {
     }
 }
 
-export default checkIfMatchAlreadyExistKnownTeams
+export default checkIfMatchAlreadyExistCreateKnownTeams

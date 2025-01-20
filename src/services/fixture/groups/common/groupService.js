@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-catch */
-import { Op } from 'sequelize'
+import { Op, where } from 'sequelize'
 import { Group } from '../../../../models/groupModel.js'
 import { Team } from '../../../../models/teamModel.js'
 import { TeamGroup } from '../../../../models/teamGroupModel.js'
@@ -35,6 +35,36 @@ const getAllGroupsWithTeams = async() => {
                 {
                     model: Stage,
                     attributes: ['stageId', 'name']
+                }
+            ]
+        })
+
+        const groupedByStageId = groups.reduce((acc, group) => {
+            const { stageId, name } = group.Stage
+            if (!acc[stageId]) {
+                acc[stageId] = { name, groups: [] }
+            }
+            acc[stageId].groups.push(group)
+            return acc
+        }, {})
+
+        return groupedByStageId
+    } catch (error) {
+        throw error
+    }
+}
+
+const getAllGroupsWithTeamsByTournament = async(tournamentId) => {
+    try {
+        const groups = await Group.findAll({
+            include: [
+                {
+                    model: Stage,
+                    where: { tournamentId }
+                },
+                {
+                    model: Team,
+                    through: { attributes: [] }
                 }
             ]
         })
@@ -161,6 +191,7 @@ const checkIfTeamsExistInSameGroup = async(localTeamId, visitorTeamId, groupId) 
 const groupService = {
     create,
     getAllGroupsWithTeams,
+    getAllGroupsWithTeamsByTournament,
     getOneByNameAndStageId,
     getOneById,
     updateTeamsGroup,

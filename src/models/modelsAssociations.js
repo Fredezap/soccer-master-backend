@@ -30,9 +30,9 @@ export const modelsAssociations = () => {
     Team.belongsToMany(Group, { through: TeamGroup, foreignKey: 'teamId', otherKey: 'groupId', onDelete: 'CASCADE' })
     Group.belongsToMany(Team, { through: TeamGroup, foreignKey: 'groupId', otherKey: 'teamId', onDelete: 'CASCADE' })
 
-    TeamGroup.belongsTo(Team, { foreignKey: 'teamId' })
+    TeamGroup.belongsTo(Team, { foreignKey: 'teamId', onDelete: 'CASCADE' })
     Team.hasMany(TeamGroup, { foreignKey: 'teamId' })
 
-    TeamGroup.belongsTo(Group, { foreignKey: 'groupId' })
+    TeamGroup.belongsTo(Group, { foreignKey: 'groupId', onDelete: 'CASCADE' })
     Group.hasMany(TeamGroup, { foreignKey: 'groupId' })
 }

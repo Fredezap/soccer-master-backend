@@ -25,9 +25,6 @@ export const Group = sequelize.define('Group', {
     }
 })
 
-Group.belongsTo(Stage, { foreignKey: 'stageId', as: 'stage' })
-Stage.hasMany(Group, { foreignKey: 'stageId', as: 'groups' })
-
 await sequelize.sync()
     .then(() => {
         logger.info('Group synchronized')
