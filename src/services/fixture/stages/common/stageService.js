@@ -21,16 +21,16 @@ const create = async(data) => {
     }
 }
 
-const getOneByName = async(name) => {
-    return await Stage.findOne({ where: { name } })
+const getOneByName = async(name, tournamentId) => {
+    return await Stage.findOne({ where: { name, tournamentId } })
 }
 
 const getOneById = async(id) => {
     return Stage.findByPk(id)
 }
 
-const getOneByOrder = async(order) => {
-    return await Stage.findOne({ where: { order } })
+const getOneByOrder = async(order, tournamentId) => {
+    return await Stage.findOne({ where: { order, tournamentId } })
 }
 
 const getAll = async() => {
@@ -163,6 +163,53 @@ const getKnockoutStagesWithTeams = async() => {
     }
 }
 
+const getKnockoutStagesByTournament = async(tournamentId) => {
+    try {
+        const stages = await Stage.findAll({
+            where: { type: 'knockout', tournamentId },
+            include: [
+                {
+                    model: Match,
+                    include: [
+                        {
+                            model: Team,
+                            as: 'LocalTeam'
+                        },
+                        {
+                            model: Team,
+                            as: 'VisitorTeam'
+                        }
+                    ]
+                }
+            ]
+        })
+
+        const groupedByStageId = stages.reduce((acc, stage) => {
+            const { stageId, name, order, type } = stage
+            if (!acc[stageId]) {
+                acc[stageId] = { stageId, name, order, type, Matches: [] }
+            }
+
+            stage.Matches.forEach(match => {
+                acc[stageId].Matches.push({
+                    matchId: match.matchId,
+                    localTeam: match.LocalTeam,
+                    visitorTeam: match.VisitorTeam,
+                    date: match.date,
+                    time: match.time,
+                    location: match.location
+                })
+            })
+
+            return acc
+        }, {})
+
+        return groupedByStageId
+    } catch (error) {
+        throw error
+    }
+}
+
 const stageService = {
     create,
     getOneByName,
@@ -171,7 +218,8 @@ const stageService = {
     getAllStagesByTournament,
     getOneById,
     destroy,
-    getKnockoutStagesWithTeams
+    getKnockoutStagesWithTeams,
+    getKnockoutStagesByTournament
 }
 
 export default stageService

@@ -55,6 +55,14 @@ export const Match = sequelize.define('Match', {
         type: DataTypes.INTEGER,
         defaultValue: null
     },
+    localTeamPenaltyScore: {
+        type: DataTypes.INTEGER,
+        defaultValue: null
+    },
+    visitorTeamPenaltyScore: {
+        type: DataTypes.INTEGER,
+        defaultValue: null
+    },
     date: {
         type: DataTypes.DATE,
         allowNull: false
@@ -68,12 +76,6 @@ export const Match = sequelize.define('Match', {
         allowNull: false
     }
 })
-
-Match.belongsTo(Team, { foreignKey: 'localTeamId', as: 'localTeam' })
-Match.belongsTo(Team, { foreignKey: 'visitorTeamId', as: 'visitorTeam' })
-
-Match.belongsTo(Stage, { foreignKey: 'stageId', as: 'stage' })
-Stage.hasMany(Match, { foreignKey: 'stageId', as: 'matches' })
 
 await sequelize.sync()
     .then(() => {

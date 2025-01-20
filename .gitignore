@@ -6,3 +6,4 @@ dist-ssr
 .env.production
 combined.log
 error.log
+/config

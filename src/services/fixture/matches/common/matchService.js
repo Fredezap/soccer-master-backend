@@ -80,17 +80,16 @@ const getAllMatchesByDate = async() => {
             include: [
                 {
                     model: Team,
-                    as: 'localTeam',
+                    as: 'LocalTeam', // Alias definido en la asociación
                     attributes: ['teamId', 'name']
                 },
                 {
                     model: Team,
-                    as: 'visitorTeam',
+                    as: 'VisitorTeam', // Alias definido en la asociación
                     attributes: ['teamId', 'name']
                 },
                 {
                     model: Stage,
-                    as: 'stage',
                     attributes: ['stageId', 'name']
                 }
             ],
@@ -142,6 +141,8 @@ const edit = async({ values }) => {
         visitorTeamPlaceholder,
         localTeamScore,
         visitorTeamScore,
+        localTeamPenaltyScore,
+        visitorTeamPenaltyScore,
         date,
         time,
         location
@@ -157,6 +158,8 @@ const edit = async({ values }) => {
                 visitorTeamPlaceholder,
                 localTeamScore,
                 visitorTeamScore,
+                localTeamPenaltyScore,
+                visitorTeamPenaltyScore,
                 date,
                 time,
                 location
