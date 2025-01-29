@@ -6,6 +6,6 @@ const { INVALID_TIME } = errorCodes.matchErrors
 const checkTime = check('time', INVALID_TIME)
     .exists()
     .bail()
-    .isTime()
+    .matches(/^([01]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/)
 
 export default checkTime
