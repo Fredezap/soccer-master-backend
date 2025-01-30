@@ -6,6 +6,7 @@ import { Team } from '../../../models/teamModel.js'
 import { Stage } from '../../../models/stageModel.js'
 import { Player } from '../../../models/playerModel.js'
 import { Group } from '../../../models/groupModel.js'
+import { TeamGroup } from '../../../models/teamGroupModel.js'
 
 const create = async({ name, date }) => {
     return await Tournament.create({ name, date })
@@ -54,7 +55,39 @@ const findOneById = async(tournamentId) => {
 }
 
 const findAll = async() => {
-    return await Tournament.findAll()
+    return await Tournament.findAll({
+        include: [
+            {
+                model: Team,
+                include: [
+                    { model: Player }, // Jugadores del equipo
+                    { model: Match, as: 'LocalMatches', include: [{ model: Team, as: 'VisitorTeam' }] },
+                    { model: Match, as: 'VisitorMatches', include: [{ model: Team, as: 'LocalTeam' }] }
+                ]
+            },
+            {
+                model: Stage,
+                include: [
+                    {
+                        model: Group,
+                        include: [
+                            {
+                                model: Team,
+                                through: { model: TeamGroup }
+                            }
+                        ]
+                    },
+                    {
+                        model: Match,
+                        include: [
+                            { model: Team, as: 'LocalTeam' },
+                            { model: Team, as: 'VisitorTeam' }
+                        ]
+                    }
+                ]
+            }
+        ]
+    })
 }
 
 const update = async(data) => {
