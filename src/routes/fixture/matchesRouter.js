@@ -108,14 +108,7 @@ const runValidateMatch = runValidations([
     validateMatchExist
 ])
 
-const p = (req, res, next) => {
-    console.log('EN MATCH EDIT: ', req.body)
-    // req.body.matchId = 'asd'
-    next()
-}
-
 matchesRouter.post('/create-group-match',
-    p,
     runValidateCreateGroupMatchData,
     checkIfTeamsExistInSameGroup,
     checkIfMatchAlreadyExistCreateKnownTeams,
@@ -135,19 +128,16 @@ matchesRouter.post('/create-knockout-match-unknown-teams',
 )
 
 matchesRouter.post('/edit-known-teams',
-    p,
     runValidateKnockoutMatchKnownTeamsEdit,
     editMatch
 )
 
 matchesRouter.post('/edit-group-match',
-    p,
     runValidateGroupMatcEdit,
     editMatch
 )
 
 matchesRouter.post('/edit-unknown-teams',
-    p,
     runValidateKnockoutMatchUnknownTeamsEdit,
     editMatch
 )
