@@ -25,7 +25,7 @@ export const Group = sequelize.define('Group', {
     }
 })
 
-await sequelize.sync({ alter: true })
+await sequelize.sync()
     .then(() => {
         logger.info('Group synchronized')
     })
