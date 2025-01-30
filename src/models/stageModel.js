@@ -34,7 +34,7 @@ export const Stage = sequelize.define('Stage', {
     }
 })
 
-await sequelize.sync()
+await sequelize.sync({ alter: true })
     .then(() => {
         logger.info('Stage synchronized')
     })
