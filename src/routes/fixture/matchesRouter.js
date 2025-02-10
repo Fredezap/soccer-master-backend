@@ -64,6 +64,22 @@ const runValidateKnockoutMatchKnownTeamsEdit = runValidations([
     checkLocation
 ])
 
+const runValidateKnockoutMatchUnknownTeamsEdit = runValidations([
+    validateTeamIdDoNotExist('localTeamId'),
+    validateTeamIdDoNotExist('visitorTeamId'),
+    validateTeamScore('localTeamScore'),
+    validateTeamScore('visitorTeamScore'),
+    validateTeamScore('localTeamPenaltyScore'),
+    validateTeamScore('visitorTeamPenaltyScore'),
+    validateStageId,
+    checkIfStageExistById,
+    validateMatchId,
+    validateMatchExist,
+    checkDate,
+    checkTime,
+    checkLocation
+])
+
 const runValidateGroupMatchEdit = runValidations([
     validateTeamId('localTeamId'),
     validateTeamId('visitorTeamId'),
@@ -87,22 +103,6 @@ const runValidateGroupMatchEditScore = runValidations([
     validateTeamId('visitorTeamId'),
     validateTeamScore('localTeamScore'),
     validateTeamScore('visitorTeamScore')
-])
-
-const runValidateKnockoutMatchUnknownTeamsEdit = runValidations([
-    validateTeamIdDoNotExist('localTeamId'),
-    validateTeamIdDoNotExist('visitorTeamId'),
-    validateTeamScore('localTeamScore'),
-    validateTeamScore('visitorTeamScore'),
-    validateTeamScore('localTeamPenaltyScore'),
-    validateTeamScore('visitorTeamPenaltyScore'),
-    validateStageId,
-    checkIfStageExistById,
-    validateMatchId,
-    validateMatchExist,
-    checkDate,
-    checkTime,
-    checkLocation
 ])
 
 const runValidateKnockoutMatchUnknownTeams = runValidations([
@@ -144,6 +144,11 @@ matchesRouter.post('/edit-known-teams',
     editMatch
 )
 
+matchesRouter.post('/edit-unknown-teams',
+    runValidateKnockoutMatchUnknownTeamsEdit,
+    editMatch
+)
+
 matchesRouter.post('/edit-group-match',
     runValidateStageId,
     runValidateStageExistbyId,
@@ -155,11 +160,6 @@ matchesRouter.post('/edit-group-match-score',
     runValidateGroupMatchEditScore,
     checkIfGroupStagePointsPerMatchAreSet,
     editGroupMatchScore
-)
-
-matchesRouter.post('/edit-unknown-teams',
-    runValidateKnockoutMatchUnknownTeamsEdit,
-    editMatch
 )
 
 matchesRouter.post('/delete',

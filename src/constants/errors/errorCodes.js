@@ -77,7 +77,11 @@ const matchErrors = {
     ERROR_WHILE_DELETING_MATCH: 'error while deleting match',
     INVALID_LOCATION: 'invalid location',
     ERROR_WHILE_EDITING_MATCH: 'error while editing match',
-    YOU_MUST_DEFINE_BOTH_RESULTS: 'you must define both results'
+    YOU_MUST_DEFINE_BOTH_RESULTS: 'you must define both results',
+    YOU_CANNOT_EDIT_A_MATCH_THAT_HAS_RESULT_DEFINED: 'you cannot edit a match that has result defined',
+    MATCH_RESULT_MUST_BE_DEFINED_BEFORE_SETTING_PENALTY_RESULTS: 'match result must be defined before setting penalty results',
+    ERROR_CANNOT_DEFINE_PENALTY_IF_NO_DRAW: 'You cannot define the penalty result if the match result is not a draw',
+    PENALTY_RESULT_MUST_BE_DIFFERENT: 'penalty result must be different'
 }
 
 const OAuthErrors = {
