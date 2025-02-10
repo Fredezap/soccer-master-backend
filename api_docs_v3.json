@@ -9,6 +9,20 @@
     "description": "Specification JSONs: [v2](/api-spec/v2), [v3](/api-spec/v3)."
   },
   "paths": {
+    "/api/tournaments/get-details": {
+      "post": {
+        "summary": "/api/tournaments/get-details",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/tournaments/get-all": {
+      "post": {
+        "summary": "/api/tournaments/get-all",
+        "responses": {},
+        "tags": []
+      }
+    },
     "/api/admin/tournament-details/create": {
       "post": {
         "summary": "/api/admin/tournament-details/create",
@@ -16,9 +30,9 @@
         "tags": []
       }
     },
-    "/api/admin/tournament-details/get-details": {
-      "post": {
-        "summary": "/api/admin/tournament-details/get-details",
+    "/api/admin/tournament-details/update": {
+      "patch": {
+        "summary": "/api/admin/tournament-details/update",
         "responses": {},
         "tags": []
       }
@@ -51,6 +65,13 @@
         "tags": []
       }
     },
+    "/api/admin/teams/get-by-tournament": {
+      "post": {
+        "summary": "/api/admin/teams/get-by-tournament",
+        "responses": {},
+        "tags": []
+      }
+    },
     "/api/admin/fixture/stages/create": {
       "post": {
         "summary": "/api/admin/fixture/stages/create",
@@ -72,9 +93,30 @@
         "tags": []
       }
     },
+    "/api/admin/fixture/stages/get-all-by-tournament": {
+      "post": {
+        "summary": "/api/admin/fixture/stages/get-all-by-tournament",
+        "responses": {},
+        "tags": []
+      }
+    },
     "/api/admin/fixture/stages/get-all-knockout-stages": {
       "post": {
         "summary": "/api/admin/fixture/stages/get-all-knockout-stages",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/stages/get-all-knockout-stages-by-tournament": {
+      "post": {
+        "summary": "/api/admin/fixture/stages/get-all-knockout-stages-by-tournament",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/stages/edit": {
+      "post": {
+        "summary": "/api/admin/fixture/stages/edit",
         "responses": {},
         "tags": []
       }
@@ -121,6 +163,13 @@
         "tags": []
       }
     },
+    "/api/admin/fixture/groups/get-all-groups-by-tournament": {
+      "post": {
+        "summary": "/api/admin/fixture/groups/get-all-groups-by-tournament",
+        "responses": {},
+        "tags": []
+      }
+    },
     "/api/admin/fixture/matches/create-group-match": {
       "post": {
         "summary": "/api/admin/fixture/matches/create-group-match",
@@ -142,30 +191,44 @@
         "tags": []
       }
     },
-    "/api/admin/fixture/matches/edit": {
+    "/api/admin/fixture/matches/edit-known-teams": {
       "post": {
-        "summary": "/api/admin/fixture/matches/edit",
+        "summary": "/api/admin/fixture/matches/edit-known-teams",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/matches/edit-group-match": {
+      "post": {
+        "summary": "/api/admin/fixture/matches/edit-group-match",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/matches/edit-group-match-score": {
+      "post": {
+        "summary": "/api/admin/fixture/matches/edit-group-match-score",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "matchId": {
+                  "localTeamScore": {
                     "type": "number",
-                    "example": 58
+                    "example": 4
                   },
-                  "localTeamId": {
-                    "type": "number",
-                    "example": 1
-                  },
-                  "visitorTeamId": {
+                  "visitorTeamScore": {
                     "type": "number",
                     "example": 3
                   },
+                  "matchId": {
+                    "type": "number",
+                    "example": 61
+                  },
                   "token": {
                     "type": "string",
-                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzZEBhc2QuY29tIiwiaWF0IjoxNzMzNTMwNzQxLCJleHAiOjE3MzYxNTg3NDF9.Pch_6pJsUoMm1l2-TTigRK1vJizoEB_455wUq-F9LOs"
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzZEBhc2QuY29tIiwiaWF0IjoxNzM4ODc0Mjk2LCJleHAiOjE3NDE1MDIyOTZ9.kDPETqphAAn8I-mXY2QPnSRXVJ11tRBAf7l4fdJFprk"
                   },
                   "role": {
                     "type": "string",
@@ -188,12 +251,19 @@
               "text/html": {
                 "schema": {
                   "type": "string",
-                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/fixture/matches/edit</pre>\n</body>\n</html>\n"
+                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/fixture/matches/edit-group-match-score</pre>\n</body>\n</html>\n"
                 }
               }
             }
           }
         },
+        "tags": []
+      }
+    },
+    "/api/admin/fixture/matches/edit-unknown-teams": {
+      "post": {
+        "summary": "/api/admin/fixture/matches/edit-unknown-teams",
+        "responses": {},
         "tags": []
       }
     },

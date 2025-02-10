@@ -15,6 +15,7 @@ import getAllKnockoutStagesWithTeams from '../../services/fixture/stages/getAllK
 import getStagesByTournamentId from '../../services/fixture/stages/getStagesByTournamentId.js'
 import validateTournamentExist from '../../middlewares/tournament-details/validateTournamentExist.js'
 import getAllKnockoutStagesByTournament from '../../services/fixture/stages/getAllKnockoutStagesByTournament.js'
+import editStage from '../../services/fixture/stages/editStage.js'
 
 const stagesRouter = express.Router()
 
@@ -33,11 +34,11 @@ const runValidateStageExist = runValidations([
     checkIfStageOrderAlreadyExist
 ])
 
-const runValidateStageId = runValidations([
+export const runValidateStageId = runValidations([
     validateStageId
 ])
 
-const runValidateStageExistbyId = runValidations([
+export const runValidateStageExistbyId = runValidations([
     checkIfStageExistById
 ])
 
@@ -71,6 +72,12 @@ stagesRouter.post('/get-all-knockout-stages',
 stagesRouter.post('/get-all-knockout-stages-by-tournament',
     runValidateTournament,
     getAllKnockoutStagesByTournament
+)
+
+stagesRouter.post('/edit',
+    runValidateStageId,
+    runValidateStageExistbyId,
+    editStage
 )
 
 export default stagesRouter

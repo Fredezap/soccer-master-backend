@@ -131,7 +131,7 @@ const destroy = async({ matchId }) => {
     }
 }
 
-const edit = async({ values }) => {
+const edit = async({ values, transaction = null }) => {
     const {
         matchId,
         stageId,
@@ -165,7 +165,8 @@ const edit = async({ values }) => {
                 location
             },
             {
-                where: { matchId }
+                where: { matchId },
+                transaction
             }
         )
     } catch (error) {

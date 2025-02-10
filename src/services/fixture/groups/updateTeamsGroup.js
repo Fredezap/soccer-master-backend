@@ -1,7 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 import errorCodes from '../../../constants/errors/errorCodes.js'
 import groupService from './common/groupService.js'
-import teamService from '../../teams/common/teamService.js'
 
 const updateTeamsGroup = async(req, res) => {
     const { ERROR_WHILE_UPDATING_TEAM, SOME_TEAM_IS_ALREADY_ASSOCIATED_WITH_A_GROUP } = errorCodes.groupErrors

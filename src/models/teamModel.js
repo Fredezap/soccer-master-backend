@@ -20,6 +20,10 @@ export const Team = sequelize.define('Team', {
             len: [MIN_NAME_LENGTH, MAX_NAME_LENGTH]
         }
     },
+    logoUrl: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     tournamentId: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -31,7 +35,7 @@ export const Team = sequelize.define('Team', {
     }
 })
 
-await sequelize.sync()
+await sequelize.sync({ alter: true })
     .then(() => {
         logger.info('Team synchronized')
     })

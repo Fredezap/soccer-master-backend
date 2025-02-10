@@ -31,7 +31,7 @@ export const Player = sequelize.define('Player', {
     }
 })
 
-await sequelize.sync()
+await sequelize.sync({ alter: true })
     .then(() => {
         logger.info('Player synchronized')
     })

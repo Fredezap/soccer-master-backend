@@ -35,4 +35,7 @@ export const modelsAssociations = () => {
 
     TeamGroup.belongsTo(Group, { foreignKey: 'groupId', onDelete: 'CASCADE' })
     Group.hasMany(TeamGroup, { foreignKey: 'groupId' })
+
+    TeamGroup.belongsTo(Match, { foreignKey: 'matchId', onDelete: 'CASCADE' })
+    Match.hasMany(TeamGroup, { foreignKey: 'matchId' })
 }

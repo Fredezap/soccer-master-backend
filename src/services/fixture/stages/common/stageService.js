@@ -5,6 +5,8 @@ import { Match } from '../../../../models/matchModel.js'
 import { Stage } from '../../../../models/stageModel.js'
 import { Team } from '../../../../models/teamModel.js'
 import { Tournament } from '../../../../models/tournamentModel.js'
+import errorCodes from '../../../../constants/errors/errorCodes.js'
+const { SELECTED_STAGE_DOES_NOT_EXIST, PLEASE_SET_POINTS_PER_MATCH_BEFORE_EDITING } = errorCodes.stageErrors
 
 const create = async(data) => {
     const { name, type, order, tournamentId } = data
@@ -16,6 +18,29 @@ const create = async(data) => {
         })
 
         return { response, created }
+    } catch (error) {
+        throw error
+    }
+}
+
+const edit = async({ values }) => {
+    const { pointsPerResult, name, type, order, stageId } = values
+    const { wonPoints, drawnPoints, lostPoints } = pointsPerResult
+
+    try {
+        await Stage.update(
+            {
+                name,
+                type,
+                order,
+                wonPoints,
+                lostPoints,
+                drawnPoints
+            },
+            {
+                where: { stageId }
+            }
+        )
     } catch (error) {
         throw error
     }
@@ -97,6 +122,7 @@ const getAllStagesByTournament = async({ tournamentId }) => {
         },
         order: [['order', 'ASC']]
     })
+
     return stages
 }
 
@@ -210,8 +236,22 @@ const getKnockoutStagesByTournament = async(tournamentId) => {
     }
 }
 
+const checkPointsPerMatchAreSet = async(stageId) => {
+    const stage = await Stage.findByPk(stageId)
+
+    if (!stage) {
+        return { success: false, error: SELECTED_STAGE_DOES_NOT_EXIST }
+    }
+
+    const pointsPerMatchAreSetted = stage.wonPoints !== 0 || stage.drawnPoints !== 0 || stage.lostPoints !== 0
+    if (!pointsPerMatchAreSetted) return { success: false, error: PLEASE_SET_POINTS_PER_MATCH_BEFORE_EDITING }
+
+    return { success: true }
+}
+
 const stageService = {
     create,
+    edit,
     getOneByName,
     getOneByOrder,
     getAll,
@@ -219,7 +259,8 @@ const stageService = {
     getOneById,
     destroy,
     getKnockoutStagesWithTeams,
-    getKnockoutStagesByTournament
+    getKnockoutStagesByTournament,
+    checkPointsPerMatchAreSet
 }
 
 export default stageService
