@@ -42,7 +42,10 @@ const stageErrors = {
     INVALID_STAGE_ORDER: 'invalid stage order',
     INVALID_STAGE_ID: 'invalid stage id',
     SELECTED_STAGE_DOES_NOT_EXIST: 'selected stage does not exist',
-    ERROR_WHILE_DELETING_STAGE: 'error while deleting stage'
+    ERROR_WHILE_DELETING_STAGE: 'error while deleting stage',
+    PLEASE_SET_POINTS_PER_MATCH_BEFORE_EDITING: 'please set points per match before editing',
+    ERROR_WHILE_GETTING_STAGE_DATA: 'error while getting stage data',
+    ERROR_WHILE_EDITING_STAGE: 'error while editing stage'
 }
 
 const groupErrors = {
@@ -73,7 +76,12 @@ const matchErrors = {
     SELECTED_MATCH_DOES_NOT_EXIST: 'selected match does not exist',
     ERROR_WHILE_DELETING_MATCH: 'error while deleting match',
     INVALID_LOCATION: 'invalid location',
-    ERROR_WHILE_EDITING_MATCH: 'error while editing match'
+    ERROR_WHILE_EDITING_MATCH: 'error while editing match',
+    YOU_MUST_DEFINE_BOTH_RESULTS: 'you must define both results',
+    YOU_CANNOT_EDIT_A_MATCH_THAT_HAS_RESULT_DEFINED: 'you cannot edit a match that has result defined',
+    MATCH_RESULT_MUST_BE_DEFINED_BEFORE_SETTING_PENALTY_RESULTS: 'match result must be defined before setting penalty results',
+    ERROR_CANNOT_DEFINE_PENALTY_IF_NO_DRAW: 'You cannot define the penalty result if the match result is not a draw',
+    PENALTY_RESULT_MUST_BE_DIFFERENT: 'penalty result must be different'
 }
 
 const OAuthErrors = {

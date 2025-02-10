@@ -19,7 +19,7 @@ export const Tournament = sequelize.define('Tournament', {
     }
 })
 
-await sequelize.sync()
+await sequelize.sync({ alter: true })
     .then(() => {
         logger.info('Tournament synchronized')
     })

@@ -70,9 +70,9 @@ const getAllGroupsWithTeamsByTournament = async(tournamentId) => {
         })
 
         const groupedByStageId = groups.reduce((acc, group) => {
-            const { stageId, name } = group.Stage
+            const { stageId } = group.Stage
             if (!acc[stageId]) {
-                acc[stageId] = { name, groups: [] }
+                acc[stageId] = { Stage: group.Stage, groups: [] }
             }
             acc[stageId].groups.push(group)
             return acc
