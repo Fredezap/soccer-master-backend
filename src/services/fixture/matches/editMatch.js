@@ -6,8 +6,9 @@ const {
     ERROR_WHILE_EDITING_MATCH,
     YOU_MUST_DEFINE_BOTH_RESULTS,
     MATCH_RESULT_MUST_BE_DEFINED_BEFORE_SETTING_PENALTY_RESULTS,
-    ERROR_CANNOT_DEFINE_PENALTY_IF_NO_DRAW,
-    PENALTY_RESULT_MUST_BE_DIFFERENT
+    CANNOT_DEFINE_PENALTY_IF_NO_DRAW,
+    PENALTY_RESULT_MUST_BE_DIFFERENT,
+    RESULTS_MUST_BE_0_OR_GREATER
 } = errorCodes.matchErrors
 
 const editMatch = async(req, res) => {
@@ -24,6 +25,13 @@ const editMatch = async(req, res) => {
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors: [{ msg: YOU_MUST_DEFINE_BOTH_RESULTS }] })
     }
 
+    // chequeamos que ambos resultados sean >= 0 (localTeamScore y visitorTeamScore)
+    const currentResultsArePositiveValues = (localTeamScore >= 0 && visitorTeamScore >= 0)
+
+    if (!currentResultsArePositiveValues) {
+        return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors: [{ msg: RESULTS_MUST_BE_0_OR_GREATER }] })
+    }
+
     // chequeamos que esten definidos ambos resultados de penales o sean null (localTeamPenaltyScore y visitorTeamPenaltyScore)
     const currentPenaltyResultsNotValid =
     (localTeamPenaltyScore === null || localTeamPenaltyScore === undefined || localTeamPenaltyScore === '') !==
@@ -35,9 +43,13 @@ const editMatch = async(req, res) => {
 
     // chequeamos que si estar definido el resultado de penales, el resultado del partido sea un empate
     const penaltyJustValidIfMatchResultIsADraw = localTeamScore === visitorTeamScore
-    if (!penaltyJustValidIfMatchResultIsADraw) {
+    const penaltysAreNotDefined =
+    (localTeamPenaltyScore === null || localTeamPenaltyScore === undefined || localTeamPenaltyScore === '') &&
+    (visitorTeamPenaltyScore === null || visitorTeamPenaltyScore === undefined || visitorTeamPenaltyScore === '')
+
+    if (!penaltyJustValidIfMatchResultIsADraw && !penaltysAreNotDefined) {
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
-            errors: [{ msg: ERROR_CANNOT_DEFINE_PENALTY_IF_NO_DRAW }]
+            errors: [{ msg: CANNOT_DEFINE_PENALTY_IF_NO_DRAW }]
         })
     }
 
@@ -54,7 +66,7 @@ const editMatch = async(req, res) => {
     // chequeamos que el resultado de los penales sea distinto
     const penaltyResultMustBeDifferent = localTeamPenaltyScore !== visitorTeamPenaltyScore
 
-    if (!penaltyResultMustBeDifferent) {
+    if (!penaltyResultMustBeDifferent && !penaltysAreNotDefined) {
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
             errors: [{ msg: PENALTY_RESULT_MUST_BE_DIFFERENT }]
         })
