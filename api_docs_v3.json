@@ -40,7 +40,19 @@
     "/api/admin/teams/create": {
       "post": {
         "summary": "/api/admin/teams/create",
-        "responses": {},
+        "responses": {
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string",
+                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/teams/create</pre>\n</body>\n</html>\n"
+                }
+              }
+            }
+          }
+        },
         "tags": []
       }
     },
@@ -198,6 +210,13 @@
         "tags": []
       }
     },
+    "/api/admin/fixture/matches/edit-unknown-teams": {
+      "post": {
+        "summary": "/api/admin/fixture/matches/edit-unknown-teams",
+        "responses": {},
+        "tags": []
+      }
+    },
     "/api/admin/fixture/matches/edit-group-match": {
       "post": {
         "summary": "/api/admin/fixture/matches/edit-group-match",
@@ -208,61 +227,6 @@
     "/api/admin/fixture/matches/edit-group-match-score": {
       "post": {
         "summary": "/api/admin/fixture/matches/edit-group-match-score",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "localTeamScore": {
-                    "type": "number",
-                    "example": 4
-                  },
-                  "visitorTeamScore": {
-                    "type": "number",
-                    "example": 3
-                  },
-                  "matchId": {
-                    "type": "number",
-                    "example": 61
-                  },
-                  "token": {
-                    "type": "string",
-                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzZEBhc2QuY29tIiwiaWF0IjoxNzM4ODc0Mjk2LCJleHAiOjE3NDE1MDIyOTZ9.kDPETqphAAn8I-mXY2QPnSRXVJ11tRBAf7l4fdJFprk"
-                  },
-                  "role": {
-                    "type": "string",
-                    "example": "user"
-                  },
-                  "email": {
-                    "type": "string",
-                    "example": "asd@asd.com"
-                  }
-                }
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/html": {
-                "schema": {
-                  "type": "string",
-                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/fixture/matches/edit-group-match-score</pre>\n</body>\n</html>\n"
-                }
-              }
-            }
-          }
-        },
-        "tags": []
-      }
-    },
-    "/api/admin/fixture/matches/edit-unknown-teams": {
-      "post": {
-        "summary": "/api/admin/fixture/matches/edit-unknown-teams",
         "responses": {},
         "tags": []
       }
@@ -277,13 +241,6 @@
     "/api/admin/fixture/matches/get-all": {
       "post": {
         "summary": "/api/admin/fixture/matches/get-all",
-        "responses": {},
-        "tags": []
-      }
-    },
-    "/api/admin/validate-access": {
-      "post": {
-        "summary": "/api/admin/validate-access",
         "responses": {},
         "tags": []
       }

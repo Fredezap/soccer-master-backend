@@ -8,18 +8,25 @@ const {
     MATCH_RESULT_MUST_BE_DEFINED_BEFORE_SETTING_PENALTY_RESULTS,
     CANNOT_DEFINE_PENALTY_IF_NO_DRAW,
     PENALTY_RESULT_MUST_BE_DIFFERENT,
-    RESULTS_MUST_BE_0_OR_GREATER
+    RESULTS_MUST_BE_0_OR_GREATER,
+    DEFINE_THE_TEAMS_BEFORE_SETTING_THE_RESULTS
 } = errorCodes.matchErrors
 
 const editMatch = async(req, res) => {
     const values = req.body
-    const { localTeamScore, visitorTeamScore, visitorTeamPenaltyScore, localTeamPenaltyScore } = values
+    const { localTeamScore, visitorTeamScore, visitorTeamPenaltyScore, localTeamPenaltyScore, localTeamId, visitorTeamId } = values
     // chequemos los resultados del partido recibidos
+    const localTeamScoreIsNull = (localTeamScore === null || localTeamScore === undefined || localTeamScore === '')
+    const visitorTeamScoreIsNull = (visitorTeamScore === null || visitorTeamScore === undefined || visitorTeamScore === '')
+
+    // devolvemos error si no estan seteados los equipos y a su vez el usuario ingreso los scores
+    // ya que si no estan definidos los equipos, el partido no se podria jugar y por ende tener resultados
+    if ((!localTeamId, !visitorTeamId) && (!visitorTeamScoreIsNull || !visitorTeamScoreIsNull)) {
+        return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors: [{ msg: DEFINE_THE_TEAMS_BEFORE_SETTING_THE_RESULTS }] })
+    }
 
     // chequeamos que esten definidos ambos resultados o sean null (localTeamScore y visitorTeamScore)
-    const currentResultsNotValid =
-        (localTeamScore === null || localTeamScore === undefined || localTeamScore === '') !==
-        (visitorTeamScore === null || visitorTeamScore === undefined || visitorTeamScore === '')
+    const currentResultsNotValid = localTeamScoreIsNull !== visitorTeamScoreIsNull
 
     if (currentResultsNotValid) {
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors: [{ msg: YOU_MUST_DEFINE_BOTH_RESULTS }] })

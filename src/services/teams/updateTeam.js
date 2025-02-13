@@ -6,7 +6,7 @@ import playerService from '../players/common/teamService.js'
 
 const updateTeam = async(req, res) => {
     const { ERROR_WHILE_UPDATING_TEAM } = errorCodes.teamErrors
-    const { name, players, team } = req.body
+    const { name, logoUrl, players, team } = req.body
     const transaction = await sequelize.transaction()
     const teamId = team.teamId
 
@@ -34,11 +34,13 @@ const updateTeam = async(req, res) => {
             ...playerAdditionPromises
         ])
 
-        if (name !== team.name) {
-            await teamService.update({ teamId, name }, { transaction })
-        }
-
+        // extraemos file para ver si esta enviando la imagen de logo del equipo
+        const { file } = req
+        await teamService.update({ logoUrl, file, teamId, name }, { transaction })
         await transaction.commit()
+
+        await teamService.cleanUpOldImages()
+
         return res.status(StatusCodes.OK).json({ success: true })
     } catch (error) {
         await transaction.rollback()

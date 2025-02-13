@@ -12,12 +12,17 @@ import updateTeam from '../services/teams/updateTeam.js'
 import deleteTeam from '../services/teams/deleteTeam.js'
 import validateTournamentExist from '../middlewares/tournament-details/validateTournamentExist.js'
 import getAllTeamsByTournamentId from '../services/teams/getAllTeamsByTournamentId.js'
+import checkImageIsValid from '../middlewares/common/checkImageIsValid.js'
+import multer from 'multer'
+import path from 'path'
 
 const teamRouter = express.Router()
 
+const upload = multer({ dest: 'uploads/' })
+
 const runValidateTeamValues = runValidations([
-    validateTeamName,
-    validateTeamPlayers
+    validateTeamPlayers,
+    validateTeamName
 ])
 
 const runValidateTournament = runValidations([
@@ -33,20 +38,26 @@ const runValidateTeamExist = runValidations([
 ])
 
 teamRouter.post('/create',
+    upload.any(),
+    // deberia ser upload.single('file') pero da error
     runValidateTeamValues,
     runValidateTournament,
     capitalizeTeamName,
     capitalizePlayerName,
     runValidateTeamNotExist,
+    checkImageIsValid,
     createTeam
 )
 
-teamRouter.patch('/update',
+teamRouter.post('/update',
+    upload.any(),
+    // deberia ser upload.single('file') pero da error
     runValidateTeamValues,
     runValidateTournament,
     capitalizeTeamName,
     capitalizePlayerName,
     runValidateTeamExist,
+    checkImageIsValid,
     updateTeam
 )
 
