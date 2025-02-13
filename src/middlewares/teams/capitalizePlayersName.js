@@ -1,13 +1,13 @@
 import capitalizeName from '../common/validations/capitalizeName.js'
 
 const capitalizePlayerName = (req, res, next) => {
-    const players = req.body.players || []
+    const playersToArray = JSON.parse(req.body.players)
 
-    if (players.length === 0) {
+    if (Array.isArray(playersToArray).length === 0) {
         return next()
     }
 
-    const playersCapitalized = players.map(player => {
+    const playersCapitalized = playersToArray.map(player => {
         return {
             ...player,
             name: player.name

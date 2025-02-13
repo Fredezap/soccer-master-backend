@@ -28,7 +28,10 @@ const teamErrors = {
     INVALID_TEAM_PLACEHOLDER: 'invalid team placeholder',
     ERROR_WHILE_DELETING_TEAM: 'error while deleting team',
     INVALID_TEAM_SCORE: 'invalid team score',
-    TEAM_ID_NOT_ALLOWED: 'team id not allowed'
+    TEAM_ID_NOT_ALLOWED: 'team id not allowed',
+    LOGO_IMAGE_NOT_VALID: 'logo image not valid',
+    ERROR_WHILE_CHECKING_LOGO_IMAGE: 'error while ckeching logo image',
+    ERROR_WHILE_SAVING_IMAGE: 'error while saving image'
 }
 
 const stageErrors = {
@@ -82,7 +85,8 @@ const matchErrors = {
     MATCH_RESULT_MUST_BE_DEFINED_BEFORE_SETTING_PENALTY_RESULTS: 'match result must be defined before setting penalty results',
     CANNOT_DEFINE_PENALTY_IF_NO_DRAW: 'You cannot define the penalty result if the match result is not a draw',
     PENALTY_RESULT_MUST_BE_DIFFERENT: 'penalty result must be different',
-    RESULTS_MUST_BE_0_OR_GREATER: 'Results must be 0 or greater'
+    RESULTS_MUST_BE_0_OR_GREATER: 'Results must be 0 or greater',
+    DEFINE_THE_TEAMS_BEFORE_SETTING_THE_RESULTS: 'define the teams before setting the results'
 }
 
 const OAuthErrors = {

@@ -1,8 +1,10 @@
 import { check } from 'express-validator'
-import errorCodes from '../../../constants/errors/errorCodes.js'
 
-const { INVALID_CREDENTIALS } = errorCodes.OAuthErrors
-
-const validateToken = check('token', INVALID_CREDENTIALS).exists().bail().isString().bail().isLength({ min: 20 })
+const validateToken = check('authorization')
+    .exists().withMessage('Missing Authorization Header')
+    .bail()
+    .isString().withMessage('Invalid token format')
+    .bail()
+    .isLength({ min: 20 }).withMessage('Invalid token length')
 
 export default validateToken
