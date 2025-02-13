@@ -6,6 +6,7 @@ import verifyUserToken from '../middlewares/user/validations/verifyUserToken.js'
 import { checkTokenAndRoleDb } from '../middlewares/user/validations/checkTokenAndRoleDb.js'
 import priviteTournamentRouter from './priviteTournamentRouter.js'
 import teamRouter from './teamRouter.js'
+import fixtureRouter from './fixture/fixtureRouter.js'
 
 const adminRouter = express.Router()
 
@@ -23,6 +24,7 @@ const runValidateAdminValues = runValidations([
 adminRouter.use(extractAuthFields, runValidateAdminValues, verifyUserToken, checkTokenAndRoleDb)
 adminRouter.use('/tournament-details', priviteTournamentRouter)
 adminRouter.use('/teams', teamRouter)
+adminRouter.use('/fixture', fixtureRouter)
 
 adminRouter.post('/validate-access', (req, res) => {
     res.status(200).json({})
