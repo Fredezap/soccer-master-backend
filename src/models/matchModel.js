@@ -77,7 +77,8 @@ export const Match = sequelize.define('Match', {
     }
 })
 
-await sequelize.sync({ alter: true })
+// await sequelize.sync({ alter: true })
+await sequelize.sync()
     .then(() => {
         logger.info('Match synchronized')
     })

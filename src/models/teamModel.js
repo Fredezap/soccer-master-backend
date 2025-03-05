@@ -35,7 +35,8 @@ export const Team = sequelize.define('Team', {
     }
 })
 
-await sequelize.sync({ alter: true })
+// await sequelize.sync({ alter: true })
+await sequelize.sync()
     .then(() => {
         logger.info('Team synchronized')
     })
