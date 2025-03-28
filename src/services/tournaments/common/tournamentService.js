@@ -7,6 +7,7 @@ import { Stage } from '../../../models/stageModel.js'
 import { Player } from '../../../models/playerModel.js'
 import { Group } from '../../../models/groupModel.js'
 import { TeamGroup } from '../../../models/teamGroupModel.js'
+import { Video } from '../../../models/videosModel.js'
 
 const create = async({ name, date }) => {
     return await Tournament.create({ name, date })
@@ -85,7 +86,8 @@ const findAll = async() => {
                         ]
                     }
                 ]
-            }
+            },
+            { model: Video }
         ]
     })
 }

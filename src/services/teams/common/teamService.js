@@ -47,7 +47,7 @@ const getOneByName = async(name, tournamentId) => {
 }
 
 const getOneById = async(id) => {
-    return Team.findByPk(id, { include: [Player] })
+    return await Team.findByPk(id, { include: [Player] })
 }
 
 const getAll = async() => {
@@ -76,17 +76,19 @@ const getAllByTournamentId = async(tournamentId) => {
 const update = async({ logoUrl, file, teamId, name }, { transaction = null }) => {
     // Chequeamos el tipo de datos, ya que al estar recibiendo los datos con 'Content-Type': 'multipart/form-data',
     // recibimos los values en el back convertidos a string
+    console.log('LOGO URL', logoUrl)
     if (logoUrl === 'null') logoUrl = null // Conviertimos null de string a object
 
     if (file) {
         const filename = file.path
-
+        console.log('FILENAME: ', filename)
         if (!fs.existsSync(filename)) {
+            console.log('FILENAME ERROR SYNC: ')
             throw new Error(ERROR_WHILE_SAVING_IMAGE)
         }
         logoUrl = filename
     }
-
+    console.log('LOGO URL ACTUALIZADO', logoUrl)
     return await Team.update(
         { name, logoUrl },
         { where: { teamId }, transaction }
@@ -100,21 +102,26 @@ const cleanUpOldImages = async() => {
         // Extraer el nombre del archivo de logoUrl (sin la parte 'uploads/')
         const teamImages = teams.map(team => {
             const logoUrl = team.logoUrl || ''
-            const imageName = logoUrl.replace('uploads/', '')
+            const imageName = logoUrl.replace('uploads/team-images/', '')
             return imageName
         })
+        // todo: Revisar esto, xq elimina imagenes que no deberia?
 
         // Ruta para acceder a la carpeta 'uploads'
         const __filename = fileURLToPath(import.meta.url)
         const currentDir = path.dirname(__filename)
         const rootDir = path.resolve(currentDir, '../../../../')
-        const uploadDir = path.join(rootDir, 'uploads')
+        const uploadDir = path.join(rootDir, 'uploads/team-images')
 
         // Iterar sobre los archivos en la carpeta 'uploads' y eliminar los que no estén en uso
         const filesInUploadDir = fs.readdirSync(uploadDir)
+        console.log('filesInUploadDir', filesInUploadDir)
+        console.log('teamImages', teamImages)
         filesInUploadDir.forEach(file => {
             if (!teamImages.includes(file)) {
+                console.log('FILE', file)
                 const filePath = path.join(uploadDir, file)
+                console.log('filePath', filePath)
                 fs.unlinkSync(filePath)
             }
         })
