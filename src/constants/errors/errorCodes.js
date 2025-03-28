@@ -107,9 +107,21 @@ const OAuthErrors = {
     PASSWORD_AND_CONFIRM_PASSWORD_DO_NOT_MATCH: 'Password and Confirm Password do not match'
 }
 
+const videoErrors = {
+    INVALID_STRING_VALUE: 'invalid string value',
+    A_REQUIRED_VALUE_NOT_EXIST: 'a required value not exist',
+    INVALID_VIDEO_ID: 'invalid video id',
+    VIDEO_NOT_FOUNDED: 'video not funded',
+    ERROR_WHILE_CREATING_VIDEO: 'error while creating video',
+    ERROR_WHILE_SAVING_IMAGE: 'error while saving image',
+    ERROR_WHILE_DELETING_VIDEO: 'error while deleting video',
+    ERROR_WHILE_GETTING_VIDEOS: 'error while getting videos'
+}
+
 const errorCodes = {
     tournamentErrors,
     teamErrors,
+    videoErrors,
     stageErrors,
     groupErrors,
     matchErrors,

@@ -14,11 +14,11 @@ import validateTournamentExist from '../middlewares/tournament-details/validateT
 import getAllTeamsByTournamentId from '../services/teams/getAllTeamsByTournamentId.js'
 import checkImageIsValid from '../middlewares/common/checkImageIsValid.js'
 import multer from 'multer'
-import path from 'path'
+import printRequest from '../utils/printRequest.js'
 
 const teamRouter = express.Router()
 
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: 'uploads/team-images' })
 
 const runValidateTeamValues = runValidations([
     validateTeamPlayers,
@@ -38,7 +38,7 @@ const runValidateTeamExist = runValidations([
 ])
 
 teamRouter.post('/create',
-    upload.any(),
+    upload.single('file'),
     // deberia ser upload.single('file') pero da error
     runValidateTeamValues,
     runValidateTournament,
@@ -50,7 +50,8 @@ teamRouter.post('/create',
 )
 
 teamRouter.post('/update',
-    upload.any(),
+    upload.single('file'),
+    // printRequest,
     // deberia ser upload.single('file') pero da error
     runValidateTeamValues,
     runValidateTournament,
