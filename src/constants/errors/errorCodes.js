@@ -118,6 +118,14 @@ const videoErrors = {
     ERROR_WHILE_GETTING_VIDEOS: 'error while getting videos'
 }
 
+const emailErrors = {
+    INVALID_EMAILS_LIST: 'invalid emails list',
+    INVALID_EMAIL_FORMAT: 'invalid email format',
+    REMOVED_EMAILS_NOT_FOUND: 'removed emails not found',
+    SOME_EMAIL_ALREADY_EXIST: 'some email already exist',
+    AN_ERROR_OCURRED_WHILE_UPDATING_EMAILS: 'an error ocurred while updating emails'
+}
+
 const errorCodes = {
     tournamentErrors,
     teamErrors,
@@ -125,7 +133,8 @@ const errorCodes = {
     stageErrors,
     groupErrors,
     matchErrors,
-    OAuthErrors
+    OAuthErrors,
+    emailErrors
 }
 
 export default errorCodes
