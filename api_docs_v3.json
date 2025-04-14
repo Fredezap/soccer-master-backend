@@ -40,24 +40,12 @@
     "/api/admin/teams/create": {
       "post": {
         "summary": "/api/admin/teams/create",
-        "responses": {
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "text/html": {
-                "schema": {
-                  "type": "string",
-                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/teams/create</pre>\n</body>\n</html>\n"
-                }
-              }
-            }
-          }
-        },
+        "responses": {},
         "tags": []
       }
     },
     "/api/admin/teams/update": {
-      "patch": {
+      "post": {
         "summary": "/api/admin/teams/update",
         "responses": {},
         "tags": []
@@ -245,6 +233,121 @@
         "tags": []
       }
     },
+    "/api/admin/video/create": {
+      "post": {
+        "summary": "/api/admin/video/create",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/video/delete": {
+      "post": {
+        "summary": "/api/admin/video/delete",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/video/get-all-by-tournament": {
+      "post": {
+        "summary": "/api/admin/video/get-all-by-tournament",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/email-sender/update-emails": {
+      "post": {
+        "summary": "/api/admin/email-sender/update-emails",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "newEmails": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "email"
+                      ]
+                    },
+                    "example": [
+                      {
+                        "id": "new-1743409242671",
+                        "email": "fede@gmail.com"
+                      }
+                    ]
+                  },
+                  "removedEmails": {
+                    "type": "array",
+                    "items": {},
+                    "example": [
+                      null
+                    ]
+                  },
+                  "token": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzZEBhc2QuY29tIiwiaWF0IjoxNzQyMjIwNzI0LCJleHAiOjE3NDQ4NDg3MjR9.EoVbI-7nyqNd8NHMxBhy8NUA9GYF-YK4r-J-NSOy9Gg"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "user"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "asd@asd.com"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string",
+                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/email-sender/update-emails</pre>\n</body>\n</html>\n"
+                }
+              }
+            }
+          }
+        },
+        "tags": [],
+        "security": [
+          {
+            "authorization": []
+          }
+        ]
+      }
+    },
+    "/api/admin/validate-access": {
+      "post": {
+        "summary": "/api/admin/validate-access",
+        "responses": {},
+        "tags": []
+      },
+      "patch": {
+        "summary": "/api/admin/validate-access",
+        "responses": {},
+        "tags": []
+      }
+    },
     "/api/auth/login": {
       "post": {
         "summary": "/api/auth/login",
@@ -265,5 +368,14 @@
     {
       "url": "http://localhost:3001"
     }
-  ]
+  ],
+  "components": {
+    "securitySchemes": {
+      "authorization": {
+        "name": "authorization",
+        "in": "header",
+        "type": "apiKey"
+      }
+    }
+  }
 }

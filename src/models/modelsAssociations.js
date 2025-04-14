@@ -6,6 +6,7 @@ import { Match } from './matchModel.js'
 import { TeamGroup } from './teamGroupModel.js'
 import { Tournament } from './tournamentModel.js'
 import { Video } from './videosModel.js'
+import { Email } from './emailsModel.js'
 
 export const modelsAssociations = () => {
     Tournament.hasMany(Team, { foreignKey: 'tournamentId', onDelete: 'CASCADE' })
@@ -42,4 +43,7 @@ export const modelsAssociations = () => {
 
     Tournament.hasMany(Video, { foreignKey: 'tournamentId' })
     Video.belongsTo(Tournament, { foreignKey: 'tournamentId' })
+
+    Tournament.hasMany(Email, { foreignKey: 'tournamentId', onDelete: 'CASCADE' })
+    Email.belongsTo(Tournament, { foreignKey: 'tournamentId' })
 }

@@ -8,6 +8,7 @@ import { Player } from '../../../models/playerModel.js'
 import { Group } from '../../../models/groupModel.js'
 import { TeamGroup } from '../../../models/teamGroupModel.js'
 import { Video } from '../../../models/videosModel.js'
+import { Email } from '../../../models/emailsModel.js'
 
 const create = async({ name, date }) => {
     return await Tournament.create({ name, date })
@@ -35,61 +36,61 @@ const findOneByNameAndDate = async(values) => {
 }
 
 const findOneById = async(tournamentId) => {
-    return await Tournament.findByPk(tournamentId, {
-        include: [
-            {
-                model: Team,
-                include: [Player]
-            },
-            {
-                model: Stage,
-                include: [
-                    {
-                        model: Group,
-                        include: [Team]
-                    },
-                    Match
-                ]
-            }
-        ]
-    })
+    const tournament = await Tournament.findByPk(tournamentId)
+
+    if (!tournament) return null
+
+    const [Teams, Stages, Videos, Emails] = await Promise.all([
+        tournament.getTeams({
+            include: [
+                { model: Player },
+                {
+                    model: Match,
+                    as: 'LocalMatches',
+                    include: [{ model: Team, as: 'VisitorTeam' }]
+                },
+                {
+                    model: Match,
+                    as: 'VisitorMatches',
+                    include: [{ model: Team, as: 'LocalTeam' }]
+                }
+            ]
+        }),
+        tournament.getStages({
+            include: [
+                {
+                    model: Group,
+                    include: [
+                        {
+                            model: Team,
+                            through: { model: TeamGroup }
+                        }
+                    ]
+                },
+                {
+                    model: Match,
+                    include: [
+                        { model: Team, as: 'LocalTeam' },
+                        { model: Team, as: 'VisitorTeam' }
+                    ]
+                }
+            ]
+        }),
+        tournament.getVideos(),
+        tournament.getEmails()
+    ])
+
+    return {
+        ...tournament.toJSON(),
+        Teams,
+        Stages,
+        Videos,
+        Emails
+    }
 }
 
 const findAll = async() => {
-    return await Tournament.findAll({
-        include: [
-            {
-                model: Team,
-                include: [
-                    { model: Player }, // Jugadores del equipo
-                    { model: Match, as: 'LocalMatches', include: [{ model: Team, as: 'VisitorTeam' }] },
-                    { model: Match, as: 'VisitorMatches', include: [{ model: Team, as: 'LocalTeam' }] }
-                ]
-            },
-            {
-                model: Stage,
-                include: [
-                    {
-                        model: Group,
-                        include: [
-                            {
-                                model: Team,
-                                through: { model: TeamGroup }
-                            }
-                        ]
-                    },
-                    {
-                        model: Match,
-                        include: [
-                            { model: Team, as: 'LocalTeam' },
-                            { model: Team, as: 'VisitorTeam' }
-                        ]
-                    }
-                ]
-            },
-            { model: Video }
-        ]
-    })
+    return await Tournament.findAll()
 }
 
 const update = async(data) => {

@@ -8,6 +8,7 @@ import priviteTournamentRouter from './priviteTournamentRouter.js'
 import teamRouter from './teamRouter.js'
 import fixtureRouter from './fixture/fixtureRouter.js'
 import videoRouter from './videoRouter.js'
+import emailSenderRouter from './emailSenderRouter.js'
 
 const adminRouter = express.Router()
 
@@ -27,6 +28,7 @@ adminRouter.use('/tournament-details', priviteTournamentRouter)
 adminRouter.use('/teams', teamRouter)
 adminRouter.use('/fixture', fixtureRouter)
 adminRouter.use('/video', videoRouter)
+adminRouter.use('/email-sender', emailSenderRouter)
 
 adminRouter.post('/validate-access', (req, res) => {
     res.status(200).json({})
