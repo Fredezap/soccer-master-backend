@@ -9,10 +9,8 @@ const checkImageIsValid = (req, res, next) => {
         // req.file = file
         const { file } = req
         if (file) {
-            console.log('SU GAT FYKE')
             if (file.fieldname === 'file' && file.mimetype) {
                 const isImageValid = isImage(file)
-                console.log('isImageValid:', isImageValid)
                 if (!isImageValid) {
                     const mimeType = file.mimetype
                     const type = mimeType.split('/')[1]

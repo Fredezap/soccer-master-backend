@@ -9,6 +9,7 @@ import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { createTransporter } from './emailConfig/emailConfig.js'
 
 const environment = process.env.NODE_ENV ? `.${process.env.NODE_ENV}` : ''
 dotenv.config({ path: `.env${environment}` })
@@ -37,5 +38,7 @@ expressOasGenerator.handleResponses(server, {
     alwaysServeDocs: true
 })
 expressOasGenerator.handleRequests()
+
+await createTransporter()
 
 export default server

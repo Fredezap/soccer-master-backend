@@ -123,7 +123,15 @@ const emailErrors = {
     INVALID_EMAIL_FORMAT: 'invalid email format',
     REMOVED_EMAILS_NOT_FOUND: 'removed emails not found',
     SOME_EMAIL_ALREADY_EXIST: 'some email already exist',
-    AN_ERROR_OCURRED_WHILE_UPDATING_EMAILS: 'an error ocurred while updating emails'
+    AN_ERROR_OCURRED_WHILE_UPDATING_EMAILS: 'an error ocurred while updating emails',
+    AN_ERROR_OCURRED_WHILE_SENDING_EMAIL: 'an error ocurred while updating emails',
+    NAME_IS_REQUIRED: 'Name is required',
+    NAME_MUST_BE_AT_LEAST_3_CHARACTERS_LONG: 'Name must be at least 3 characters long',
+    EMAIL_IS_REQUIRED: 'Email is required',
+    INVALID_EMAIL: 'Invalid email',
+    SUBJECT_IS_REQUIRED: 'Subject is required',
+    EMAIL_MESSAGE_IS_REQUIRED: 'Email message is required',
+    EMAIL_MASSAGE_TOO_LONG: 'Email massage too long. Maximum 2000 characters allowed'
 }
 
 const errorCodes = {

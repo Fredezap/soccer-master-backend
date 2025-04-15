@@ -76,19 +76,16 @@ const getAllByTournamentId = async(tournamentId) => {
 const update = async({ logoUrl, file, teamId, name }, { transaction = null }) => {
     // Chequeamos el tipo de datos, ya que al estar recibiendo los datos con 'Content-Type': 'multipart/form-data',
     // recibimos los values en el back convertidos a string
-    console.log('LOGO URL', logoUrl)
     if (logoUrl === 'null') logoUrl = null // Conviertimos null de string a object
 
     if (file) {
         const filename = file.path
-        console.log('FILENAME: ', filename)
         if (!fs.existsSync(filename)) {
-            console.log('FILENAME ERROR SYNC: ')
             throw new Error(ERROR_WHILE_SAVING_IMAGE)
         }
         logoUrl = filename
     }
-    console.log('LOGO URL ACTUALIZADO', logoUrl)
+
     return await Team.update(
         { name, logoUrl },
         { where: { teamId }, transaction }
@@ -115,13 +112,10 @@ const cleanUpOldImages = async() => {
 
         // Iterar sobre los archivos en la carpeta 'uploads' y eliminar los que no estén en uso
         const filesInUploadDir = fs.readdirSync(uploadDir)
-        console.log('filesInUploadDir', filesInUploadDir)
-        console.log('teamImages', teamImages)
+
         filesInUploadDir.forEach(file => {
             if (!teamImages.includes(file)) {
-                console.log('FILE', file)
                 const filePath = path.join(uploadDir, file)
-                console.log('filePath', filePath)
                 fs.unlinkSync(filePath)
             }
         })
