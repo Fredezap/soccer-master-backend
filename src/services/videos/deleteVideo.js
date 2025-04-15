@@ -7,8 +7,6 @@ const deleteVideo = async(req, res) => {
     const { tournamentId, videoId, video: { imageUrl } } = req.body
     try {
         await videoService.destroy({ videoId })
-        console.log('imageUrl', imageUrl)
-
         await videoService.deleteImage(imageUrl)
         const dbVideos = await videoService.getAllByTournamentId(tournamentId)
         return res.status(StatusCodes.OK).json({ dbVideos })

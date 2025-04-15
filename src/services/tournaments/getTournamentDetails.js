@@ -6,9 +6,7 @@ const getTournamentDetails = async(req, res) => {
     const { AN_ERROR_OCURRED_GETTING_TOURNAMENT_DETAILS } = errorCodes.tournamentErrors
     try {
         const { tournamentId } = req.body
-        console.log(tournamentId)
         const tournamentDetails = await tournamentService.findOneById(tournamentId)
-        // console.log(tournamentDetails)
         return res.status(StatusCodes.OK).json({ tournamentDetails })
     } catch (err) {
         const errors = [{ msg: AN_ERROR_OCURRED_GETTING_TOURNAMENT_DETAILS }]
