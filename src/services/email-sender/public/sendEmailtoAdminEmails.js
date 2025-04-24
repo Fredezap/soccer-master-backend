@@ -31,6 +31,7 @@ const sendEmailtoAdminEmails = async(req, res) => {
         await sendEmail(mailOptions)
         return res.status(StatusCodes.OK).send()
     } catch (err) {
+        console.log('ERROR: ', err)
         const error = [{ msg: AN_ERROR_OCURRED_WHILE_SENDING_EMAIL }]
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ error })
     }

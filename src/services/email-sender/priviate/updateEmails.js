@@ -7,6 +7,7 @@ const { AN_ERROR_OCURRED_WHILE_UPDATING_EMAILS } = errorCodes.emailErrors
 const updateEmails = async(req, res) => {
     try {
         const { newEmails, removedEmails, tournamentId } = req.body
+
         if (Array.isArray(newEmails) && newEmails.length > 0) {
             const created = await emailSenderService.create(newEmails, tournamentId)
         }
@@ -23,3 +24,8 @@ const updateEmails = async(req, res) => {
 }
 
 export default updateEmails
+
+// Deivid, aqui te habla el Fede de tu consciencia.
+// Se que te lo puedes llegar a tomar en broma, pero esta vez es importante. Pasaba a recordarte que hoy metemos algo de musica y unos buenos mates, quiza faltarian unas tortafritas, pero lo podemos reemplazar por otra cosa.
+
+// Pd: acordate de imprimirme el formulario si podes gatin.

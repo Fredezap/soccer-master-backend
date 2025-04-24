@@ -86,7 +86,9 @@ const matchErrors = {
     CANNOT_DEFINE_PENALTY_IF_NO_DRAW: 'You cannot define the penalty result if the match result is not a draw',
     PENALTY_RESULT_MUST_BE_DIFFERENT: 'penalty result must be different',
     RESULTS_MUST_BE_0_OR_GREATER: 'Results must be 0 or greater',
-    DEFINE_THE_TEAMS_BEFORE_SETTING_THE_RESULTS: 'define the teams before setting the results'
+    DEFINE_THE_TEAMS_BEFORE_SETTING_THE_RESULTS: 'define the teams before setting the results',
+    TEMAS_CAN_NOT_BE_THE_SAME_TO_MAKE_A_MATCH: 'Teams can not be the same to make a match',
+    YOU_MUST_DEFINE_PENALTY_RESULTS_IF_MATCH_RESULT_IS_A_DRAW: 'You must define penalty results if match result is a draw'
 }
 
 const OAuthErrors = {
