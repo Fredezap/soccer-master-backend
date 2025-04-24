@@ -24,6 +24,7 @@ import { runValidateStageExistbyId, runValidateStageId } from './stagesRouter.js
 import editGroupMatch from '../../services/fixture/matches/editGroupMatch.js'
 import checkDatePlusPastDate from '../../middlewares/matches/checkDatePlusPastDate.js'
 import editGroupMatchScore from '../../services/fixture/matches/editGroupMatchScore.js'
+import validateNoSameTeams from '../../middlewares/teams/validateNoSameTeams.js'
 
 const matchesRouter = express.Router()
 
@@ -55,6 +56,7 @@ const runValidateKnockoutMatchKnownTeamsEdit = runValidations([
     validateTeamScore('visitorTeamScore'),
     validateTeamScore('localTeamPenaltyScore'),
     validateTeamScore('visitorTeamPenaltyScore'),
+    validateNoSameTeams,
     validateStageId,
     checkIfStageExistById,
     validateMatchId,
