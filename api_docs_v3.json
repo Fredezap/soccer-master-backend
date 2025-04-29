@@ -23,6 +23,13 @@
         "tags": []
       }
     },
+    "/api/email-sender/send-email": {
+      "post": {
+        "summary": "/api/email-sender/send-email",
+        "responses": {},
+        "tags": []
+      }
+    },
     "/api/admin/tournament-details/create": {
       "post": {
         "summary": "/api/admin/tournament-details/create",
@@ -254,49 +261,46 @@
         "tags": []
       }
     },
-    "/api/admin/email-sender/update-emails": {
+    "/api/admin/contact/set-emails": {
       "post": {
-        "summary": "/api/admin/email-sender/update-emails",
+        "summary": "/api/admin/contact/set-emails",
+        "responses": {},
+        "tags": []
+      }
+    },
+    "/api/admin/contact/set-contact-details": {
+      "post": {
+        "summary": "/api/admin/contact/set-contact-details",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "newEmails": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "id": {
-                          "type": "string"
-                        },
-                        "email": {
-                          "type": "string"
-                        }
+                  "values": {
+                    "type": "object",
+                    "properties": {
+                      "address": {
+                        "type": "string",
+                        "example": ""
                       },
-                      "required": [
-                        "id",
-                        "email"
-                      ]
-                    },
-                    "example": [
-                      {
-                        "id": "new-1743409242671",
-                        "email": "fede@gmail.com"
+                      "email": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "phone": {
+                        "type": "string",
+                        "example": ""
                       }
-                    ]
+                    }
                   },
-                  "removedEmails": {
-                    "type": "array",
-                    "items": {},
-                    "example": [
-                      null
-                    ]
+                  "tournamentId": {
+                    "type": "number",
+                    "example": 9
                   },
                   "token": {
                     "type": "string",
-                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzZEBhc2QuY29tIiwiaWF0IjoxNzQyMjIwNzI0LCJleHAiOjE3NDQ4NDg3MjR9.EoVbI-7nyqNd8NHMxBhy8NUA9GYF-YK4r-J-NSOy9Gg"
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzZEBhc2QuY29tIiwiaWF0IjoxNzQ1NDg2NDY5LCJleHAiOjE3NDgxMTQ0Njl9.QtiLZNAfKfejX91uuNK0f6-K2o7kSZrrI3mp8UW-jxI"
                   },
                   "role": {
                     "type": "string",
@@ -322,7 +326,7 @@
               "text/html": {
                 "schema": {
                   "type": "string",
-                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/email-sender/update-emails</pre>\n</body>\n</html>\n"
+                  "example": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n<title>Error</title>\n</head>\n<body>\n<pre>Cannot POST /api/admin/contact/set-contact-details</pre>\n</body>\n</html>\n"
                 }
               }
             }

@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import errorCodes from '../../../constants/errors/errorCodes.js'
 import { sendEmail } from './sendEmail.js'
-const { AN_ERROR_OCURRED_WHILE_SENDING_EMAIL } = errorCodes.emailErrors
+const { AN_ERROR_OCURRED_WHILE_SENDING_EMAIL } = errorCodes.contactErrors
 
 const sendEmailtoAdminEmails = async(req, res) => {
     const { userEmail, userName, emailSubject, emailContent, adminAllowedEmails } = req.body

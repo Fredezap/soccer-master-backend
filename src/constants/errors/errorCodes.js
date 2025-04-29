@@ -120,9 +120,10 @@ const videoErrors = {
     ERROR_WHILE_GETTING_VIDEOS: 'error while getting videos'
 }
 
-const emailErrors = {
+const contactErrors = {
     INVALID_EMAILS_LIST: 'invalid emails list',
     INVALID_EMAIL_FORMAT: 'invalid email format',
+    INVALID_PHONE_NUMBER: 'invalid phone number',
     REMOVED_EMAILS_NOT_FOUND: 'removed emails not found',
     SOME_EMAIL_ALREADY_EXIST: 'some email already exist',
     AN_ERROR_OCURRED_WHILE_UPDATING_EMAILS: 'an error ocurred while updating emails',
@@ -133,7 +134,8 @@ const emailErrors = {
     INVALID_EMAIL: 'Invalid email',
     SUBJECT_IS_REQUIRED: 'Subject is required',
     EMAIL_MESSAGE_IS_REQUIRED: 'Email message is required',
-    EMAIL_MASSAGE_TOO_LONG: 'Email massage too long. Maximum 2000 characters allowed'
+    EMAIL_MASSAGE_TOO_LONG: 'Email massage too long. Maximum 2000 characters allowed',
+    AN_ERROR_OCURRED_WHILE_SETTING_CONTACT_DETAILS: 'An error ocurred while setting contact details'
 }
 
 const errorCodes = {
@@ -144,7 +146,7 @@ const errorCodes = {
     groupErrors,
     matchErrors,
     OAuthErrors,
-    emailErrors
+    contactErrors
 }
 
 export default errorCodes

@@ -1,8 +1,8 @@
 import { check } from 'express-validator'
-import errorCodes from '../../constants/errors/errorCodes.js'
-import emailSenderService from '../../services/email-sender/common/emailSenderService.js'
+import errorCodes from '../../../constants/errors/errorCodes.js'
+import emailSenderService from '../../../services/contact/common/emailSenderService.js'
 
-const { INVALID_EMAILS_LIST, INVALID_EMAIL_FORMAT, REMOVED_EMAILS_NOT_FOUND, SOME_EMAIL_ALREADY_EXIST } = errorCodes.emailErrors
+const { INVALID_EMAILS_LIST, INVALID_EMAIL_FORMAT, REMOVED_EMAILS_NOT_FOUND, SOME_EMAIL_ALREADY_EXIST } = errorCodes.contactErrors
 
 // This function will check if email array is valid
 const validateEmailsData = (fieldName) => {

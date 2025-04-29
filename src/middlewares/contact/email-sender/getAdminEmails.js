@@ -1,10 +1,9 @@
 import { check } from 'express-validator'
-import errorCodes from '../../constants/errors/errorCodes.js'
-import teamService from '../../services/teams/common/teamService.js'
-import emailSenderService from '../../services/email-sender/common/emailSenderService.js'
-import tournamentService from '../../services/tournaments/common/tournamentService.js'
+import errorCodes from '../../../constants/errors/errorCodes.js'
+import emailSenderService from '../../../services/contact/common/emailSenderService.js'
+import tournamentService from '../../../services/tournaments/common/tournamentService.js'
 
-const { AN_ERROR_OCURRED_WHILE_SENDING_EMAIL } = errorCodes.emailErrors
+const { AN_ERROR_OCURRED_WHILE_SENDING_EMAIL } = errorCodes.contactErrors
 
 const getAdminEmails = check('tournamentId')
     .exists()

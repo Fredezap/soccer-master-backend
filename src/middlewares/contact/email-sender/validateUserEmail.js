@@ -1,7 +1,7 @@
 import { check } from 'express-validator'
-import errorCodes from '../../constants/errors/errorCodes.js'
+import errorCodes from '../../../constants/errors/errorCodes.js'
 
-const { EMAIL_IS_REQUIRED, INVALID_EMAIL } = errorCodes.emailErrors
+const { EMAIL_IS_REQUIRED, INVALID_EMAIL } = errorCodes.contactErrors
 
 const validateUserEmail = check('userEmail')
     .exists({ checkFalsy: true }).withMessage(EMAIL_IS_REQUIRED)
