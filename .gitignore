@@ -11,3 +11,4 @@ api_docs.json
 /config
 /uploads
 token.json
+.gitignore
