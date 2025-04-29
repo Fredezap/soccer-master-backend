@@ -3,12 +3,9 @@ import { Tournament } from '../../../models/tournamentModel.js'
 import { sequelize } from '../../../database/connection.js'
 import { Match } from '../../../models/matchModel.js'
 import { Team } from '../../../models/teamModel.js'
-import { Stage } from '../../../models/stageModel.js'
 import { Player } from '../../../models/playerModel.js'
 import { Group } from '../../../models/groupModel.js'
 import { TeamGroup } from '../../../models/teamGroupModel.js'
-import { Video } from '../../../models/videosModel.js'
-import { Email } from '../../../models/emailsModel.js'
 
 const create = async({ name, date }) => {
     return await Tournament.create({ name, date })
@@ -40,7 +37,7 @@ const findOneById = async(tournamentId) => {
 
     if (!tournament) return null
 
-    const [Teams, Stages, Videos, Emails] = await Promise.all([
+    const [Teams, Stages, Videos, Emails, Contact] = await Promise.all([
         tournament.getTeams({
             include: [
                 { model: Player },
@@ -77,7 +74,8 @@ const findOneById = async(tournamentId) => {
             ]
         }),
         tournament.getVideos(),
-        tournament.getEmails()
+        tournament.getEmails(),
+        tournament.getContact()
     ])
 
     return {
@@ -85,7 +83,8 @@ const findOneById = async(tournamentId) => {
         Teams,
         Stages,
         Videos,
-        Emails
+        Emails,
+        Contact
     }
 }
 

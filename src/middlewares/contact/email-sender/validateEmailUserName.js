@@ -1,7 +1,7 @@
 import { check } from 'express-validator'
-import errorCodes from '../../constants/errors/errorCodes.js'
+import errorCodes from '../../../constants/errors/errorCodes.js'
 
-const { NAME_IS_REQUIRED, NAME_MUST_BE_AT_LEAST_3_CHARACTERS_LONG } = errorCodes.emailErrors
+const { NAME_IS_REQUIRED, NAME_MUST_BE_AT_LEAST_3_CHARACTERS_LONG } = errorCodes.contactErrors
 
 const validateEmailUserName = check('userName', NAME_IS_REQUIRED)
     .exists({ checkFalsy: true }).withMessage(NAME_IS_REQUIRED)

@@ -7,6 +7,7 @@ import { TeamGroup } from './teamGroupModel.js'
 import { Tournament } from './tournamentModel.js'
 import { User } from './userModel.js'
 import { Email } from './emailsModel.js'
+import { Contact } from './contactModel.js'
 
 export const modelsExportations = {
     Player,
@@ -17,5 +18,6 @@ export const modelsExportations = {
     TeamGroup,
     Tournament,
     User,
-    Email
+    Email,
+    Contact
 }
