@@ -2,7 +2,6 @@
 import { Contact } from '../../../models/contactModel.js'
 
 const set = async(details, tournamentId) => {
-    console.log('DETAILS: ', details, tournamentId)
     await Contact.upsert({
         ...details,
         tournamentId

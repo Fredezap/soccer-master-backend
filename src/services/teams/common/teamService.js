@@ -74,8 +74,6 @@ const getAllByTournamentId = async(tournamentId) => {
 }
 
 const update = async({ logoUrl, file, teamId, name }, { transaction = null }) => {
-    // Chequeamos el tipo de datos, ya que al estar recibiendo los datos con 'Content-Type': 'multipart/form-data',
-    // recibimos los values en el back convertidos a string
     if (logoUrl === 'null') logoUrl = null // Conviertimos null de string a object
 
     if (file) {
@@ -102,7 +100,6 @@ const cleanUpOldImages = async() => {
             const imageName = logoUrl.replace('uploads/team-images/', '')
             return imageName
         })
-        // todo: Revisar esto, xq elimina imagenes que no deberia?
 
         // Ruta para acceder a la carpeta 'uploads'
         const __filename = fileURLToPath(import.meta.url)

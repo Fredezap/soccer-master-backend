@@ -81,10 +81,6 @@ groupsRouter.post('/delete',
     deleteGroup
 )
 
-// todo: si se elimina un equipo del grupo se deberia eliminar en cascada, los partidos relacionados no?
-// todo: ya que si el equipo no existe mas en el grupo, no tendria sentido que existan partidos asociados al mismo
-// todo: y a su vez, se deberia eliminar (restar, sumar, etc) los putos asociados a los partidos jugados?
-// todo: tambien si se elimina un partido (matchesRouter), se deberian descontar los puntos asociados al mismo
 groupsRouter.post('/delete-team-group',
     runValidateTeamAndGroupIds,
     deleteTeamGroupRecord

@@ -16,7 +16,6 @@ const setEmails = async(req, res) => {
             const emailIdsArray = removedEmails.map(email => email.emailId)
             const removed = await emailSenderService.destroy(emailIdsArray)
         }
-        // const allTournaments = await tournamentService.findAll()
         return res.status(StatusCodes.OK).json({})
     } catch (err) {
         const errors = [{ msg: AN_ERROR_OCURRED_WHILE_UPDATING_EMAILS }]

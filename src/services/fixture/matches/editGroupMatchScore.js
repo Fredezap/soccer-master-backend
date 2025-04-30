@@ -177,8 +177,6 @@ const editGroupMatchScore = async(req, res) => {
                 await localTeamGroup.reload({ transaction })
                 await visitorTeamGroup.reload({ transaction })
 
-                // const localTeamGroupUpdated = await teamGroupService.getOneByGroupIdAndTeamId({ groupId, teamId: localTeamId, transaction })
-                // const visitorTeamGroupUpdated = await teamGroupService.getOneByGroupIdAndTeamId({ groupId, teamId: visitorTeamId, transaction })
                 if (newResult === 'LOCAL_WON') {
                     await editTeamGroup(localTeamGroup, wonPoints, WON, transaction)
                     await editTeamGroup(visitorTeamGroup, lostPoints, LOST, transaction)
