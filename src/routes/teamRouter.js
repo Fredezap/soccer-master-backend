@@ -14,7 +14,6 @@ import validateTournamentExist from '../middlewares/tournament-details/validateT
 import getAllTeamsByTournamentId from '../services/teams/getAllTeamsByTournamentId.js'
 import checkImageIsValid from '../middlewares/common/checkImageIsValid.js'
 import multer from 'multer'
-import printRequest from '../utils/printRequest.js'
 
 const teamRouter = express.Router()
 
@@ -39,7 +38,6 @@ const runValidateTeamExist = runValidations([
 
 teamRouter.post('/create',
     upload.single('file'),
-    // deberia ser upload.single('file') pero da error
     runValidateTeamValues,
     runValidateTournament,
     capitalizeTeamName,
@@ -51,8 +49,6 @@ teamRouter.post('/create',
 
 teamRouter.post('/update',
     upload.single('file'),
-    // printRequest,
-    // deberia ser upload.single('file') pero da error
     runValidateTeamValues,
     runValidateTournament,
     capitalizeTeamName,

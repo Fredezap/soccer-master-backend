@@ -38,24 +38,9 @@ const create = async(req) => {
     }
 }
 
-// const getOneByName = async(name, tournamentId) => {
-//     const response = await Team.findOne({ where: { name, tournamentId } })
-//     return response
-// }
-
 const findOneById = async(id) => {
     return await Video.findByPk(id)
 }
-
-// const getAll = async() => {
-//     return await Team.findAll({
-//         include: [
-//             {
-//                 model: Player
-//             }
-//         ]
-//     })
-// }
 
 const getAllByTournamentId = async(tournamentId) => {
     return await Video.findAll({
@@ -64,26 +49,6 @@ const getAllByTournamentId = async(tournamentId) => {
         }
     })
 }
-
-// const update = async({ logoUrl, file, teamId, name }, { transaction = null }) => {
-//     // Chequeamos el tipo de datos, ya que al estar recibiendo los datos con 'Content-Type': 'multipart/form-data',
-//     // recibimos los values en el back convertidos a string
-//     if (logoUrl === 'null') logoUrl = null // Conviertimos null de string a object
-
-//     if (file) {
-//         const filename = file.path
-
-//         if (!fs.existsSync(filename)) {
-//             throw new Error(ERROR_WHILE_SAVING_IMAGE)
-//         }
-//         logoUrl = filename
-//     }
-
-//     return await Team.update(
-//         { name, logoUrl },
-//         { where: { teamId }, transaction }
-//     )
-// }
 
 const deleteImage = async(imageUrl) => {
     try {
@@ -114,11 +79,8 @@ const destroy = async({ videoId }) => {
 
 const videoService = {
     create,
-    // getOneByName,
-    // getAll,
     getAllByTournamentId,
     findOneById,
-    // update,
     destroy,
     deleteImage
 }

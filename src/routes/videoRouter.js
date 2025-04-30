@@ -29,7 +29,6 @@ const runValidateTournament = runValidations([
 
 videoRouter.post('/create',
     upload.single('file'),
-    // deberia ser upload.single('file') pero da error
     runValidateVideoValues,
     checkImageIsValid,
     createVideo

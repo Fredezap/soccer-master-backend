@@ -5,8 +5,6 @@ import { isImage } from '../../middlewares/common/isImage.js'
 const checkImageIsValid = (req, res, next) => {
     const { LOGO_IMAGE_NOT_VALID, ERROR_WHILE_CHECKING_LOGO_IMAGE } = errorCodes.teamErrors
     try {
-        // const file = req.files?.[0]
-        // req.file = file
         const { file } = req
         if (file) {
             if (file.fieldname === 'file' && file.mimetype) {

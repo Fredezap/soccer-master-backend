@@ -38,8 +38,7 @@ const updateTeam = async(req, res) => {
         const { file } = req
         await teamService.update({ logoUrl, file, teamId, name }, { transaction })
         await transaction.commit()
-        // FILENAME:  uploads/team-images/4f866fc4105752c2e957907289ebe55a
-        // LOGO URL ACTUALIZADO uploads/team-images/4f866fc4105752c2e957907289ebe55a
+
         await teamService.cleanUpOldImages()
 
         return res.status(StatusCodes.OK).json({ success: true })
