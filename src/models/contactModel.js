@@ -24,6 +24,14 @@ export const Contact = sequelize.define('Contact', {
         type: DataTypes.STRING,
         allowNull: true
     },
+    footerContactWebPage: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    footerContactInstagram: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     tournamentId: {
         type: DataTypes.INTEGER,
         allowNull: false,
