@@ -49,6 +49,21 @@ export const TeamGroup = sequelize.define('TeamGroup', {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
+    },
+    goalsFor: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+    },
+    goalsAgainst: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false
+    },
+    goalDifference: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false
     }
 })
 
