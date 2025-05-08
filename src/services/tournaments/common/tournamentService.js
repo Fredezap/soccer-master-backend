@@ -37,7 +37,7 @@ const findOneById = async(tournamentId) => {
 
     if (!tournament) return null
 
-    const [Teams, Stages, Videos, Emails, Contact] = await Promise.all([
+    let [Teams, Stages, Videos, Emails, Contact] = await Promise.all([
         tournament.getTeams({
             include: [
                 { model: Player },
@@ -60,7 +60,14 @@ const findOneById = async(tournamentId) => {
                     include: [
                         {
                             model: Team,
-                            through: { model: TeamGroup }
+                            through: {
+                                model: TeamGroup
+                            },
+                            order: [
+                                [TeamGroup, 'totalTeamPoints', 'DESC'],
+                                [TeamGroup, 'goalDifference', 'DESC'],
+                                [TeamGroup, 'goalsFor', 'DESC']
+                            ]
                         }
                     ]
                 },
@@ -77,6 +84,41 @@ const findOneById = async(tournamentId) => {
         tournament.getEmails(),
         tournament.getContact()
     ])
+
+    Stages = Stages.map(stage => {
+        if (stage.type !== 'group') return stage
+
+        const updatedGroups = stage.Groups.map(group => {
+            const sortedTeams = group.Teams
+                .map(team => ({
+                    ...team.get({ plain: true }),
+                    TeamGroup: team.TeamGroup.get({ plain: true })
+                }))
+                .sort((a, b) => {
+                    if (b.TeamGroup.totalTeamPoints !== a.TeamGroup.totalTeamPoints) { return b.TeamGroup.totalTeamPoints - a.TeamGroup.totalTeamPoints }
+                    if (b.TeamGroup.goalDifference !== a.TeamGroup.goalDifference) { return b.TeamGroup.goalDifference - a.TeamGroup.goalDifference }
+                    return b.TeamGroup.goalsFor - a.TeamGroup.goalsFor
+                })
+
+            // Log ordenado
+            console.log(`Equipos ordenados en grupo "${group.name}":`)
+            sortedTeams.forEach((team, i) => {
+                const { name } = team
+                const { totalTeamPoints, goalDifference, goalsFor } = team.TeamGroup
+                console.log(`${i + 1}. ${name} - Pts: ${totalTeamPoints}, DG: ${goalDifference}, GF: ${goalsFor}`)
+            })
+
+            return {
+                ...group.get({ plain: true }),
+                Teams: sortedTeams
+            }
+        })
+
+        return {
+            ...stage.get({ plain: true }),
+            Groups: updatedGroups
+        }
+    })
 
     return {
         ...tournament.toJSON(),
