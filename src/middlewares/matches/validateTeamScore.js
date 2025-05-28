@@ -7,5 +7,6 @@ const validateTeamScore = (fieldName) =>
     check(fieldName, INVALID_TEAM_SCORE)
         .optional({ checkFalsy: true })
         .isNumeric()
+        .isInt({ min: 0 })
 
 export default validateTeamScore

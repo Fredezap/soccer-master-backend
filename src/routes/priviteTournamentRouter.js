@@ -5,8 +5,12 @@ import validateTournamentDate from '../middlewares/tournament-details/validateTo
 import { createTournament } from '../services/tournaments/createTournament.js'
 import updateTournamentDetails from '../services/tournaments/updateTournament.js'
 import validateTournamentExist from '../middlewares/tournament-details/validateTournamentExist.js'
+import checkMultipleImagesAreValid from '../middlewares/common/checkMultipleImagesAreValid.js'
+import multer from 'multer'
+import printRequest from '../utils/printRequest.js'
 
 const priviteTournamentRouter = express.Router()
+const upload = multer({ dest: 'uploads/tournament-images' })
 
 const runCreateValidations = runValidations([
     validateTournamentName,
@@ -24,8 +28,11 @@ priviteTournamentRouter.post('/create',
     createTournament
 )
 
-priviteTournamentRouter.patch('/update',
+priviteTournamentRouter.post('/update',
+    upload.array('files'),
+    printRequest,
     runUpdateValidations,
+    checkMultipleImagesAreValid,
     updateTournamentDetails
 )
 

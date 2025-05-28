@@ -50,7 +50,7 @@ const editMatch = async(req, res) => {
     }
 
     // chequeamos que si estar definido el resultado de penales, el resultado del partido sea un empate
-    const penaltyJustValidIfMatchResultIsADraw = localTeamScore === visitorTeamScore
+    const penaltyJustValidIfMatchResultIsADraw = (localTeamScore === visitorTeamScore) && (localTeamScore !== null && visitorTeamScore !== null)
     const penaltysAreNotDefined =
     (localTeamPenaltyScore === null || localTeamPenaltyScore === undefined || localTeamPenaltyScore === '') &&
     (visitorTeamPenaltyScore === null || visitorTeamPenaltyScore === undefined || visitorTeamPenaltyScore === '')

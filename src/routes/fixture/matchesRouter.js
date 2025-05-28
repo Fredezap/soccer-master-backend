@@ -25,6 +25,9 @@ import editGroupMatch from '../../services/fixture/matches/editGroupMatch.js'
 import checkDatePlusPastDate from '../../middlewares/matches/checkDatePlusPastDate.js'
 import editGroupMatchScore from '../../services/fixture/matches/editGroupMatchScore.js'
 import validateNoSameTeams from '../../middlewares/teams/validateNoSameTeams.js'
+import editKnockoutMatch from '../../services/fixture/matches/editKnockoutMatch.js'
+import printRequest from '../../utils/printRequest.js'
+import EditKnockoutMatchScore from '../../services/fixture/matches/editKnockoutMatchScore.js'
 
 const matchesRouter = express.Router()
 
@@ -39,9 +42,19 @@ const runValidateCreateGroupMatchData = runValidations([
     checkLocation
 ])
 
-const runValidateKnockoutMatchKnownTeams = runValidations([
+const runValidateKnockoutMatchKnownTeamsCreate = runValidations([
     validateTeamId('localTeamId'),
     validateTeamId('visitorTeamId'),
+    validateStageId,
+    checkIfStageExistById,
+    checkDatePlusPastDate,
+    checkTime,
+    checkLocation
+])
+
+const runValidateKnockoutMatchUnknownTeamsCreate = runValidations([
+    validateTeamPlaceholder('localTeamPlaceholder'),
+    validateTeamPlaceholder('visitorTeamPlaceholder'),
     validateStageId,
     checkIfStageExistById,
     checkDatePlusPastDate,
@@ -52,10 +65,6 @@ const runValidateKnockoutMatchKnownTeams = runValidations([
 const runValidateKnockoutMatchKnownTeamsEdit = runValidations([
     validateTeamId('localTeamId'),
     validateTeamId('visitorTeamId'),
-    validateTeamScore('localTeamScore'),
-    validateTeamScore('visitorTeamScore'),
-    validateTeamScore('localTeamPenaltyScore'),
-    validateTeamScore('visitorTeamPenaltyScore'),
     validateNoSameTeams,
     validateStageId,
     checkIfStageExistById,
@@ -69,10 +78,6 @@ const runValidateKnockoutMatchKnownTeamsEdit = runValidations([
 const runValidateKnockoutMatchUnknownTeamsEdit = runValidations([
     validateTeamIdDoNotExist('localTeamId'),
     validateTeamIdDoNotExist('visitorTeamId'),
-    validateTeamScore('localTeamScore'),
-    validateTeamScore('visitorTeamScore'),
-    validateTeamScore('localTeamPenaltyScore'),
-    validateTeamScore('visitorTeamPenaltyScore'),
     validateStageId,
     checkIfStageExistById,
     validateMatchId,
@@ -80,6 +85,19 @@ const runValidateKnockoutMatchUnknownTeamsEdit = runValidations([
     checkDate,
     checkTime,
     checkLocation
+])
+
+const runValidateKnockoutMatchEditScore = runValidations([
+    validateTeamId('localTeamId'),
+    validateTeamId('visitorTeamId'),
+    validateMatchId,
+    validateMatchExist,
+    validateStageId,
+    checkIfStageExistById,
+    validateTeamScore('localTeamScore'),
+    validateTeamScore('visitorTeamScore'),
+    validateTeamScore('localTeamPenaltyScore'),
+    validateTeamScore('visitorTeamPenaltyScore')
 ])
 
 const runValidateGroupMatchEdit = runValidations([
@@ -107,16 +125,6 @@ const runValidateGroupMatchEditScore = runValidations([
     validateTeamScore('visitorTeamScore')
 ])
 
-const runValidateKnockoutMatchUnknownTeams = runValidations([
-    validateTeamPlaceholder('localTeamPlaceholder'),
-    validateTeamPlaceholder('visitorTeamPlaceholder'),
-    validateStageId,
-    checkIfStageExistById,
-    checkDatePlusPastDate,
-    checkTime,
-    checkLocation
-])
-
 const runValidateMatch = runValidations([
     validateMatchId,
     validateMatchExist
@@ -130,25 +138,31 @@ matchesRouter.post('/create-group-match',
 )
 
 matchesRouter.post('/create-knockout-match-known-teams',
-    runValidateKnockoutMatchKnownTeams,
+    runValidateKnockoutMatchKnownTeamsCreate,
     checkIfMatchAlreadyExistCreateKnownTeams,
     createMatch
 )
 
 matchesRouter.post('/create-knockout-match-unknown-teams',
-    runValidateKnockoutMatchUnknownTeams,
+    runValidateKnockoutMatchUnknownTeamsCreate,
     checkIfMatchAlreadyExistCreateUnknownTeams,
     createMatch
 )
 
 matchesRouter.post('/edit-known-teams',
     runValidateKnockoutMatchKnownTeamsEdit,
-    editMatch
+    editKnockoutMatch
 )
 
 matchesRouter.post('/edit-unknown-teams',
     runValidateKnockoutMatchUnknownTeamsEdit,
-    editMatch
+    editKnockoutMatch
+)
+
+matchesRouter.post('/edit-knockout-match-result',
+    printRequest,
+    runValidateKnockoutMatchEditScore,
+    EditKnockoutMatchScore
 )
 
 matchesRouter.post('/edit-group-match',
@@ -158,7 +172,6 @@ matchesRouter.post('/edit-group-match',
     editGroupMatch
 )
 
-// aca
 matchesRouter.post('/edit-group-match-score',
     runValidateGroupMatchEditScore,
     checkIfGroupStagePointsPerMatchAreSet,

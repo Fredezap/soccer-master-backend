@@ -3,7 +3,7 @@ import errorCodes from '../../../constants/errors/errorCodes.js'
 import stageService from './common/stageService.js'
 
 const checkIfGroupStagePointsPerMatchAreSet = async(req, res, next) => {
-    const { ERROR_WHILE_GETTING_STAGE_DATA } = errorCodes.stageErrors
+    const { ERROR_WHILE_GETTING_STAGE_DATA, PLEASE_SET_POINTS_PER_MATCH_BEFORE_EDITING } = errorCodes.stageErrors
 
     try {
         const { stageId } = req.body
@@ -12,7 +12,7 @@ const checkIfGroupStagePointsPerMatchAreSet = async(req, res, next) => {
         if (response.success) {
             return next()
         } else {
-            const errors = [{ msg: response.error }]
+            const errors = [{ msg: PLEASE_SET_POINTS_PER_MATCH_BEFORE_EDITING }]
             return res.status(StatusCodes.NOT_FOUND).json({ errors })
         }
     } catch (error) {
