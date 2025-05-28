@@ -16,6 +16,14 @@ export const Tournament = sequelize.define('Tournament', {
     name: {
         type: DataTypes.STRING(255),
         allowNull: true
+    },
+    tournamentLogo: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    mainBgImg: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 })
 

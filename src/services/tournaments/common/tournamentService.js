@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 import { Op } from 'sequelize'
 import { Tournament } from '../../../models/tournamentModel.js'
 import { sequelize } from '../../../database/connection.js'
@@ -6,19 +7,21 @@ import { Team } from '../../../models/teamModel.js'
 import { Player } from '../../../models/playerModel.js'
 import { Group } from '../../../models/groupModel.js'
 import { TeamGroup } from '../../../models/teamGroupModel.js'
+import fs from 'fs'
+import errorCodes from '../../../constants/errors/errorCodes.js'
+
+const { ERROR_SAVING_IMAGE } = errorCodes.tournamentErrors
 
 const create = async({ name, date }) => {
     return await Tournament.create({ name, date })
 }
 
-const findOneByNameAndDate = async(values) => {
-    const { date, name } = values
-
+const findAllByNameAndDate = async({ name, date }) => {
     const formattedDate = date instanceof Date
         ? date.toISOString().split('T')[0]
         : date.split('T')[0]
 
-    const existingTournament = await Tournament.findOne({
+    return await Tournament.findAll({
         where: {
             [Op.and]: [
                 sequelize.where(
@@ -29,7 +32,6 @@ const findOneByNameAndDate = async(values) => {
             ]
         }
     })
-    return existingTournament
 }
 
 const findOneById = async(tournamentId) => {
@@ -100,14 +102,6 @@ const findOneById = async(tournamentId) => {
                     return b.TeamGroup.goalsFor - a.TeamGroup.goalsFor
                 })
 
-            // Log ordenado
-            console.log(`Equipos ordenados en grupo "${group.name}":`)
-            sortedTeams.forEach((team, i) => {
-                const { name } = team
-                const { totalTeamPoints, goalDifference, goalsFor } = team.TeamGroup
-                console.log(`${i + 1}. ${name} - Pts: ${totalTeamPoints}, DG: ${goalDifference}, GF: ${goalsFor}`)
-            })
-
             return {
                 ...group.get({ plain: true }),
                 Teams: sortedTeams
@@ -135,22 +129,50 @@ const findAll = async() => {
 }
 
 const update = async(data) => {
-    const [updatedRows] = await Tournament.update(
-        data,
-        { where: { tournamentId: data.tournamentId } }
-    )
+    try {
+        const filesArray = data.files || []
 
-    if (updatedRows > 0) {
-        const tournamentResult = await Tournament.findByPk(data.tournamentId)
-        return { success: true, tournamentDetails: tournamentResult }
-    } else {
-        return { success: false }
+        const logoUrl = null
+        const bgUrl = null
+
+        // Tomamos los nombres que vinieron del body
+        const logoName = data.tournamentLogo
+        const bgName = data.mainBgImg
+
+        for (const file of filesArray) {
+            const { originalname, path } = file
+
+            if (originalname === logoName) {
+                if (!fs.existsSync(path)) throw new Error(ERROR_SAVING_IMAGE)
+                data.tournamentLogo = path
+            }
+
+            if (originalname === bgName) {
+                if (!fs.existsSync(path)) throw new Error(ERROR_SAVING_IMAGE)
+                data.mainBgImg = path
+            }
+        }
+
+        delete data.files
+        const [updatedRows] = await Tournament.update(
+            data,
+            { where: { tournamentId: data.tournamentId } }
+        )
+
+        if (updatedRows > 0) {
+            const tournamentResult = await Tournament.findByPk(data.tournamentId)
+            return { success: true, tournamentDetails: tournamentResult }
+        } else {
+            return { success: false }
+        }
+    } catch (err) {
+        throw err
     }
 }
 
 const tournamentService = {
     create,
-    findOneByNameAndDate,
+    findAllByNameAndDate,
     findOneById,
     findAll,
     update

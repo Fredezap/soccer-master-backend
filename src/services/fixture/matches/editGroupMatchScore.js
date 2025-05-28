@@ -19,8 +19,6 @@ const editGroupMatchScore = async(req, res) => {
         visitorTeamId,
         localTeamScore,
         visitorTeamScore,
-        localTeamPenaltyScore,
-        visitorTeamPenaltyScore,
         matchId
     } = req.body
 
@@ -61,18 +59,6 @@ const editGroupMatchScore = async(req, res) => {
     }
 
     const updateGoals = async(teamGroup, goalsFor, goalsAgainst, transaction) => {
-        console.log('EN updateGoals: ')
-        console.log('goalsFor: ', goalsFor)
-        console.log('goalsAgainst: ', goalsAgainst)
-
-        console.log('goles a favor previos totales: ', teamGroup.goalsFor)
-        console.log('resta de eso - los nuevos goles a favor: ', teamGroup.goalsFor + goalsFor)
-
-        console.log('goles en contra previos totales: ', teamGroup.goalsAgainst)
-        console.log('resta de eso - los nuevos goles en contra: ', teamGroup.goalsAgainst + goalsAgainst)
-
-        console.log('diferencia goles previos totales: ', teamGroup.goalDifference)
-        console.log('resta de eso - la diferencia de (goalsFor - goalsAgainst): ', teamGroup.goalDifference + (goalsFor - goalsAgainst))
         await teamGroupService.updateTeamGroup(
             teamGroup.teamGroupId,
             {
@@ -85,18 +71,6 @@ const editGroupMatchScore = async(req, res) => {
     }
 
     const removeGoals = async(teamGroup, goalsFor, goalsAgainst, transaction) => {
-        console.log('EN REMOVE GOALS: ')
-        console.log('goalsFor: ', goalsFor)
-        console.log('goalsAgainst: ', goalsAgainst)
-
-        console.log('goles a favor previos totales: ', teamGroup.goalsFor)
-        console.log('resta de eso - los nuevos goles a favor: ', teamGroup.goalsFor - goalsFor)
-
-        console.log('goles en contra previos totales: ', teamGroup.goalsAgainst)
-        console.log('resta de eso - los nuevos goles en contra: ', teamGroup.goalsAgainst - goalsAgainst)
-
-        console.log('diferencia goles previos totales: ', teamGroup.goalDifference)
-        console.log('resta de eso - la diferencia de (goalsFor - goalsAgainst): ', teamGroup.goalDifference - (goalsFor - goalsAgainst))
         await teamGroupService.updateTeamGroup(
             teamGroup.teamGroupId,
             {
@@ -106,12 +80,6 @@ const editGroupMatchScore = async(req, res) => {
             },
             transaction
         )
-    }
-
-    // Los penales deben ser nulos en fase de grupos
-    if (localTeamPenaltyScore || visitorTeamPenaltyScore) {
-        req.body.localTeamPenaltyScore = null
-        req.body.visitorTeamPenaltyScore = null
     }
 
     try {
@@ -136,7 +104,7 @@ const editGroupMatchScore = async(req, res) => {
             const m = await matchService.edit({ values })
             return res.status(StatusCodes.OK).json()
         }
-        // todo: ver porque dejo de funcionar, creo que sobre todo cuando cambio un resultado (gano el local y luego lo cambio a que perdio)
+
         // Si hay resultados definidos, procedemos a intentar guardar los datos con una transaccion
         // no solo en match, sino tambien en teamGroup.
 
@@ -169,33 +137,23 @@ const editGroupMatchScore = async(req, res) => {
             if (localTeamScore > visitorTeamScore) newResult = 'LOCAL_WON'
             else if (localTeamScore < visitorTeamScore) newResult = 'VISITOR_WON'
             else newResult = 'DRAW'
-            console.log('newResult: ', newResult)
-            console.log('previousResult: ', previousResult)
-            console.log(previousResult !== newResult)
 
             if (previousResultsUndefined && !areCurrentResultsUndefined) {
                 // Caso 1: se agregó un resultado nuevo
                 // Resultado nuevo y antes no había resultado (solo se suma)
-                console.log('Resultado nuevo y antes no había resultado (solo se suma')
                 await updateGoals(localTeamGroup, localTeamScore, visitorTeamScore, transaction)
                 await updateGoals(visitorTeamGroup, visitorTeamScore, localTeamScore, transaction)
             } else if (areCurrentResultsUndefined && !previousResultsUndefined) {
                 // Caso 2: se eliminó un resultado
                 // Resultado se borra (antes había, ahora no hay), entonces hay que restar goles y puntos
-                console.log('Resultado se borra (antes había, ahora no hay), entonces hay que restar goles y puntos')
                 await removeGoals(localTeamGroup, previousLocalScore, previousVisitorScore, transaction)
                 await removeGoals(visitorTeamGroup, previousVisitorScore, previousLocalScore, transaction)
             } else if (!areCurrentResultsUndefined && !previousResultsUndefined) {
                 // Caso 3: se actualizó un resultado existente
-                console.log('GOLES PREVIOS LOCAL: ', previousLocalScore)
-                console.log('GOLES NUEVOS LOCAL: ', localTeamScore)
-                console.log('GOLES PREVIOS VISITANTE: ', previousVisitorScore)
-                console.log('GOLES NUEVOS VISITANTE: ', visitorTeamScore)
 
                 if (previousLocalScore !== localTeamScore || previousVisitorScore !== visitorTeamScore) {
                     // Solo si hay un cambio real en los goles
                     // Descontamos los goles que habian sido seteadons en el partido viejo
-                    console.log('Descontamos los goles que habian sido seteadons en el partido viejo. Actualizamos los goles del nuevo partido')
                     await removeGoals(localTeamGroup, previousLocalScore, previousVisitorScore, transaction)
                     await removeGoals(visitorTeamGroup, previousVisitorScore, previousLocalScore, transaction)
                     // Actualizamos los goles del nuevo partido
@@ -217,7 +175,6 @@ const editGroupMatchScore = async(req, res) => {
                 // 🔹 Aplicar los nuevos puntos según el nuevo resultado
                 // 🔹 Aumentar en 1 el estado del resultado (WON, LOST, DRAWN) y setear resultado partido
                 if (newResult === 'LOCAL_WON') {
-                    console.log('SI RESULTADOS, PERO NO PREVIOS')
                     await editTeamGroup(localTeamGroup, wonPoints, WON, transaction)
                     await editTeamGroup(visitorTeamGroup, lostPoints, LOST, transaction)
                 } else if (newResult === 'VISITOR_WON') {
@@ -234,7 +191,6 @@ const editGroupMatchScore = async(req, res) => {
             }
 
             if (areCurrentResultsUndefined && !previousResultsUndefined) {
-                console.log('NO RESULTADOS, PERO SI PREVIOS')
                 // 🔹 Restar puntos anteriores, descontar en 1 el estado del resultado (WON, LOST, DRAWN) y setear resultado en null
                 if (previousResult === 'LOCAL_WON') {
                     await removePoints(localTeamGroup, wonPoints, WON, transaction)
@@ -254,7 +210,6 @@ const editGroupMatchScore = async(req, res) => {
 
             // 🔹 Si el resultado cambió, ajustar puntos
             if (previousResult !== newResult) {
-                console.log('SI RESULTADOS, Y SI PREVIOS DISTINTOS')
                 if (previousResult === 'LOCAL_WON') {
                     await removePoints(localTeamGroup, wonPoints, WON, transaction)
                     await removePoints(visitorTeamGroup, lostPoints, LOST, transaction)

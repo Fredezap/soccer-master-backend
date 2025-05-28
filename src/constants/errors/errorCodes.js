@@ -11,7 +11,10 @@ const tournamentErrors = {
     AN_ERROR_OCURRED_WHILE_UPDATING_TOURNAMENT_DETAILS: 'an error ocurred while updating tournament details',
     TOURNAMENT_DETAILS_ALREADY_EXIST: 'tournament details already exist, if you want you can update them',
     AN_ERROR_OCURRED_WHILE_GETTING_TOURNAMENTS: 'an error ocurred while getting tournaments',
-    TOURNAMENT_NOT_FOUNDED: 'tournament not funded'
+    TOURNAMENT_NOT_FOUNDED: 'tournament not funded',
+    IMAGE_NOT_VALID: 'Image(s) not valid',
+    ERROR_WHILE_CHECKING_IMAGES: 'Error while checking images',
+    ERROR_SAVING_IMAGE: 'Error while saving images(s)'
 }
 
 const teamErrors = {
@@ -84,6 +87,7 @@ const matchErrors = {
     YOU_CANNOT_EDIT_A_MATCH_THAT_HAS_RESULT_DEFINED: 'you cannot edit a match that has result defined',
     MATCH_RESULT_MUST_BE_DEFINED_BEFORE_SETTING_PENALTY_RESULTS: 'match result must be defined before setting penalty results',
     CANNOT_DEFINE_PENALTY_IF_NO_DRAW: 'You cannot define the penalty result if the match result is not a draw',
+    YOU_MUST_DEFINE_PENALTY_SCORES_IF_IT_IS_A_DRAW: 'You must define penalty scores if it is a draw',
     PENALTY_RESULT_MUST_BE_DIFFERENT: 'penalty result must be different',
     RESULTS_MUST_BE_0_OR_GREATER: 'Results must be 0 or greater',
     DEFINE_THE_TEAMS_BEFORE_SETTING_THE_RESULTS: 'define the teams before setting the results',
