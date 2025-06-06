@@ -15,6 +15,7 @@ const updateTournament = async(req, res) => {
         if (tournamentExistsError) {
             return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors: [{ msg: tournamentExistsError.message }] })
         }
+
         const result = await tournamentService.update(values)
         if (result.success) {
             return res.status(StatusCodes.OK).json({ tournamentDetails: result.tournamentDetails })

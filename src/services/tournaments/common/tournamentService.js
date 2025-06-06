@@ -12,8 +12,58 @@ import errorCodes from '../../../constants/errors/errorCodes.js'
 
 const { ERROR_SAVING_IMAGE } = errorCodes.tournamentErrors
 
-const create = async({ name, date }) => {
-    return await Tournament.create({ name, date })
+const checkImageData = (data) => {
+    const filesArray = data.files || []
+
+    const logoUrl = null
+    const bgUrl = null
+
+    // Tomamos los nombres que vinieron del body
+    const logoName = data.tournamentLogo
+    const bgName = data.mainBgImg
+
+    for (const file of filesArray) {
+        const { originalname, path } = file
+
+        if (originalname === logoName) {
+            if (!fs.existsSync(path)) throw new Error(ERROR_SAVING_IMAGE)
+            data.tournamentLogo = path
+        }
+
+        if (originalname === bgName) {
+            if (!fs.existsSync(path)) throw new Error(ERROR_SAVING_IMAGE)
+            data.mainBgImg = path
+        }
+    }
+
+    delete data.files
+    return data
+}
+const create = async(data) => {
+    const checkedData = checkImageData(data)
+    delete checkedData.tournamentId
+    return await Tournament.create({ ...checkedData })
+}
+
+const update = async(data) => {
+    try {
+        console.log('data en update: ', data)
+        const checkedData = checkImageData(data)
+        console.log('checkedData en update: ', checkedData)
+        const [updatedRows] = await Tournament.update(
+            checkedData,
+            { where: { tournamentId: data.tournamentId } }
+        )
+
+        if (updatedRows > 0) {
+            const tournamentResult = await Tournament.findByPk(data.tournamentId)
+            return { success: true, tournamentDetails: tournamentResult }
+        } else {
+            return { success: false }
+        }
+    } catch (err) {
+        throw err
+    }
 }
 
 const findAllByNameAndDate = async({ name, date }) => {
@@ -128,54 +178,12 @@ const findAll = async() => {
     return await Tournament.findAll()
 }
 
-const update = async(data) => {
-    try {
-        const filesArray = data.files || []
-
-        const logoUrl = null
-        const bgUrl = null
-
-        // Tomamos los nombres que vinieron del body
-        const logoName = data.tournamentLogo
-        const bgName = data.mainBgImg
-
-        for (const file of filesArray) {
-            const { originalname, path } = file
-
-            if (originalname === logoName) {
-                if (!fs.existsSync(path)) throw new Error(ERROR_SAVING_IMAGE)
-                data.tournamentLogo = path
-            }
-
-            if (originalname === bgName) {
-                if (!fs.existsSync(path)) throw new Error(ERROR_SAVING_IMAGE)
-                data.mainBgImg = path
-            }
-        }
-
-        delete data.files
-        const [updatedRows] = await Tournament.update(
-            data,
-            { where: { tournamentId: data.tournamentId } }
-        )
-
-        if (updatedRows > 0) {
-            const tournamentResult = await Tournament.findByPk(data.tournamentId)
-            return { success: true, tournamentDetails: tournamentResult }
-        } else {
-            return { success: false }
-        }
-    } catch (err) {
-        throw err
-    }
-}
-
 const tournamentService = {
     create,
+    update,
     findAllByNameAndDate,
     findOneById,
-    findAll,
-    update
+    findAll
 }
 
 export default tournamentService
