@@ -24,7 +24,10 @@ const runUpdateValidations = runValidations([
 ])
 
 priviteTournamentRouter.post('/create',
+    upload.array('files'),
+    printRequest,
     runCreateValidations,
+    checkMultipleImagesAreValid,
     createTournament
 )
 
