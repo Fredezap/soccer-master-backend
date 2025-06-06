@@ -47,9 +47,7 @@ const create = async(data) => {
 
 const update = async(data) => {
     try {
-        console.log('data en update: ', data)
         const checkedData = checkImageData(data)
-        console.log('checkedData en update: ', checkedData)
         const [updatedRows] = await Tournament.update(
             checkedData,
             { where: { tournamentId: data.tournamentId } }
@@ -63,6 +61,22 @@ const update = async(data) => {
         }
     } catch (err) {
         throw err
+    }
+}
+
+const destroy = async({ tournamentId }) => {
+    try {
+        const result = await Tournament.destroy({
+            where: { tournamentId }
+        })
+
+        if (result === 0) {
+            throw new Error(`Team with ID ${tournamentId} not found`)
+        }
+
+        return result
+    } catch (error) {
+        throw error
     }
 }
 
@@ -181,6 +195,7 @@ const findAll = async() => {
 const tournamentService = {
     create,
     update,
+    destroy,
     findAllByNameAndDate,
     findOneById,
     findAll
