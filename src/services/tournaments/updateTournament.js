@@ -3,7 +3,7 @@ import errorCodes from '../../constants/errors/errorCodes.js'
 import tournamentService from './common/tournamentService.js'
 import { checkExistingTournament } from './checkExistingTournament.js'
 
-const { AN_ERROR_OCURRED_WHILE_UPDATING_TOURNAMENT_DETAILS } = errorCodes.tournamentErrors
+const { AN_ERROR_OCURRED_WHILE_UPDATING_TOURNAMENT } = errorCodes.tournamentErrors
 const updateTournament = async(req, res) => {
     try {
         const { date, name, tournamentId, tournamentLogo, mainBgImg } = req.body
@@ -20,11 +20,11 @@ const updateTournament = async(req, res) => {
         if (result.success) {
             return res.status(StatusCodes.OK).json({ tournamentDetails: result.tournamentDetails })
         } else {
-            const errors = [{ msg: AN_ERROR_OCURRED_WHILE_UPDATING_TOURNAMENT_DETAILS }]
+            const errors = [{ msg: AN_ERROR_OCURRED_WHILE_UPDATING_TOURNAMENT }]
             return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors })
         }
     } catch (err) {
-        const errors = [{ msg: AN_ERROR_OCURRED_WHILE_UPDATING_TOURNAMENT_DETAILS }]
+        const errors = [{ msg: AN_ERROR_OCURRED_WHILE_UPDATING_TOURNAMENT }]
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors })
     }
 }
