@@ -98,12 +98,13 @@ const matchErrors = {
 
 const OAuthErrors = {
     SERVER_ERROR_GENERATING_TOKEN: 'server error generating token',
-    INVALID_CREDENTIALS: 'invalid credentials. Please login...',
+    INVALID_CREDENTIALS: 'invalid credentials',
+    INVALID_CREDENTIALS_PLEASE_LOGIN: 'invalid credentials. Please login...',
     TOKEN_HAS_EXPIRED: 'token has expired',
     UNKNOWN_ERROR_WHILE_VERIFYING_TOKEN: 'unknown error while verifying token',
     SERVER_ERROR_PROCCESING_PASSWORD: 'server error processing password',
     SERVER_ERROR_CHECKING_CREDENTIALS: 'server error checking credentials',
-    ADMIN_USER_NOT_FOUND: 'admin user not found',
+    USER_NOT_FOUND: 'User not found',
     USER_REGISTRATION_NOT_ALLOWED: 'user registration not allowed',
     EMAIL_NOT_VALID: 'email not valid',
     ERROR_WHILE_CREATING_USER: 'error while creating user',
@@ -111,7 +112,8 @@ const OAuthErrors = {
     PASSWORD_INVALID_LENGTH: 'password invalid length',
     USER_ROLE_IS_NOT_DEFINED: 'user role is not defined. Please login...',
     CONFIRM_PASSWORD_IS_REQUIRED: 'Confirm password is required',
-    PASSWORD_AND_CONFIRM_PASSWORD_DO_NOT_MATCH: 'Password and Confirm Password do not match'
+    PASSWORD_AND_CONFIRM_PASSWORD_DO_NOT_MATCH: 'Password and Confirm Password do not match',
+    INVALID_USER: 'Invalid user'
 }
 
 const videoErrors = {
@@ -140,7 +142,9 @@ const contactErrors = {
     SUBJECT_IS_REQUIRED: 'Subject is required',
     EMAIL_MESSAGE_IS_REQUIRED: 'Email message is required',
     EMAIL_MASSAGE_TOO_LONG: 'Email massage too long. Maximum 2000 characters allowed',
-    AN_ERROR_OCURRED_WHILE_SETTING_CONTACT_DETAILS: 'An error ocurred while setting contact details'
+    AN_ERROR_OCURRED_WHILE_SETTING_CONTACT_DETAILS: 'An error ocurred while setting contact details',
+    INVALID_USER_ROLE: 'Invalid user role',
+    INVALID_TOKEN: 'Invalid token'
 }
 
 const errorCodes = {

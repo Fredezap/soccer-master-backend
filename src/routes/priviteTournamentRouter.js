@@ -9,13 +9,18 @@ import checkMultipleImagesAreValid from '../middlewares/common/checkMultipleImag
 import multer from 'multer'
 import printRequest from '../utils/printRequest.js'
 import deleteTournament from '../services/tournaments/deleteTournament.js'
+import getAllTournamentsByAdminUserId from '../services/tournaments/getAllTournamentsByAdminUserId.js'
+import validateUserId from '../middlewares/user/validations/validateUserId.js'
+import validateUserExistById from '../middlewares/user/validations/validateUserExistById.js'
 
 const priviteTournamentRouter = express.Router()
 const upload = multer({ dest: 'uploads/tournament-images' })
 
 const runCreateValidations = runValidations([
     validateTournamentName,
-    validateTournamentDate
+    validateTournamentDate,
+    validateUserId,
+    validateUserExistById
 ])
 
 const runUpdateValidations = runValidations([
@@ -29,6 +34,7 @@ const runDeleteValidations = runValidations([
 ])
 
 priviteTournamentRouter.post('/create',
+    printRequest,
     upload.array('files'),
     runCreateValidations,
     checkMultipleImagesAreValid,
@@ -43,9 +49,12 @@ priviteTournamentRouter.post('/update',
 )
 
 priviteTournamentRouter.post('/delete',
-    printRequest,
     runDeleteValidations,
     deleteTournament
+)
+
+priviteTournamentRouter.post('/get-all-by-admin-user',
+    getAllTournamentsByAdminUserId
 )
 
 export default priviteTournamentRouter

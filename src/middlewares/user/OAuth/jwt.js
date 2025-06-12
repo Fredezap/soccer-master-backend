@@ -11,7 +11,7 @@ const secretKey = process.env.JWT_SECRET || crypto.randomBytes(32).toString('hex
 
 const {
     SERVER_ERROR_GENERATING_TOKEN,
-    INVALID_CREDENTIALS,
+    INVALID_CREDENTIALS_PLEASE_LOGIN,
     TOKEN_HAS_EXPIRED,
     UNKNOWN_ERROR_WHILE_VERIFYING_TOKEN
 } = errorCodes.OAuthErrors
@@ -30,7 +30,7 @@ export const generateJWTToken = async(req, res, next) => {
             await userDb.save()
         }
 
-        const user = { token: userDb.token, role: userDb.role }
+        const user = { token: userDb.token, role: userDb.role, userId: userDb.userId }
         return res.status(StatusCodes.OK).send(user)
     } catch (error) {
         errors = [{ msg: SERVER_ERROR_GENERATING_TOKEN }]
@@ -47,7 +47,7 @@ export const verifyTokenJWT = async(token) => {
         if (err instanceof jwt.TokenExpiredError) {
             errorMessage = TOKEN_HAS_EXPIRED
         } else if (err instanceof jwt.JsonWebTokenError) {
-            errorMessage = INVALID_CREDENTIALS
+            errorMessage = INVALID_CREDENTIALS_PLEASE_LOGIN
         } else {
             errorMessage = UNKNOWN_ERROR_WHILE_VERIFYING_TOKEN
         }

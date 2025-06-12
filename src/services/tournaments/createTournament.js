@@ -6,9 +6,17 @@ import validateTournamentNotExist from '../../middlewares/tournament-details/val
 const { AN_ERROR_OCURRED_WHILE_CREATING_TOURNAMENT } = errorCodes.tournamentErrors
 export const createTournament = async(req, res) => {
     try {
-        const { date, name, tournamentId, tournamentLogo, mainBgImg } = req.body
+        const {
+            userDb: { userId } = null,
+            date,
+            name,
+            tournamentId,
+            tournamentLogo,
+            mainBgImg
+        } = req.body
+
         const { files } = req
-        const values = { date, name, tournamentId, tournamentLogo, mainBgImg, files }
+        const values = { date, name, tournamentId, tournamentLogo, mainBgImg, userId, files }
 
         const tournamentExistsError = await validateTournamentNotExist(name, date)
 

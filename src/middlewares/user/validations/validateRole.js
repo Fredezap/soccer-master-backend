@@ -2,13 +2,13 @@ import { check } from 'express-validator'
 import errorCodes from '../../../constants/errors/errorCodes.js'
 import { userConstants } from '../../../constants/user/userConstants.js'
 const { ROLES } = userConstants
-const { USER_ROLE_IS_NOT_DEFINED } = errorCodes.OAuthErrors
+const { INVALID_CREDENTIALS_PLEASE_LOGIN } = errorCodes.OAuthErrors
 
 const validateRole = check('role')
-    .exists().withMessage('Role is required')
+    .exists().withMessage(INVALID_CREDENTIALS_PLEASE_LOGIN)
     .bail()
-    .isString().withMessage('Role must be a string')
+    .isString().withMessage(INVALID_CREDENTIALS_PLEASE_LOGIN)
     .bail()
-    .isIn(Object.values(ROLES)).withMessage('Invalid role')
+    .isIn(Object.values(ROLES)).withMessage(INVALID_CREDENTIALS_PLEASE_LOGIN)
 
 export default validateRole
