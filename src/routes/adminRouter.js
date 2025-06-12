@@ -9,22 +9,25 @@ import teamRouter from './teamRouter.js'
 import fixtureRouter from './fixture/fixtureRouter.js'
 import videoRouter from './videoRouter.js'
 import contactRouter from './contactRouter.js'
+import validateUserId from '../middlewares/user/validations/validateUserId.js'
 
 const adminRouter = express.Router()
 
 const extractAuthFields = (req, res, next) => {
-    req.body.token = req.headers.authorization?.replace('Bearer ', '') || req.body.token
-    req.body.role = req.headers.role || req.body.role
+    req.body.token = req.headers.authorization?.replace('Bearer ', '') || req.body.token || null
+    req.body.role = req.headers.role || req.body.role || null
+    req.body.userId = req.headers.userid || req.body.userId || null
     next()
 }
 
 const runValidateAdminValues = runValidations([
     validateToken,
-    validateRole
+    validateRole,
+    validateUserId
 ])
 
 adminRouter.use(extractAuthFields, runValidateAdminValues, verifyUserToken, checkTokenAndRoleDb)
-adminRouter.use('/tournament-details', priviteTournamentRouter)
+adminRouter.use('/tournaments', priviteTournamentRouter)
 adminRouter.use('/teams', teamRouter)
 adminRouter.use('/fixture', fixtureRouter)
 adminRouter.use('/video', videoRouter)

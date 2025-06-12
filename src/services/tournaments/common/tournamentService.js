@@ -192,13 +192,18 @@ const findAll = async() => {
     return await Tournament.findAll()
 }
 
+const findAllByUserId = async(userId) => {
+    return await Tournament.findAll({ where: { userId } })
+}
+
 const tournamentService = {
     create,
     update,
     destroy,
     findAllByNameAndDate,
     findOneById,
-    findAll
+    findAll,
+    findAllByUserId
 }
 
 export default tournamentService
