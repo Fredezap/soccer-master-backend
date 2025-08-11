@@ -33,6 +33,20 @@ export const Tournament = sequelize.define('Tournament', {
             key: 'userId'
         },
         onDelete: 'CASCADE'
+    },
+    deleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    }
+}, {
+    defaultScope: {
+        where: {
+            deleted: false
+        }
+    },
+    scopes: {
+        withDeleted: {}
     }
 })
 

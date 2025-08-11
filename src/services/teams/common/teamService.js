@@ -5,6 +5,7 @@ import path from 'path'
 import fs from 'fs'
 import errorCodes from '../../../constants/errors/errorCodes.js'
 import { fileURLToPath } from 'url'
+
 const { ERROR_WHILE_SAVING_IMAGE } = errorCodes.teamErrors
 
 const create = async(req) => {
@@ -42,19 +43,37 @@ const create = async(req) => {
 }
 
 const getOneByName = async(name, tournamentId) => {
-    const response = await Team.findOne({ where: { name, tournamentId } })
+    const response = await Team.findOne({
+        where: {
+            name,
+            tournamentId,
+            deleted: false
+        }
+    })
     return response
 }
 
 const getOneById = async(id) => {
-    return await Team.findByPk(id, { include: [Player] })
+    return await Team.findOne({
+        where: { teamId: id, deleted: false },
+        include: [
+            {
+                model: Player,
+                where: { deleted: false },
+                required: false
+            }
+        ]
+    })
 }
 
 const getAll = async() => {
     return await Team.findAll({
+        where: { deleted: false },
         include: [
             {
-                model: Player
+                model: Player,
+                where: { deleted: false },
+                required: false
             }
         ]
     })
@@ -63,18 +82,21 @@ const getAll = async() => {
 const getAllByTournamentId = async(tournamentId) => {
     return await Team.findAll({
         where: {
-            tournamentId
+            tournamentId,
+            deleted: false
         },
         include: [
             {
-                model: Player
+                model: Player,
+                where: { deleted: false },
+                required: false
             }
         ]
     })
 }
 
 const update = async({ logoUrl, file, teamId, name }, { transaction = null }) => {
-    if (logoUrl === 'null') logoUrl = null // Conviertimos null de string a object
+    if (logoUrl === 'null') logoUrl = null // Convertimos 'null' (string) a null (valor)
 
     if (file) {
         const filename = file.path
@@ -86,28 +108,30 @@ const update = async({ logoUrl, file, teamId, name }, { transaction = null }) =>
 
     return await Team.update(
         { name, logoUrl },
-        { where: { teamId }, transaction }
+        {
+            where: { teamId, deleted: false },
+            transaction
+        }
     )
 }
 
 const cleanUpOldImages = async() => {
     try {
-        const teams = await Team.findAll()
+        const teams = await Team.findAll({
+            where: { deleted: false }
+        })
 
-        // Extraer el nombre del archivo de logoUrl (sin la parte 'uploads/')
         const teamImages = teams.map(team => {
             const logoUrl = team.logoUrl || ''
             const imageName = logoUrl.replace('uploads/team-images/', '')
             return imageName
         })
 
-        // Ruta para acceder a la carpeta 'uploads'
         const __filename = fileURLToPath(import.meta.url)
         const currentDir = path.dirname(__filename)
         const rootDir = path.resolve(currentDir, '../../../../')
         const uploadDir = path.join(rootDir, 'uploads/team-images')
 
-        // Iterar sobre los archivos en la carpeta 'uploads' y eliminar los que no estén en uso
         const filesInUploadDir = fs.readdirSync(uploadDir)
 
         filesInUploadDir.forEach(file => {
@@ -116,16 +140,20 @@ const cleanUpOldImages = async() => {
                 fs.unlinkSync(filePath)
             }
         })
-    } catch (error) {}
+    } catch (error) {
+    }
 }
 
 const destroy = async({ teamId }) => {
     try {
-        const result = await Team.destroy({
-            where: { teamId }
-        })
+        const result = await Team.update(
+            { deleted: true },
+            {
+                where: { teamId, deleted: false }
+            }
+        )
 
-        if (result === 0) {
+        if (result[0] === 0) {
             throw new Error(`Team with ID ${teamId} not found`)
         }
 

@@ -38,7 +38,8 @@ const checkIfMatchExistsKnownTeams = async(stageId, localTeamId, visitorTeamId, 
                 localTeamId,
                 visitorTeamId,
                 date,
-                time
+                time,
+                deleted: false
             }
         })
 
@@ -60,7 +61,8 @@ const checkIfMatchExistsUnknownTeams = async(stageId, localTeamPlaceholder, visi
                 localTeamPlaceholder,
                 visitorTeamPlaceholder,
                 date,
-                time
+                time,
+                deleted: false
             }
         })
 
@@ -77,20 +79,27 @@ const checkIfMatchExistsUnknownTeams = async(stageId, localTeamPlaceholder, visi
 const getAllMatchesByDate = async() => {
     try {
         const matches = await Match.findAll({
+            where: { deleted: false },
             include: [
                 {
                     model: Team,
                     as: 'LocalTeam', // Alias definido en la asociación
-                    attributes: ['teamId', 'name']
+                    attributes: ['teamId', 'name'],
+                    where: { deleted: false },
+                    required: true
                 },
                 {
                     model: Team,
                     as: 'VisitorTeam', // Alias definido en la asociación
-                    attributes: ['teamId', 'name']
+                    attributes: ['teamId', 'name'],
+                    where: { deleted: false },
+                    required: true
                 },
                 {
                     model: Stage,
-                    attributes: ['stageId', 'name']
+                    attributes: ['stageId', 'name'],
+                    where: { deleted: false },
+                    required: true
                 }
             ],
             order: [['date', 'ASC']]
@@ -112,16 +121,24 @@ const getAllMatchesByDate = async() => {
 }
 
 const getOneById = async(id) => {
-    return Match.findByPk(id)
+    return Match.findOne({
+        where: {
+            matchId: id,
+            deleted: false
+        }
+    })
 }
 
 const destroy = async({ matchId }) => {
     try {
-        const result = await Match.destroy({
-            where: { matchId }
-        })
+        const result = await Match.update(
+            { deleted: true },
+            {
+                where: { matchId, deleted: false }
+            }
+        )
 
-        if (result === 0) {
+        if (result[0] === 0) {
             throw new Error(`Match with ID ${matchId} not found`)
         }
 
@@ -165,7 +182,7 @@ const edit = async({ values, transaction = null }) => {
                 location
             },
             {
-                where: { matchId },
+                where: { matchId, deleted: false },
                 transaction
             }
         )

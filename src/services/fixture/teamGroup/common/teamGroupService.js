@@ -7,11 +7,17 @@ const getOneByGroupIdAndTeamId = async({ groupId, teamId }) => {
 }
 
 async function updateTeamGroup(teamGroupId, values, transaction) {
-    await TeamGroup.update(values, {
-        where: { teamGroupId },
-        transaction
-    })
-};
+    // eslint-disable-next-line no-useless-catch
+    try {
+        const result = await TeamGroup.update(values, {
+            where: { teamGroupId },
+            transaction
+        })
+        return result // [affectedCount]
+    } catch (error) {
+        throw error
+    }
+}
 
 const teamGroupService = {
     getOneByGroupIdAndTeamId,

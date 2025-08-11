@@ -7,7 +7,6 @@ import updateTournamentDetails from '../services/tournaments/updateTournament.js
 import validateTournamentExist from '../middlewares/tournament-details/validateTournamentExist.js'
 import checkMultipleImagesAreValid from '../middlewares/common/checkMultipleImagesAreValid.js'
 import multer from 'multer'
-import printRequest from '../utils/printRequest.js'
 import deleteTournament from '../services/tournaments/deleteTournament.js'
 import getAllTournamentsByAdminUserId from '../services/tournaments/getAllTournamentsByAdminUserId.js'
 import validateUserId from '../middlewares/user/validations/validateUserId.js'
@@ -34,7 +33,6 @@ const runDeleteValidations = runValidations([
 ])
 
 priviteTournamentRouter.post('/create',
-    printRequest,
     upload.array('files'),
     runCreateValidations,
     checkMultipleImagesAreValid,

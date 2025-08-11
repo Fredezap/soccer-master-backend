@@ -35,7 +35,8 @@ const teamErrors = {
     TEAM_ID_NOT_ALLOWED: 'team id not allowed',
     LOGO_IMAGE_NOT_VALID: 'logo image not valid',
     ERROR_WHILE_CHECKING_LOGO_IMAGE: 'error while ckeching logo image',
-    ERROR_WHILE_SAVING_IMAGE: 'error while saving image'
+    ERROR_WHILE_SAVING_IMAGE: 'error while saving image',
+    THIS_TEAM_HAS_ASSOCIATED_MATCHES_TO_A_GROUP: 'This team has associated matches to a group. Please delete this matches before deleting the team'
 }
 
 const stageErrors = {
@@ -67,7 +68,8 @@ const groupErrors = {
     ERROR_WHILE_UPDATING_TEAM: 'error while updating team',
     ERROR_WHILE_DELETING_GROUP: 'error while deleting group',
     ERROR_WHILE_UPDATING_GROUP_NAME: 'error while updating group name',
-    NO_MATCHING_TEAM_AND_GROUP_FOUND: 'No matching team and group found'
+    NO_MATCHING_TEAM_AND_GROUP_FOUND: 'No matching team and group found',
+    YOU_CAN_NOT_DELETE_A_TEAM_THAT_HAS_MATCH_RESULTS_DEFINED_IN_THE_GROUP: 'You can not delete a team that has match results defined in the group. Please reset the match results related and try again'
 }
 
 const matchErrors = {
@@ -86,6 +88,7 @@ const matchErrors = {
     ERROR_WHILE_EDITING_MATCH: 'error while editing match',
     YOU_MUST_DEFINE_BOTH_RESULTS: 'you must define both results',
     YOU_CANNOT_EDIT_A_MATCH_THAT_HAS_RESULT_DEFINED: 'you cannot edit a match that has result defined',
+    YOU_CAN_NOT_DELETE_A_MATCH_THAT_HAS_RESULT_DEFINED: 'you can not delete a match that has result defined. Please reset the results before deleting',
     MATCH_RESULT_MUST_BE_DEFINED_BEFORE_SETTING_PENALTY_RESULTS: 'match result must be defined before setting penalty results',
     CANNOT_DEFINE_PENALTY_IF_NO_DRAW: 'You cannot define the penalty result if the match result is not a draw',
     YOU_MUST_DEFINE_PENALTY_SCORES_IF_IT_IS_A_DRAW: 'You must define penalty scores if it is a draw',
@@ -113,7 +116,11 @@ const OAuthErrors = {
     USER_ROLE_IS_NOT_DEFINED: 'user role is not defined. Please login...',
     CONFIRM_PASSWORD_IS_REQUIRED: 'Confirm password is required',
     PASSWORD_AND_CONFIRM_PASSWORD_DO_NOT_MATCH: 'Password and Confirm Password do not match',
-    INVALID_USER: 'Invalid user'
+    INVALID_USER: 'Invalid user',
+    USER_EMAIL_ALREADY_REGISTRATED: 'User email already registrated',
+    AN_ERROR_OCURRED_WHILE_GETTING_ADMIN_USERS_DATA: 'An error ocurred while getting admin users data',
+    AN_ERROR_OCURRED_WHILE_DELETING_ADMIN_USERS: 'An error ocurred while deleting admin users',
+    AN_ERROR_OCURRED_WITH_THE_ELEMENTS_YOU_HAVE_SELECTED: 'An error ocurred with the elements you have selected'
 }
 
 const videoErrors = {
@@ -124,7 +131,8 @@ const videoErrors = {
     ERROR_WHILE_CREATING_VIDEO: 'error while creating video',
     ERROR_WHILE_SAVING_IMAGE: 'error while saving image',
     ERROR_WHILE_DELETING_VIDEO: 'error while deleting video',
-    ERROR_WHILE_GETTING_VIDEOS: 'error while getting videos'
+    ERROR_WHILE_GETTING_VIDEOS: 'error while getting videos',
+    VIDEO_NOT_FOUND: 'Video not found'
 }
 
 const contactErrors = {

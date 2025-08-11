@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 import errorCodes from '../../../constants/errors/errorCodes.js'
-import stageService from './common/groupService.js'
+import stageService from '../stages/common/stageService.js'
 
 const { ERROR_WHILE_DELETING_STAGE } = errorCodes.stageErrors
 const deleteStage = async(req, res) => {

@@ -46,6 +46,20 @@ export const Stage = sequelize.define('Stage', {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
+    },
+    deleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    }
+}, {
+    defaultScope: {
+        where: {
+            deleted: false
+        }
+    },
+    scopes: {
+        withDeleted: {}
     }
 })
 

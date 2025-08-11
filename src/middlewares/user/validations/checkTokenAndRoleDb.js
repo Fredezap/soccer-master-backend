@@ -6,6 +6,7 @@ const { INVALID_CREDENTIALS } = errorCodes.OAuthErrors
 
 export const checkTokenAndRoleDb = async(req, res, next) => {
     const { userId, token, role } = req.body
+
     const userDb = await userService.findById(userId)
 
     if (userDb && userDb.token === token && userDb.role === role && userDb.userId === userId) {

@@ -5,7 +5,6 @@ import { Team } from './teamModel.js'
 import { Group } from './groupModel.js'
 import TeamGroupConstants from '../constants/teamGroup/teamGroupConstants.js'
 
-const { WON, LOST, DRAWN } = TeamGroupConstants
 export const TeamGroup = sequelize.define('TeamGroup', {
     teamGroupId: {
         type: DataTypes.INTEGER,
@@ -64,6 +63,20 @@ export const TeamGroup = sequelize.define('TeamGroup', {
         type: DataTypes.INTEGER,
         defaultValue: 0,
         allowNull: false
+    },
+    deleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    }
+}, {
+    defaultScope: {
+        where: {
+            deleted: false
+        }
+    },
+    scopes: {
+        withDeleted: {}
     }
 })
 

@@ -1,12 +1,10 @@
 /* eslint-disable no-useless-catch */
-import { Team } from '../../../models/teamModel.js'
-import { Player } from '../../../models/playerModel.js'
 import path from 'path'
 import fs from 'fs'
 import errorCodes from '../../../constants/errors/errorCodes.js'
 import { fileURLToPath } from 'url'
 import { Video } from '../../../models/videosModel.js'
-const { ERROR_WHILE_SAVING_IMAGE } = errorCodes.teamErrors
+const { ERROR_WHILE_SAVING_IMAGE } = errorCodes.videoErrors
 
 const create = async(req) => {
     const { title, videoUrl, tournamentId } = req.body
@@ -23,14 +21,12 @@ const create = async(req) => {
     }
 
     try {
-        const response = await Video.create(
-            {
-                title,
-                tournamentId,
-                imageUrl,
-                videoUrl
-            }
-        )
+        const response = await Video.create({
+            title,
+            tournamentId,
+            imageUrl,
+            videoUrl
+        })
 
         return response
     } catch (error) {
@@ -39,36 +35,49 @@ const create = async(req) => {
 }
 
 const findOneById = async(id) => {
-    return await Video.findByPk(id)
+    return await Video.findOne({
+        where: {
+            videoId: id,
+            deleted: false
+        }
+    })
 }
 
 const getAllByTournamentId = async(tournamentId) => {
     return await Video.findAll({
         where: {
-            tournamentId
+            tournamentId,
+            deleted: false
         }
     })
 }
 
 const deleteImage = async(imageUrl) => {
     try {
-        // Acceder a la imagen ruta donde la imagen esta guardada y tratar de eliminarla
         const __filename = fileURLToPath(import.meta.url)
         const currentDir = path.dirname(__filename)
         const rootDir = path.resolve(currentDir, '../../../../')
         const ImageDir = path.join(rootDir, imageUrl)
         if (ImageDir) fs.unlinkSync(ImageDir)
-    } catch (error) {}
+    } catch (error) {
+    }
 }
 
 const destroy = async({ videoId }) => {
     try {
-        const result = await Video.destroy({
-            where: { videoId }
-        })
+        let result = await Video.update(
+            { deleted: true },
+            {
+                where: {
+                    videoId,
+                    deleted: false
+                }
+            }
+        )
 
-        if (result === 0) {
-            throw new Error(`Video with ID ${videoId} not found`)
+        if (result[0] === 0) {
+            result = null
+            return result
         }
 
         return result
