@@ -26,7 +26,6 @@ import checkDatePlusPastDate from '../../middlewares/matches/checkDatePlusPastDa
 import editGroupMatchScore from '../../services/fixture/matches/editGroupMatchScore.js'
 import validateNoSameTeams from '../../middlewares/teams/validateNoSameTeams.js'
 import editKnockoutMatch from '../../services/fixture/matches/editKnockoutMatch.js'
-import printRequest from '../../utils/printRequest.js'
 import EditKnockoutMatchScore from '../../services/fixture/matches/editKnockoutMatchScore.js'
 
 const matchesRouter = express.Router()
@@ -160,7 +159,6 @@ matchesRouter.post('/edit-unknown-teams',
 )
 
 matchesRouter.post('/edit-knockout-match-result',
-    printRequest,
     runValidateKnockoutMatchEditScore,
     EditKnockoutMatchScore
 )

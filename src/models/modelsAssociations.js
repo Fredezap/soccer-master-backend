@@ -31,8 +31,25 @@ export const modelsAssociations = () => {
     Stage.hasMany(Match, { foreignKey: 'stageId', onDelete: 'CASCADE' })
     Match.belongsTo(Stage, { foreignKey: 'stageId' })
 
-    Team.belongsToMany(Group, { through: TeamGroup, foreignKey: 'teamId', otherKey: 'groupId', onDelete: 'CASCADE' })
-    Group.belongsToMany(Team, { through: TeamGroup, foreignKey: 'groupId', otherKey: 'teamId', onDelete: 'CASCADE' })
+    Team.belongsToMany(Group, {
+        through: {
+            model: TeamGroup,
+            scope: { deleted: false }
+        },
+        foreignKey: 'teamId',
+        otherKey: 'groupId',
+        onDelete: 'CASCADE'
+    })
+
+    Group.belongsToMany(Team, {
+        through: {
+            model: TeamGroup,
+            scope: { deleted: false }
+        },
+        foreignKey: 'groupId',
+        otherKey: 'teamId',
+        onDelete: 'CASCADE'
+    })
 
     TeamGroup.belongsTo(Team, { foreignKey: 'teamId', onDelete: 'CASCADE' })
     Team.hasMany(TeamGroup, { foreignKey: 'teamId' })

@@ -9,6 +9,7 @@ import { Group } from '../../../models/groupModel.js'
 import { TeamGroup } from '../../../models/teamGroupModel.js'
 import fs from 'fs'
 import errorCodes from '../../../constants/errors/errorCodes.js'
+import { User } from '../../../models/userModel.js'
 
 const { ERROR_SAVING_IMAGE } = errorCodes.tournamentErrors
 
@@ -18,7 +19,6 @@ const checkImageData = (data) => {
     const logoUrl = null
     const bgUrl = null
 
-    // Tomamos los nombres que vinieron del body
     const logoName = data.tournamentLogo
     const bgName = data.mainBgImg
 
@@ -39,6 +39,7 @@ const checkImageData = (data) => {
     delete data.files
     return data
 }
+
 const create = async(data) => {
     const checkedData = checkImageData(data)
     delete checkedData.tournamentId
@@ -50,7 +51,12 @@ const update = async(data) => {
         const checkedData = checkImageData(data)
         const [updatedRows] = await Tournament.update(
             checkedData,
-            { where: { tournamentId: data.tournamentId } }
+            {
+                where: {
+                    tournamentId: data.tournamentId,
+                    deleted: false
+                }
+            }
         )
 
         if (updatedRows > 0) {
@@ -66,12 +72,15 @@ const update = async(data) => {
 
 const destroy = async({ tournamentId }) => {
     try {
-        const result = await Tournament.destroy({
-            where: { tournamentId }
-        })
+        const result = await Tournament.update(
+            { deleted: true },
+            {
+                where: { tournamentId, deleted: false }
+            }
+        )
 
-        if (result === 0) {
-            throw new Error(`Team with ID ${tournamentId} not found`)
+        if (result[0] === 0) {
+            throw new Error(`Tournament with ID ${tournamentId} not found`)
         }
 
         return result
@@ -87,6 +96,7 @@ const findAllByNameAndDate = async({ name, date }) => {
 
     return await Tournament.findAll({
         where: {
+            deleted: false,
             [Op.and]: [
                 sequelize.where(
                     sequelize.fn('DATE', sequelize.col('date')),
@@ -99,83 +109,140 @@ const findAllByNameAndDate = async({ name, date }) => {
 }
 
 const findOneById = async(tournamentId) => {
-    const tournament = await Tournament.findByPk(tournamentId)
+    const tournament = await Tournament.findOne({
+        where: { tournamentId, deleted: false }
+    })
 
     if (!tournament) return null
 
     let [Teams, Stages, Videos, Emails, Contact] = await Promise.all([
         tournament.getTeams({
+            where: { deleted: false },
             include: [
-                { model: Player },
                 {
-                    model: Match,
-                    as: 'LocalMatches',
-                    include: [{ model: Team, as: 'VisitorTeam' }]
+                    model: Player,
+                    where: { deleted: false },
+                    required: false
                 },
                 {
                     model: Match,
-                    as: 'VisitorMatches',
-                    include: [{ model: Team, as: 'LocalTeam' }]
-                }
-            ]
-        }),
-        tournament.getStages({
-            include: [
-                {
-                    model: Group,
+                    as: 'LocalMatches',
+                    where: { deleted: false },
+                    required: false,
                     include: [
                         {
                             model: Team,
-                            through: {
-                                model: TeamGroup
-                            },
-                            order: [
-                                [TeamGroup, 'totalTeamPoints', 'DESC'],
-                                [TeamGroup, 'goalDifference', 'DESC'],
-                                [TeamGroup, 'goalsFor', 'DESC']
-                            ]
+                            as: 'VisitorTeam',
+                            where: { deleted: false },
+                            required: false
                         }
                     ]
                 },
                 {
                     model: Match,
+                    as: 'VisitorMatches',
+                    where: { deleted: false },
+                    required: false,
                     include: [
-                        { model: Team, as: 'LocalTeam' },
-                        { model: Team, as: 'VisitorTeam' }
+                        {
+                            model: Team,
+                            as: 'LocalTeam',
+                            where: { deleted: false },
+                            required: false
+                        }
                     ]
                 }
             ]
         }),
-        tournament.getVideos(),
-        tournament.getEmails(),
-        tournament.getContact()
+
+        tournament.getStages({
+            where: { deleted: false },
+            include: [
+                {
+                    model: Group,
+                    where: { deleted: false },
+                    required: false,
+                    include: [
+                        {
+                            model: Team,
+                            required: false,
+                            where: { deleted: false },
+                            through: {
+                                where: { deleted: false }
+                            }
+                        }
+                    ]
+                },
+                {
+                    model: Match,
+                    where: { deleted: false },
+                    required: false,
+                    include: [
+                        {
+                            model: Team,
+                            as: 'LocalTeam',
+                            where: { deleted: false },
+                            required: false
+                        },
+                        {
+                            model: Team,
+                            as: 'VisitorTeam',
+                            where: { deleted: false },
+                            required: false
+                        }
+                    ]
+                }
+            ]
+        }),
+
+        tournament.getVideos({
+            where: { deleted: false }
+        }),
+
+        tournament.getEmails({
+            where: { deleted: false }
+        }),
+
+        tournament.getContact() // Puede estar eliminado, pero asumimos que solo hay uno
     ])
 
+    // Ordenar los equipos por puntos en grupos (si corresponde)
     Stages = Stages.map(stage => {
-        if (stage.type !== 'group') return stage
+        const stagePlain = stage.get({ plain: true })
 
-        const updatedGroups = stage.Groups.map(group => {
-            const sortedTeams = group.Teams
-                .map(team => ({
-                    ...team.get({ plain: true }),
-                    TeamGroup: team.TeamGroup.get({ plain: true })
-                }))
-                .sort((a, b) => {
-                    if (b.TeamGroup.totalTeamPoints !== a.TeamGroup.totalTeamPoints) { return b.TeamGroup.totalTeamPoints - a.TeamGroup.totalTeamPoints }
-                    if (b.TeamGroup.goalDifference !== a.TeamGroup.goalDifference) { return b.TeamGroup.goalDifference - a.TeamGroup.goalDifference }
-                    return b.TeamGroup.goalsFor - a.TeamGroup.goalsFor
-                })
-
-            return {
-                ...group.get({ plain: true }),
-                Teams: sortedTeams
-            }
-        })
-
-        return {
-            ...stage.get({ plain: true }),
-            Groups: updatedGroups
+        // Si hay Matches, filtrarlos
+        if (stagePlain.Matches) {
+            stagePlain.Matches = stagePlain.Matches.filter(match =>
+                match.LocalTeam && match.VisitorTeam
+            )
         }
+
+        // Si hay Groups, mantener como ya lo tienes
+        if (stagePlain.type === 'group' && stagePlain.Groups) {
+            stagePlain.Groups = stagePlain.Groups.map(group => {
+                const sortedTeams = group.Teams
+                    .map(team => ({
+                        ...team,
+                        TeamGroup: team.TeamGroup
+                    }))
+                    .sort((a, b) => {
+                        if (b.TeamGroup.totalTeamPoints !== a.TeamGroup.totalTeamPoints) {
+                            return b.TeamGroup.totalTeamPoints - a.TeamGroup.totalTeamPoints
+                        }
+                        if (b.TeamGroup.goalDifference !== a.TeamGroup.goalDifference) {
+                            return b.TeamGroup.goalDifference - a.TeamGroup.goalDifference
+                        }
+                        return b.TeamGroup.goalsFor - a.TeamGroup.goalsFor
+                    })
+
+                return {
+                    ...group,
+                    Teams: sortedTeams
+                }
+            })
+        }
+
+        return stagePlain
     })
 
     return {
@@ -189,11 +256,22 @@ const findOneById = async(tournamentId) => {
 }
 
 const findAll = async() => {
-    return await Tournament.findAll()
+    return await Tournament.findAll({
+        where: { deleted: false },
+        include: {
+            model: User,
+            attributes: ['userId', 'email', 'username']
+        }
+    })
 }
 
 const findAllByUserId = async(userId) => {
-    return await Tournament.findAll({ where: { userId } })
+    return await Tournament.findAll({
+        where: {
+            userId,
+            deleted: false
+        }
+    })
 }
 
 const tournamentService = {

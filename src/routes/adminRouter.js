@@ -10,6 +10,7 @@ import fixtureRouter from './fixture/fixtureRouter.js'
 import videoRouter from './videoRouter.js'
 import contactRouter from './contactRouter.js'
 import validateUserId from '../middlewares/user/validations/validateUserId.js'
+import priviteUserRouter from './priviteUserRouter.js'
 
 const adminRouter = express.Router()
 
@@ -32,6 +33,7 @@ adminRouter.use('/teams', teamRouter)
 adminRouter.use('/fixture', fixtureRouter)
 adminRouter.use('/video', videoRouter)
 adminRouter.use('/contact', contactRouter)
+adminRouter.use('/users', priviteUserRouter)
 
 adminRouter.post('/validate-access', (req, res) => {
     res.status(200).json({})

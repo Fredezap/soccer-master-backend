@@ -28,6 +28,20 @@ export const Player = sequelize.define('Player', {
             key: 'teamId'
         },
         onDelete: 'CASCADE'
+    },
+    deleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    }
+}, {
+    defaultScope: {
+        where: {
+            deleted: false
+        }
+    },
+    scopes: {
+        withDeleted: {}
     }
 })
 

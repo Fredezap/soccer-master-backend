@@ -24,8 +24,21 @@ export const Email = sequelize.define('Email', {
             key: 'tournamentId'
         },
         onDelete: 'CASCADE'
+    },
+    deleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 }, {
+    defaultScope: {
+        where: {
+            deleted: false
+        }
+    },
+    scopes: {
+        withDeleted: {}
+    },
     indexes: [
         {
             unique: true,

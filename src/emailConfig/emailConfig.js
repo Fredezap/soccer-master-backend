@@ -8,7 +8,11 @@ import { fileURLToPath } from 'url'
 const e = process.env
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-const TOKEN_PATH = path.join(__dirname, 'token.json')
+
+const TOKEN_PATH = e.NODE_ENV === 'development'
+    ? path.join(__dirname, 'token.json')
+    : process.env.EMAIL_TOKEN_PROD_PATH
+
 const OAuth2 = google.auth.OAuth2
 
 const oauth2Client = new OAuth2(

@@ -2,7 +2,8 @@ import { sequelize } from '../database/connection.js'
 import { DataTypes } from 'sequelize'
 import logger from '../utils/logger.js'
 import { userConstants } from '../constants/user/userConstants.js'
-const { MIN_PASSWORD_LENGTH, ROLES: { ADMIN, USER, GUEST } } = userConstants
+
+const { MIN_PASSWORD_LENGTH, ROLES: { ADMIN, USER, GUEST, SUPERADMIN } } = userConstants
 
 export const User = sequelize.define('User', {
     userId: {
@@ -26,9 +27,9 @@ export const User = sequelize.define('User', {
         }
     },
     role: {
-        type: DataTypes.ENUM(USER, GUEST, ADMIN),
+        type: DataTypes.ENUM(USER, GUEST, ADMIN, SUPERADMIN),
         allowNull: false,
-        defaultValue: 'user'
+        defaultValue: userConstants.ROLES.USER
     },
     password: {
         type: DataTypes.STRING,
@@ -40,6 +41,20 @@ export const User = sequelize.define('User', {
     token: {
         type: DataTypes.STRING,
         allowNull: true
+    },
+    deleted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    }
+}, {
+    defaultScope: {
+        where: {
+            deleted: false
+        }
+    },
+    scopes: {
+        withDeleted: {}
     }
 })
 

@@ -7,7 +7,6 @@ import setEmails from '../services/contact/priviate/setEmails.js'
 import validatePhoneNumber from '../middlewares/contact/contact-details/validatePhoneNumber.js'
 import validateEmail from '../middlewares/contact/contact-details/validateEmail.js'
 import setFooterContactDetails from '../services/contact/priviate/setFooterContactDetails.js'
-import printRequest from '../utils/printRequest.js'
 
 const contactRouter = express.Router()
 
@@ -38,7 +37,6 @@ contactRouter.post('/set-contact-details',
 )
 
 contactRouter.post('/set-footer-contact-details',
-    printRequest,
     runValidateTournament,
     setFooterContactDetails
 )

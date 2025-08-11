@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes'
 import { sequelize } from '../../database/connection.js'
 import teamService from './common/teamService.js'
 import errorCodes from '../../constants/errors/errorCodes.js'
-import playerService from '../players/common/teamService.js'
+import playerService from '../players/common/playerService.js'
 
 const updateTeam = async(req, res) => {
     const { ERROR_WHILE_UPDATING_TEAM } = errorCodes.teamErrors

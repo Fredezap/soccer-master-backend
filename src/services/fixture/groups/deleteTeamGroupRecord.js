@@ -1,13 +1,16 @@
 import { StatusCodes } from 'http-status-codes'
 import errorCodes from '../../../constants/errors/errorCodes.js'
 import groupService from './common/groupService.js'
+import matchService from '../matches/common/matchService.js'
+import teamService from '../../teams/common/teamService.js'
 
 const deleteTeamGroupRecord = async(req, res) => {
     const { ERROR_WHILE_DELETING_GROUP } = errorCodes.groupErrors
     try {
         const { groupId, teamId } = req.body
 
-        const response = await groupService.deleteTeamGroupRecord(groupId, teamId)
+        const response = await groupService.deleteTeamGroupAndRelatedMatches(groupId, teamId)
+
         if (response.success) {
             return res.status(StatusCodes.OK).json({ success: true })
         } else {
