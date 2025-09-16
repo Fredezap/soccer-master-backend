@@ -47,8 +47,8 @@ export const Video = sequelize.define('Videos', {
     }
 })
 
-await sequelize.sync({ alter: true })
-// await sequelize.sync()
+// await sequelize.sync({ alter: true })
+await sequelize.sync()
     .then(() => {
         logger.info('Videos synchronized')
     })
