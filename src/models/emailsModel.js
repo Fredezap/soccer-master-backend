@@ -47,8 +47,8 @@ export const Email = sequelize.define('Email', {
     ]
 })
 
-// await sequelize.sync({ alter: true })
-await sequelize.sync()
+await sequelize.sync({ alter: true })
+// await sequelize.sync()
     .then(() => {
         logger.info('Emails synchronized')
     })

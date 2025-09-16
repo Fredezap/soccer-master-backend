@@ -44,8 +44,8 @@ export const Contact = sequelize.define('Contact', {
     }
 })
 
-// await sequelize.sync({ alter: true })
-await sequelize.sync()
+await sequelize.sync({ alter: true })
+// await sequelize.sync()
     .then(() => {
         logger.info('Contact synchronized')
     })

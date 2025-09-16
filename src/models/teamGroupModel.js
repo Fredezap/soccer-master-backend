@@ -84,8 +84,8 @@ TeamGroup.belongsTo(sequelize.models.Team, { foreignKey: 'teamId', onDelete: 'CA
 TeamGroup.belongsTo(sequelize.models.Group, { foreignKey: 'groupId', onDelete: 'CASCADE' })
 TeamGroup.belongsTo(sequelize.models.Match, { foreignKey: 'matchId', onDelete: 'CASCADE' })
 
-// await sequelize.sync({ alter: true })
-await sequelize.sync()
+await sequelize.sync({ alter: true })
+// await sequelize.sync()
     .then(() => {
         logger.info('TeamGroup synchronized')
     })
