@@ -1,13 +1,13 @@
 import { check } from 'express-validator'
 import errorCodes from '../../../constants/errors/errorCodes.js'
 
-const { NAME_IS_REQUIRED, NAME_MUST_BE_AT_LEAST_3_CHARACTERS_LONG } = errorCodes.contactErrors
+const { VORNAME_IS_REQUIRED, VORNAME_MUST_BE_AT_LEAST_3_CHARACTERS_LONG } = errorCodes.contactErrors
 
-const validateEmailUserName = check('userName', NAME_IS_REQUIRED)
-    .exists({ checkFalsy: true }).withMessage(NAME_IS_REQUIRED)
+const validateEmailUserName = check('userVorname', VORNAME_IS_REQUIRED)
+    .exists({ checkFalsy: true }).withMessage(VORNAME_IS_REQUIRED)
     .bail()
-    .isString().withMessage(NAME_IS_REQUIRED)
+    .isString().withMessage(VORNAME_IS_REQUIRED)
     .bail()
-    .isLength({ min: 3 }).withMessage(NAME_MUST_BE_AT_LEAST_3_CHARACTERS_LONG)
+    .isLength({ min: 3 }).withMessage(VORNAME_MUST_BE_AT_LEAST_3_CHARACTERS_LONG)
 
 export default validateEmailUserName

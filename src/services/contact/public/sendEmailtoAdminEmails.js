@@ -4,7 +4,7 @@ import { sendEmail } from './sendEmail.js'
 const { AN_ERROR_OCURRED_WHILE_SENDING_EMAIL } = errorCodes.contactErrors
 
 const sendEmailtoAdminEmails = async(req, res) => {
-    const { userEmail, userName, emailSubject, emailContent, adminAllowedEmails } = req.body
+    const { userEmail, userVorname, userNachname, emailSubject, emailContent, adminAllowedEmails } = req.body
     const destinataryEmails = adminAllowedEmails.map(emailData => emailData.email)
     const adminOwnerEmail = process.env.GMAIL_API_USER
 
@@ -18,7 +18,7 @@ const sendEmailtoAdminEmails = async(req, res) => {
         to: destinataryEmails.join(','),
         subject: emailSubject,
         html: `
-                <h1>${userName} has contacted from Fustalforher.ch!</h1>
+                <h1>${userVorname} ${userNachname} has contacted from Fustalforher.ch!</h1>
                 <br></br>
                 <p>${emailContent}</p>
                 <br></br>
