@@ -6,6 +6,7 @@ import validateEmailContent from '../middlewares/contact/email-sender/validateEm
 import validateEmailSubject from '../middlewares/contact/email-sender/validateEmailSubject.js'
 import validateEmailUserName from '../middlewares/contact/email-sender/validateEmailUserName.js'
 import validateUserEmail from '../middlewares/contact/email-sender/validateUserEmail.js'
+import validateEmailUserSurname from '../middlewares/contact/email-sender/validateUserSurname.js'
 
 const publicEmailSenderRouter = express.Router()
 
@@ -17,6 +18,7 @@ const runValidateEmailFields = runValidations([
     validateEmailContent,
     validateEmailSubject,
     validateEmailUserName,
+    validateEmailUserSurname,
     validateUserEmail
 ])
 
