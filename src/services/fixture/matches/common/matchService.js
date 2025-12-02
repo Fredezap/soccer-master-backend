@@ -2,6 +2,7 @@
 import { Team } from '../../../../models/teamModel.js'
 import { Stage } from '../../../../models/stageModel.js'
 import { Match } from '../../../../models/matchModel.js'
+import { Op } from 'sequelize'
 
 const create = async(values) => {
     const {
@@ -83,17 +84,27 @@ const getAllMatchesByDate = async() => {
             include: [
                 {
                     model: Team,
-                    as: 'LocalTeam', // Alias definido en la asociación
+                    as: 'LocalTeam',
                     attributes: ['teamId', 'name'],
-                    where: { deleted: false },
-                    required: true
+                    required: false, // permite partidos sin equipo
+                    where: {
+                        [Op.or]: [
+                            { deleted: false }, // equipos activos
+                            { teamId: null } // partidos sin equipo aún
+                        ]
+                    }
                 },
                 {
                     model: Team,
-                    as: 'VisitorTeam', // Alias definido en la asociación
+                    as: 'VisitorTeam',
                     attributes: ['teamId', 'name'],
-                    where: { deleted: false },
-                    required: true
+                    required: false, // permite partidos sin equipo
+                    where: {
+                        [Op.or]: [
+                            { deleted: false },
+                            { teamId: null }
+                        ]
+                    }
                 },
                 {
                     model: Stage,
@@ -104,7 +115,7 @@ const getAllMatchesByDate = async() => {
             ],
             order: [['date', 'ASC']]
         })
-
+        console.log('matches: ', matches)
         const groupedByDate = matches.reduce((acc, match) => {
             const matchDate = match.date.toISOString().split('T')[0]
             if (!acc[matchDate]) {
