@@ -115,7 +115,7 @@ const getAllMatchesByDate = async() => {
             ],
             order: [['date', 'ASC']]
         })
-        console.log('matches: ', matches)
+
         const groupedByDate = matches.reduce((acc, match) => {
             const matchDate = match.date.toISOString().split('T')[0]
             if (!acc[matchDate]) {
