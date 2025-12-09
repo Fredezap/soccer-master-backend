@@ -8,10 +8,12 @@ const validateTournamentExist = check('tournamentId', INVALID_TOURNAMENT_ID)
     .exists().bail().isNumeric().bail()
     .custom(async(tournamentId, { req }) => {
         const existingTournament = await tournamentService.findOneById(tournamentId)
+
         if (!existingTournament) {
             throw new Error(TOURNAMENT_NOT_FOUNDED)
         }
         req.body.tournament = existingTournament
+        return true
     })
 
 export default validateTournamentExist

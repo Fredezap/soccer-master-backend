@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-catch */
 import { Player } from '../../../models/playerModel.js'
+import { Team } from '../../../models/teamModel.js'
 
 const add = async({ name, teamId }, { transaction = null }) => {
     try {
@@ -33,9 +34,34 @@ const destroy = async({ playerId }, { transaction = null }) => {
     }
 }
 
+const findOneById = async(playerId) => {
+    return await Player.findOne({ where: { playerId } })
+}
+
+const findOneByTournamentAndPlayerId = async(playerId, tournamentId) => {
+    try {
+        const player = await Player.findOne({
+            where: { playerId },
+            include: {
+                model: Team,
+                required: true,
+                where: {
+                    tournamentId
+                }
+            }
+        })
+
+        return player
+    } catch (error) {
+        throw error
+    }
+}
+
 const playerService = {
     destroy,
-    add
+    add,
+    findOneById,
+    findOneByTournamentAndPlayerId
 }
 
 export default playerService

@@ -6,7 +6,6 @@ import { Match } from '../../../models/matchModel.js'
 import { Team } from '../../../models/teamModel.js'
 import { Player } from '../../../models/playerModel.js'
 import { Group } from '../../../models/groupModel.js'
-import { TeamGroup } from '../../../models/teamGroupModel.js'
 import fs from 'fs'
 import errorCodes from '../../../constants/errors/errorCodes.js'
 import { User } from '../../../models/userModel.js'
@@ -109,13 +108,18 @@ const findAllByNameAndDate = async({ name, date }) => {
 }
 
 const findOneById = async(tournamentId) => {
-    const tournament = await Tournament.findOne({
-        where: { tournamentId, deleted: false }
-    })
+    const tournament = await Tournament.findOne({ where: { tournamentId, deleted: false } })
 
     if (!tournament) return null
 
-    let [Teams, Stages, Videos, Emails, Contact] = await Promise.all([
+    const [
+        Teams,
+        Stages,
+        Videos,
+        Emails,
+        Contact,
+        MVPSurvey
+    ] = await Promise.all([
         tournament.getTeams({
             where: { deleted: false },
             include: [
@@ -195,55 +199,14 @@ const findOneById = async(tournamentId) => {
             ]
         }),
 
-        tournament.getVideos({
-            where: { deleted: false }
-        }),
-
-        tournament.getEmails({
-            where: { deleted: false }
-        }),
-
-        tournament.getContact() // Puede estar eliminado, pero asumimos que solo hay uno
+        tournament.getVideos({ where: { deleted: false } }),
+        tournament.getEmails({ where: { deleted: false } }),
+        tournament.getContact(),
+        tournament.getMVPSurveys({
+            where: { deleted: false },
+            limit: 1
+        })
     ])
-
-    // Ordenar los equipos por puntos en grupos (si corresponde)
-    Stages = Stages.map(stage => {
-        const stagePlain = stage.get({ plain: true })
-
-        // Si hay Matches, filtrarlos
-        if (stagePlain.Matches) {
-            stagePlain.Matches = stagePlain.Matches.filter(match =>
-                match.LocalTeam && match.VisitorTeam
-            )
-        }
-
-        // Si hay Groups, mantener como ya lo tienes
-        if (stagePlain.type === 'group' && stagePlain.Groups) {
-            stagePlain.Groups = stagePlain.Groups.map(group => {
-                const sortedTeams = group.Teams
-                    .map(team => ({
-                        ...team,
-                        TeamGroup: team.TeamGroup
-                    }))
-                    .sort((a, b) => {
-                        if (b.TeamGroup.totalTeamPoints !== a.TeamGroup.totalTeamPoints) {
-                            return b.TeamGroup.totalTeamPoints - a.TeamGroup.totalTeamPoints
-                        }
-                        if (b.TeamGroup.goalDifference !== a.TeamGroup.goalDifference) {
-                            return b.TeamGroup.goalDifference - a.TeamGroup.goalDifference
-                        }
-                        return b.TeamGroup.goalsFor - a.TeamGroup.goalsFor
-                    })
-
-                return {
-                    ...group,
-                    Teams: sortedTeams
-                }
-            })
-        }
-
-        return stagePlain
-    })
 
     return {
         ...tournament.toJSON(),
@@ -251,7 +214,8 @@ const findOneById = async(tournamentId) => {
         Stages,
         Videos,
         Emails,
-        Contact
+        Contact,
+        MVPSurvey: MVPSurvey.length ? MVPSurvey[0] : null
     }
 }
 
