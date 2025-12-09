@@ -5,8 +5,6 @@ import surveyService from './common/surveyService.js'
 const { ERROR_WHILE_UPDATING_SURVEY, NO_MVP_SET } = errorCodes.mvpErrors
 
 const updateSurveyShowMVP = async(req, res) => {
-    console.log('aca')
-
     const MVPSurvey = req.body.MVPSurvey
     const mvpSurveyId = MVPSurvey.mvpSurveyId
     const votingIsAvaliable = MVPSurvey.votingIsAvaliable || false
@@ -25,8 +23,6 @@ const updateSurveyShowMVP = async(req, res) => {
 
         return res.status(StatusCodes.OK).json({})
     } catch (err) {
-        console.log('ERROR:', err)
-
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY)
             .json({ errors: [{ msg: ERROR_WHILE_UPDATING_SURVEY }] })
     }

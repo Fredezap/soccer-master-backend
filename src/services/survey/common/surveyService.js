@@ -11,7 +11,7 @@ const create = async({ userIp, tournamentId, playerId }) => {
 
 const findByIpAndTournament = async(userIp, tournamentId) => {
     return await MVPVotes.findOne({
-        where: { userIp, tournamentId }
+        where: { userIp, tournamentId, deleted: false }
     })
 }
 
@@ -20,8 +20,7 @@ const findByIpAndTournament = async(userIp, tournamentId) => {
 
 const getVotesByTournament = async(tournamentId) => {
     return await MVPVotes.findAll({
-        where: { tournamentId },
-
+        where: { tournamentId, deleted: false },
         attributes: [
             'playerId',
             [
@@ -32,20 +31,20 @@ const getVotesByTournament = async(tournamentId) => {
                 'totalVotes'
             ]
         ],
-
         include: [
             {
                 model: Player,
                 attributes: ['name'],
+                where: { deleted: false }, // si Player también tiene deleted
                 include: [
                     {
                         model: Team,
-                        attributes: ['name']
+                        attributes: ['name'],
+                        where: { deleted: false } // si Team también tiene deleted
                     }
                 ]
             }
         ],
-
         group: [
             'MVPVotes.playerId',
             'Player.playerId',
@@ -56,21 +55,18 @@ const getVotesByTournament = async(tournamentId) => {
 
 // MVP Survey service
 const updateMVPSurvey = async(mvpSurveyId, { updatedFields }) => {
-    console.log('UPDATED FIELDS: ', updatedFields)
-    const a = await MVPSurvey.update(updatedFields, {
+    return await MVPSurvey.update(updatedFields, {
         where: { mvpSurveyId }
     })
-    // console.log('UPDATE:', a)
 }
 
 const findByIdMVPSurvey = async(mvpSurveyId) => {
     return await MVPSurvey.findOne({
-        where: { mvpSurveyId }
+        where: { mvpSurveyId, deleted: false }
     })
 }
 
 const createMVPSurvey = async({ tournamentId }) => {
-    console.log(tournamentId)
     return await MVPSurvey.create({ tournamentId })
 }
 

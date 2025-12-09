@@ -9,13 +9,12 @@ const createMVPSurvey = async(req, res) => {
         if (tournamentId.MVPSurvey) {
             throw new Error(ERROR_WHILE_CREATING_SURVEY)
         }
-        console.log(tournamentId)
+
         await surveyService.createMVPSurvey({ tournamentId })
 
         return res
             .status(StatusCodes.CREATED).json({})
     } catch (err) {
-        console.error(err)
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors: [{ msg: ERROR_WHILE_CREATING_SURVEY }] })
     }
 }

@@ -7,8 +7,6 @@ const { SURVEY_NOT_FOUND } = errorCodes.mvpErrors
 const validateSurveyExist = check('MVPSurvey')
     .exists().bail()
     .custom(async(value, { req }) => {
-        console.log('EN CUSTOM: ', req.body)
-
         const MVPSurvey = value
 
         if (!MVPSurvey || !MVPSurvey.mvpSurveyId) {

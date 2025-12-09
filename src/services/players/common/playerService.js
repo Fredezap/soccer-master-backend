@@ -39,9 +39,6 @@ const findOneById = async(playerId) => {
 }
 
 const findOneByTournamentAndPlayerId = async(playerId, tournamentId) => {
-    console.log('>>> ENTER findOneByTournamentAndPlayerId')
-    console.log('playerId:', playerId, 'tournamentId:', tournamentId)
-
     try {
         const player = await Player.findOne({
             where: { playerId },
@@ -54,10 +51,8 @@ const findOneByTournamentAndPlayerId = async(playerId, tournamentId) => {
             }
         })
 
-        console.log('>>> RESULT:', player)
         return player
     } catch (error) {
-        console.error('>>> ERROR:', error)
         throw error
     }
 }

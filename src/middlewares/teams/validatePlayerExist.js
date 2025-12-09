@@ -9,14 +9,13 @@ const validatePlayerExist = check('playerId', SELECTED_PLAYER_NOT_FOUND)
     .exists().bail().isNumeric().bail()
     .custom(async(playerId, { req }) => {
         const tournamentId = req.body.tournamentId
-        console.log('torneo y player: ', playerId, tournamentId)
+
         if (!tournamentId) {
-            console.log('EROR?')
             throw new Error(TOURNAMENT_NOT_FOUNDED)
         }
-        console.log('por entrar a player exist: ')
+
         const playerExist = await playerService.findOneByTournamentAndPlayerId(playerId, tournamentId)
-        console.log('ERROR EN PLAYER: ', playerExist)
+
         if (!playerExist) {
             throw new Error(SELECTED_PLAYER_NOT_FOUND)
         }

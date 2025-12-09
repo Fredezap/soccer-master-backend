@@ -11,6 +11,7 @@ import printRequest from '../utils/printRequest.js'
 import createMVPSurvey from '../services/survey/createMVPSurvey.js'
 import validateSurveyExist from '../middlewares/survey/validateSurveyExist.js'
 import updateSurveyShowMVP from '../services/survey/updateSurveyShowMVP.js'
+import deleteAllVotesByTournament from '../services/survey/deleteAllVotesByTournament.js'
 
 const surveyRouter = express.Router()
 
@@ -56,6 +57,12 @@ surveyRouter.patch('/update-mvp-survey',
 surveyRouter.post('/create-mvp-survey',
     runValidateTournamentExist,
     createMVPSurvey
+)
+
+surveyRouter.patch('/delete-all-survey-votes',
+    printRequest,
+    runValidateTournamentExist,
+    deleteAllVotesByTournament
 )
 
 export default surveyRouter
