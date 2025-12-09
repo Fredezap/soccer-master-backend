@@ -9,7 +9,6 @@ const GetVotesByTournament = async(req, res) => {
         const { tournamentId } = req.body
 
         const votes = await surveyService.getVotesByTournament(tournamentId)
-
         return res.status(StatusCodes.OK).json({ votes })
     } catch (err) {
         return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({

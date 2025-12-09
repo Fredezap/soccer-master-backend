@@ -8,8 +8,7 @@ const CreateSurveyVote = async(req, res) => {
     let errors
 
     try {
-        const { tournamentId, playerId } = req.body
-        const userIp = (Math.floor(Math.random() * 1000000) + 1).toString()
+        const { tournamentId, playerId, userIp } = req.body
 
         // Validar si ya votó esa IP para ese torneo
         const alreadyVoted = await surveyService.findByIpAndTournament(userIp, tournamentId)
