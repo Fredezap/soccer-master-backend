@@ -7,7 +7,6 @@ import validateTournamentExist from '../middlewares/tournament-details/validateT
 import GetVotesByTournament from '../services/survey/getVotesByTournament.js'
 import validateSurveyAvailability from '../middlewares/survey/validateSurveyAvailability.js'
 import updateSurveyAvaliability from '../services/survey/updateSurveyAvaliability.js'
-import printRequest from '../utils/printRequest.js'
 import createMVPSurvey from '../services/survey/createMVPSurvey.js'
 import validateSurveyExist from '../middlewares/survey/validateSurveyExist.js'
 import updateSurveyShowMVP from '../services/survey/updateSurveyShowMVP.js'
@@ -44,7 +43,6 @@ surveyRouter.post('/get-votes',
 )
 
 surveyRouter.patch('/update-survey-availability',
-    printRequest,
     runValidateSurveyAvailability,
     updateSurveyAvaliability
 )
@@ -60,7 +58,6 @@ surveyRouter.post('/create-mvp-survey',
 )
 
 surveyRouter.patch('/delete-all-survey-votes',
-    printRequest,
     runValidateTournamentExist,
     deleteAllVotesByTournament
 )
