@@ -19,6 +19,7 @@ const tournamentErrors = {
 }
 
 const teamErrors = {
+    SELECTED_PLAYER_NOT_FOUND: 'selected player not found',
     ERROR_WHILE_CREATING_TEAM: 'error while creating team',
     INVALID_TEAM_NAME: 'invalid team name',
     TEAM_NAME_TOO_LONG: 'team name too long',
@@ -159,6 +160,16 @@ const contactErrors = {
     INVALID_TOKEN: 'Invalid token'
 }
 
+const mvpErrors = {
+    ERROR_WHILE_CREATING_VOTE: 'error while creating vote',
+    ERROR_VOTE_ALREADY_EXISTS: 'Sie haben bereits abgestimmt',
+    VOTING_NOT_AVAILABLE: 'voting not available',
+    ERROR_WHILE_UPDATING_SURVEY: 'error while updating survey',
+    SURVEY_NOT_FOUND: 'survey not found',
+    ERROR_WHILE_CREATING_SURVEY: 'error while creating survey',
+    NO_MVP_SET: 'There is not MVP set'
+}
+
 const errorCodes = {
     tournamentErrors,
     teamErrors,
@@ -167,7 +178,8 @@ const errorCodes = {
     groupErrors,
     matchErrors,
     OAuthErrors,
-    contactErrors
+    contactErrors,
+    mvpErrors
 }
 
 export default errorCodes

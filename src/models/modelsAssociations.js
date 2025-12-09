@@ -9,6 +9,8 @@ import { Video } from './videosModel.js'
 import { Email } from './emailsModel.js'
 import { Contact } from './contactModel.js'
 import { User } from './userModel.js'
+import { MVPSurvey } from './MVPSurveyModel.js'
+import { MVPVotes } from './MVPVotesModel.js'
 
 export const modelsAssociations = () => {
     Tournament.hasMany(Team, { foreignKey: 'tournamentId', onDelete: 'CASCADE' })
@@ -71,4 +73,13 @@ export const modelsAssociations = () => {
 
     User.hasMany(Tournament, { foreignKey: 'userId', onDelete: 'CASCADE' })
     Tournament.belongsTo(User, { foreignKey: 'userId' })
+
+    Tournament.hasMany(MVPSurvey, { foreignKey: 'tournamentId' })
+    MVPSurvey.belongsTo(Tournament, { foreignKey: 'tournamentId' })
+
+    Tournament.hasMany(MVPVotes, { foreignKey: 'tournamentId' })
+    MVPVotes.belongsTo(Tournament, { foreignKey: 'tournamentId' })
+
+    Player.hasMany(MVPVotes, { foreignKey: 'playerId' })
+    MVPVotes.belongsTo(Player, { foreignKey: 'playerId' })
 }

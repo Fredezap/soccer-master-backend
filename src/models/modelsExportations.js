@@ -8,6 +8,8 @@ import { Tournament } from './tournamentModel.js'
 import { User } from './userModel.js'
 import { Email } from './emailsModel.js'
 import { Contact } from './contactModel.js'
+import { MVPSurvey } from './MVPSurveyModel.js'
+import { MVPVotes } from './MVPVotesModel.js'
 
 export const modelsExportations = {
     Player,
@@ -19,5 +21,7 @@ export const modelsExportations = {
     Tournament,
     User,
     Email,
-    Contact
+    Contact,
+    MVPSurvey,
+    MVPVotes
 }
