@@ -3,6 +3,9 @@ import errorCodes from '../../constants/errors/errorCodes.js'
 
 const { INVALID_DATE } = errorCodes.matchErrors
 
+const normalizeDate = (d) =>
+    new Date(d.getFullYear(), d.getMonth(), d.getDate())
+
 const checkDatePlusPastDate = check('date', INVALID_DATE)
     .exists()
     .bail()
@@ -10,10 +13,13 @@ const checkDatePlusPastDate = check('date', INVALID_DATE)
     .toDate()
     .bail()
     .custom((date) => {
-        const currentDate = new Date()
-        if (date <= currentDate) {
+        const inputDate = normalizeDate(date)
+        const today = normalizeDate(new Date())
+
+        if (inputDate < today) {
             throw new Error(INVALID_DATE)
         }
+
         return true
     })
 
